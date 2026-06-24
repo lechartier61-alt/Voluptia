@@ -1,0 +1,102 @@
+databases:
+  - name: voluptia-db
+    databaseName: voluptia
+    user: voluptia
+    plan: basic-256mb
+
+services:
+  - type: web
+    name: laccordsecret
+    env: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    disk:
+      name: laccordsecret-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: VITE_API_URL
+        value: /api
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: VITE_GOOGLE_CLIENT_ID
+        sync: false
+      - key: DATA_DIR
+        value: /app/data
+      - key: DATABASE_PATH
+        value: laccord_secret.sqlite
+      - key: DATABASE_URL
+        fromDatabase:
+          name: voluptia-db
+          property: connectionString
+      - key: GEOCODER_URL
+        value: https://nominatim.openstreetmap.org/search
+      - key: GEOCODER_COUNTRYCODES
+        value: fr,be,ch,lu,mc
+      - key: GEOCODER_USER_AGENT
+        value: Voluptia/1.0 city-distance-geocoder
+      - key: DISABLE_EXTERNAL_GEOCODING
+        value: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: TRUST_PROXY
+        value: 1
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_INITIAL_PASSWORD
+        sync: false
+      - key: OWNER_ADMIN_EMAILS
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: OWNER_ADMIN_INITIAL_PASSWORD
+        sync: false
+      - key: ADMIN_BOOTSTRAP_EMAIL
+        sync: false
+      - key: DISABLE_BOOTSTRAP_ADMIN
+        value: true
+      - key: AGE_VERIFICATION_PROVIDER
+        sync: false
+      - key: AGE_VERIFICATION_PROVIDER_URL
+        sync: false
+      - key: AGE_VERIFICATION_ENABLED
+        value: false
+      - key: AGE_VERIFICATION_WEBHOOK_SECRET
+        sync: false
+      - key: ALLOW_DEMO_AGE_IN_PRODUCTION
+        sync: false
+      - key: REQUIRE_AGE_VERIFICATION
+        value: true
+      - key: ENABLE_DEMO_PAID_ACTIVATION
+        value: false
+      - key: SEED_WELCOME_PROMO
+        value: false
+      - key: PAYMENT_PROVIDER
+        sync: false
+      - key: PAYMENT_CURRENCY
+        value: eur
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: PAYMENT_SUCCESS_URL
+        sync: false
+      - key: PAYMENT_CANCEL_URL
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: PUBLIC_PRODUCTION_HEALTH
+        value: false
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: VAPID_SUBJECT
+        sync: false

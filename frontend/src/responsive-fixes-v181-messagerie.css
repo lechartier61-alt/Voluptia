@@ -1,0 +1,154 @@
+/* ============================================================================
+   V181 — Messagerie : messages vocaux + suppression de message
+   ============================================================================ */
+
+/* --- Lecteur de message vocal --- */
+.voice-message-v181 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 180px;
+  max-width: 260px;
+  padding: 8px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 143, 197, 0.25);
+}
+.voice-message-v181.mine {
+  background: rgba(192, 40, 111, 0.22);
+  border-color: rgba(255, 143, 197, 0.4);
+}
+.voice-play-v181 {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #ff6fb0, #c0286f);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.voice-track-v181 {
+  position: relative;
+  flex: 1 1 auto;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+.voice-fill-v181 {
+  position: absolute;
+  inset: 0 auto 0 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff8fc5, #ff5fa2);
+  transition: width 0.1s linear;
+}
+.voice-time-v181 {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+  font-size: 12px;
+}
+
+/* --- Barre d'enregistrement en cours --- */
+.voice-recorder-bar-v181 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: rgba(192, 40, 111, 0.14);
+  border: 1px solid rgba(255, 143, 197, 0.35);
+}
+.voice-rec-dot-v181 {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff4d6d;
+  animation: voicePulse181 1s ease-in-out infinite;
+}
+@keyframes voicePulse181 {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+.voice-rec-time-v181 { font-variant-numeric: tabular-nums; opacity: 0.85; }
+.voice-recorder-bar-v181 button {
+  margin-left: auto;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.voice-rec-cancel-v181 { margin-left: auto; }
+.voice-rec-stop-v181 {
+  margin-left: 8px !important;
+  background: linear-gradient(135deg, #ff6fb0, #c0286f) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+/* --- Aperçu d'un vocal prêt à envoyer --- */
+.voice-preview-bar-v181 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed rgba(255, 143, 197, 0.4);
+}
+.voice-preview-bar-v181 button {
+  margin-left: auto;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* --- Bouton micro dans la barre d'outils --- */
+.voice-mic-btn-v181.recording {
+  background: rgba(255, 77, 109, 0.25) !important;
+  border-color: rgba(255, 77, 109, 0.6) !important;
+}
+
+/* --- Suppression d'un message --- */
+.message-bubble.v28-message-bubble { position: relative; }
+.message-delete-v181 {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.message-bubble.v28-message-bubble:hover .message-delete-v181,
+.message-bubble.v28-message-bubble:focus-within .message-delete-v181 {
+  opacity: 1;
+}
+/* Sur tactile (pas de survol), toujours visible mais discret. */
+@media (hover: none) {
+  .message-delete-v181 { opacity: 0.55; }
+}
+.message-deleted-v181 { opacity: 0.6; }
+.message-bubble.is-deleted-v181 { opacity: 0.85; }

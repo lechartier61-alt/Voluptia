@@ -1,0 +1,30 @@
+/* ============================================================================
+   V185 — Menu mobile (tiroir) : icône + libellé centrés dans chaque bouton
+   ============================================================================ */
+.v28-drawer-nav button{
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:center !important;
+  text-align:center !important;
+  gap:6px !important;
+}
+.v28-drawer-nav button > span{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  gap:6px !important;
+  width:100%;
+}
+.v28-drawer-nav button > span em{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  margin:0 auto !important;
+}
+/* badge (compteur) centré sous le libellé plutôt que collé à droite */
+.v28-drawer-nav button b,
+.pro-mobile-drawer .drawer-nav button b{
+  margin:0 auto !important;
+}

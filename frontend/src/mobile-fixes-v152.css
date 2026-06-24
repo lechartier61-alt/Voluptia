@@ -1,0 +1,112 @@
+/* ============================================================================
+   V152 — Corrections graphiques mobile / tablette
+   Chargé en dernier : ces règles ont priorité sur les feuilles précédentes.
+   ========================================================================== */
+
+/* ── Bug 1 : titre d'en-tête qui chevauche le sous-titre ────────────────────
+   .hub-header-v100 était en flex horizontal + space-between : le titre (h2) et
+   la description (p) se retrouvaient côte à côte et se superposaient sur les
+   écrans étroits (« Messages » sur « Messagerie privée… », « Découvrir »…).
+   On repasse en colonne : titre puis description, l'un sous l'autre. */
+.hub-header-v100 {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 4px !important;
+}
+.hub-header-v100 h2 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.hub-header-v100 p {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+/* Les actions éventuelles passent en pleine largeur sous le titre. */
+.hub-header-v100 .hub-header-actions-v65 {
+  width: 100%;
+  justify-content: flex-start;
+  margin-top: 6px;
+}
+
+/* ── Bug 2 : titre « Connexion » / « Inscription » coupé au bord gauche ──────
+   En mobile, .landing-auth-head reçoit margin:-18px -14px (pleine largeur) mais
+   une règle !important annule son padding horizontal : le titre est tiré 14px
+   trop à gauche, hors écran. On rétablit le padding qui compense la marge. */
+@media (max-width: 720px) {
+  .landing-auth-head {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}
+/* Sécurité : le titre ne déborde jamais de sa carte. */
+.landing-auth-head h2 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* ── Bug 3 : badge « % COMPATIBLE » qui recouvre le pseudo ───────────────────
+   Dans l'aperçu de profil, la pastille était ancrée en bas-gauche du média et
+   retombait sur le pseudo de la carte résumé juste en dessous. On la remonte en
+   haut-gauche du média (zone libre). */
+.profile-hero-media-v116 > .compat-pill-v127 {
+  top: 14px !important;
+  bottom: auto !important;
+  left: 14px !important;
+}
+
+/* ── Bug 4 : barres d'actions/onglets du profil translucides ────────────────
+   Fonds à ~88-90% + backdrop-filter peu fiable sur Android : le contenu défilait
+   visiblement derrière. On rend les fonds totalement opaques (le flou devient un
+   simple bonus là où il est supporté). */
+.profile-action-row-v116 {
+  background: #100a12 !important;
+}
+.profile-tabs-v116 {
+  background: #100a12 !important;
+}
+
+/* ── Bug 6 : barre rouge parasite dans la navigation du bas ──────────────────
+   Un badge de notification sans contenu pouvait s'afficher comme une barre.
+   On garantit une pastille ronde lisible, jamais une barre, et on masque les
+   badges vides. */
+.mobile-bottom-nav button > em:empty,
+.mobile-bottom-nav button > .badge:empty,
+.pro-bottom-nav button > em:empty {
+  display: none !important;
+}
+.mobile-bottom-nav button em,
+.pro-bottom-nav button em {
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  font-size: .6rem;
+  line-height: 16px;
+  text-align: center;
+}
+
+/* ── V153 — Filtres pratiques/fétiches : chips à bascule ───────────────────── */
+.option-chips-v153 { display: flex; flex-wrap: wrap; gap: .4rem; }
+.option-chips-v153 button {
+  padding: .42rem .8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(255, 255, 255, .04);
+  color: rgba(255, 255, 255, .82);
+  font-size: .82rem;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.option-chips-v153 button:hover { background: rgba(255, 255, 255, .08); }
+.option-chips-v153 button.active {
+  background: linear-gradient(135deg, rgba(255, 87, 169, .9), rgba(156, 70, 225, .82));
+  border-color: rgba(255, 145, 205, .5);
+  color: #fff;
+}
+.profile-chip-editor-v153 { margin-top: .9rem; display: flex; flex-direction: column; gap: .5rem; }
+.profile-chip-editor-v153 .field-label-v153 {
+  font-size: .78rem;
+  letter-spacing: .02em;
+  color: rgba(255, 236, 230, .62);
+}

@@ -1,0 +1,29 @@
+{
+  "name": "voluptia-secret",
+  "version": "0.47.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "build": "npm run build --workspace frontend",
+    "start": "node backend/src/server.js",
+    "start:render": "NODE_ENV=production node backend/src/server.js",
+    "check:backend-syntax": "node --check backend/src/app.js && node --check backend/src/server.js",
+    "deploy:render:check": "npm run build && npm run check:backend-syntax",
+    "deploy:check": "npm run deploy:render:check",
+    "audit:prod": "npm audit --omit=dev"
+  },
+  "engines": {
+    "node": ">=22 <23",
+    "npm": ">=10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lechartier61-alt/Voluptia.git"
+  }
+}

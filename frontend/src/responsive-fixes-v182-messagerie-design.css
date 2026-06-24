@@ -1,0 +1,179 @@
+/* ============================================================================
+   V182 — Refonte messagerie "Épuré" (Direction A)
+   Scopé à la page messagerie (.messages-page-v121). Thème sombre intime,
+   bulles douces, accent rose calme, avatars ronds, composer en icônes.
+   ============================================================================ */
+.messages-page-v121{
+  --mz-bg:#0C0810; --mz-surface:#15101B; --mz-line:rgba(255,255,255,.07);
+  --mz-ink:#F3ECF4; --mz-muted:#9C8FA8; --mz-faint:#6E6478;
+  --mz-sent:#A23E6B; --mz-rose:#E573A4; --mz-online:#5BD6A0; --mz-gold:#E8C07A;
+}
+
+/* Masquer l'ancien gros bandeau hero pour un en-tête épuré */
+.messages-page-v121 .messages-hero-v121{
+  background:none !important;border:none !important;padding:.2rem .2rem .6rem !important;border-radius:0 !important;
+}
+.messages-page-v121 .messages-hero-v121 p{display:none !important;}
+.messages-page-v121 .messages-hero-v121 h2{font-size:1.7rem !important;letter-spacing:.2px !important;color:var(--mz-ink) !important;}
+
+/* Conteneur : pleine largeur, sans cadre "glass" épais */
+.messages-page-v121 .messenger.v47-messenger{
+  background:var(--mz-bg) !important;border:none !important;border-radius:0 !important;
+  box-shadow:none !important;backdrop-filter:none !important;gap:0 !important;padding:0 !important;
+}
+
+/* ---------- LISTE DES CONVERSATIONS ---------- */
+.messages-page-v121 .v28-conversation-sidebar{background:transparent !important;border:none !important;padding:0 !important;}
+.messages-page-v121 .v28-conversation-tools{padding:0 4px 10px !important;border:none !important;background:none !important;}
+.messages-page-v121 .v28-conversation-tools > input{
+  width:100%;height:42px;border-radius:16px !important;border:1px solid var(--mz-line) !important;
+  background:var(--mz-surface) !important;color:var(--mz-ink) !important;padding:0 14px !important;font-size:14.5px;
+}
+.messages-page-v121 .v28-message-filters{display:flex;gap:8px;margin-top:10px;}
+.messages-page-v121 .v28-message-filters button{
+  border:1px solid var(--mz-line) !important;background:transparent !important;color:var(--mz-muted) !important;
+  border-radius:999px !important;padding:6px 14px !important;font-size:13px;font-weight:500;
+}
+.messages-page-v121 .v28-message-filters button.active{
+  background:rgba(229,115,164,.16) !important;color:#fff !important;border-color:rgba(229,115,164,.5) !important;
+}
+
+.messages-page-v121 .v28-conversation-scroll{padding:2px 0 !important;background:none !important;}
+.messages-page-v121 .conversation-item.v28-conversation-item{
+  display:flex !important;align-items:center !important;gap:13px !important;
+  padding:12px 6px !important;border:none !important;border-radius:14px !important;background:none !important;
+  position:relative;text-align:left;width:100%;
+}
+.messages-page-v121 .conversation-item.v28-conversation-item + .conversation-item.v28-conversation-item::before{
+  content:"";position:absolute;top:0;left:73px;right:6px;height:1px;background:var(--mz-line);
+}
+.messages-page-v121 .conversation-item.v28-conversation-item.active{background:rgba(255,255,255,.04) !important;}
+.messages-page-v121 .conversation-item .avatar{
+  width:54px !important;height:54px !important;border-radius:50% !important;flex:0 0 auto !important;
+  font-size:17px !important;font-weight:600 !important;
+  background:linear-gradient(135deg,#b96aa0,#5e2a52) !important;color:#fff !important;overflow:hidden;
+}
+.messages-page-v121 .conversation-item .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.messages-page-v121 .conversation-item > span{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;}
+.messages-page-v121 .conversation-item > span strong{
+  font-size:16px !important;font-weight:600 !important;color:var(--mz-ink) !important;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.messages-page-v121 .conversation-item > span small{
+  font-size:14px !important;color:var(--mz-muted) !important;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.messages-page-v121 .conversation-item > span em{display:none !important;} /* ligne ville/statut retirée */
+.messages-page-v121 .conversation-item .v28-online-dot{
+  position:absolute !important;left:46px !important;top:48px !important;width:14px;height:14px;border-radius:50%;
+  background:var(--mz-faint) !important;border:3px solid var(--mz-bg) !important;
+}
+.messages-page-v121 .conversation-item .v28-online-dot.online{background:var(--mz-online) !important;}
+.messages-page-v121 .conversation-item > b{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  min-width:21px;height:21px;border-radius:999px;background:var(--mz-rose) !important;color:#1a0a12 !important;
+  font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 6px;
+}
+
+/* liste "commencer un chat" */
+.messages-page-v121 .v69-start-chat-list > p{color:var(--mz-faint) !important;font-size:12px;letter-spacing:.4px;
+  text-transform:uppercase;margin:14px 6px 4px;}
+
+/* ---------- VOLET CONVERSATION ---------- */
+.messages-page-v121 .chat-panel.v47-chat-panel{background:transparent !important;border:none !important;}
+.messages-page-v121 .chat-header.v47-chat-header{
+  display:flex !important;align-items:center !important;gap:12px !important;
+  background:transparent !important;border:none !important;border-bottom:1px solid var(--mz-line) !important;
+  padding:8px 6px 14px !important;border-radius:0 !important;
+}
+.messages-page-v121 .chat-header .avatar{
+  width:44px !important;height:44px !important;border-radius:50% !important;flex:0 0 auto;
+  background:linear-gradient(135deg,#caa06a,#7a4a2e) !important;color:#1a120c !important;font-weight:600;overflow:hidden;
+}
+.messages-page-v121 .chat-header .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.messages-page-v121 .chat-header > div strong{font-size:18px !important;color:var(--mz-ink) !important;}
+.messages-page-v121 .chat-header > div small{font-size:12.5px !important;color:var(--mz-muted) !important;}
+.messages-page-v121 .v28-status-pill{
+  border:1px solid var(--mz-line) !important;background:transparent !important;color:var(--mz-muted) !important;
+  border-radius:999px !important;padding:4px 11px !important;font-size:12px !important;
+}
+.messages-page-v121 .v28-status-pill.online{color:var(--mz-online) !important;border-color:rgba(91,214,160,.4) !important;}
+.messages-page-v121 .chat-header-actions-v121 .small-btn,
+.messages-page-v121 .chat-header-actions-v121 .secondary-btn{
+  background:transparent !important;border:1px solid var(--mz-line) !important;color:var(--mz-muted) !important;
+  border-radius:12px !important;padding:7px 11px !important;font-size:12.5px !important;
+}
+
+/* bandeau sécurité discret (ligne fine sans cadre) */
+.messages-page-v121 .v47-chat-safety{
+  background:none !important;border:none !important;color:var(--mz-faint) !important;
+  border-radius:0 !important;margin:6px 0 2px !important;padding:2px 2px !important;font-size:11px !important;gap:6px !important;
+}
+.messages-page-v121 .v47-chat-safety p{margin:0 !important;color:var(--mz-faint) !important;}
+
+/* fil + séparateurs de jour */
+.messages-page-v121 .v47-message-stream{background:transparent !important;padding:14px 4px 6px !important;}
+.messages-page-v121 .chat-day-sep-v178{display:flex;justify-content:center;margin:10px 0 14px;}
+.messages-page-v121 .chat-day-sep-v178 span{
+  font-size:11px;color:var(--mz-faint);letter-spacing:.5px;text-transform:uppercase;
+  background:rgba(255,255,255,.05);border:1px solid var(--mz-line);padding:4px 12px;border-radius:999px;
+}
+
+/* ---------- BULLES ---------- */
+.messages-page-v121 .message-bubble.v47-message-bubble{
+  max-width:78% !important;padding:11px 15px !important;font-size:15px !important;line-height:1.42 !important;
+  border-radius:20px !important;border:none !important;position:relative;margin:3px 0 !important;
+  background:var(--mz-surface) !important;color:#EEE7F2 !important;border-bottom-left-radius:7px !important;
+}
+.messages-page-v121 .message-bubble.v47-message-bubble.mine{
+  background:var(--mz-sent) !important;color:#FCEFF5 !important;
+  border-bottom-left-radius:20px !important;border-bottom-right-radius:7px !important;
+}
+.messages-page-v121 .message-bubble p{margin:0 !important;}
+.messages-page-v121 .message-bubble > small{
+  display:block;margin-top:5px !important;font-size:11px !important;opacity:.65;
+}
+.messages-page-v121 .message-bubble.mine > small{text-align:right;}
+.messages-page-v121 .message-deleted-v181{opacity:.6;font-style:italic;}
+
+/* ---------- COMPOSER ---------- */
+.messages-page-v121 .message-form.v47-message-form{
+  background:transparent !important;border:none !important;border-top:1px solid var(--mz-line) !important;
+  padding:12px 4px calc(10px + env(safe-area-inset-bottom)) !important;border-radius:0 !important;
+}
+.messages-page-v121 .message-form textarea{
+  background:var(--mz-surface) !important;border:1px solid var(--mz-line) !important;border-radius:20px !important;
+  color:var(--mz-ink) !important;padding:11px 16px !important;font-size:15px !important;min-height:46px;
+}
+.messages-page-v121 .v47-composer-toolbar{border:none !important;background:none !important;padding:8px 0 0 !important;}
+.messages-page-v121 .v47-tool-buttons{display:flex !important;gap:6px !important;}
+.messages-page-v121 .v47-tool-buttons button{
+  width:42px;height:42px;border-radius:50% !important;border:1px solid var(--mz-line) !important;
+  background:transparent !important;color:var(--mz-muted) !important;font-size:18px !important;
+  display:grid;place-items:center;padding:0 !important;
+}
+.messages-page-v121 .v47-tool-buttons .voice-mic-btn-v181.recording{
+  background:rgba(255,77,109,.22) !important;border-color:rgba(255,77,109,.6) !important;color:#fff !important;
+}
+.messages-page-v121 .v28-composer-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;}
+.messages-page-v121 .v28-composer-actions small{color:var(--mz-faint) !important;font-size:11.5px;}
+.messages-page-v121 .v28-composer-actions .landing-btn-primary{
+  background:var(--mz-sent) !important;border:none !important;color:#fff !important;
+  border-radius:999px !important;padding:11px 22px !important;font-weight:600;box-shadow:none !important;
+}
+
+/* ---------- BASCULE LISTE / CONVERSATION SUR MOBILE ---------- */
+.messages-page-v121 .chat-back-v182{
+  display:none;background:none;border:none;color:var(--mz-muted);font-size:28px;line-height:1;
+  padding:2px 6px 2px 0;flex:0 0 auto;
+}
+@media (max-width:900px){
+  .messages-page-v121 .messenger.v47-messenger{display:block !important;min-height:0 !important;max-height:none !important;}
+  .messages-page-v121 .v28-conversation-sidebar{display:block !important;max-height:none !important;padding:0 !important;}
+  .messages-page-v121 .v28-conversation-scroll{display:flex !important;flex-direction:column !important;align-content:start !important;overflow-x:visible !important;overflow-y:visible !important;max-height:none !important;}
+  .messages-page-v121 .messenger.v47-messenger.has-active-v182 .v28-conversation-sidebar{display:none !important;}
+  .messages-page-v121 .messenger.v47-messenger:not(.has-active-v182) .chat-panel{display:none !important;}
+  .messages-page-v121 .chat-back-v182{display:block;}
+  /* le composer ne passe plus sous la barre de navigation fixe */
+  .messages-page-v121 .message-form.v47-message-form{padding-bottom:calc(86px + env(safe-area-inset-bottom)) !important;}
+}

@@ -1,0 +1,25 @@
+/* ============================================================================
+   V184 — Correctifs de petits bugs du hub messagerie (desktop)
+   ============================================================================ */
+
+/* BUG : compteurs collés au libellé dans les sous-onglets "Interactions" */
+.interaction-tabs-v149 button em{
+  font-style:normal;opacity:.7;margin-left:.36rem;
+}
+
+/* BUG : bouton de l'état vide coupé dans la colonne étroite de la messagerie.
+   On empile (icône / texte / bouton) pour éviter toute troncature. */
+.messages-page-v121 .action-empty-v121{
+  flex-direction:column !important;align-items:flex-start !important;text-align:left !important;
+}
+.messages-page-v121 .action-empty-actions-v121{
+  margin-left:0 !important;width:100%;justify-content:flex-start !important;
+}
+.messages-page-v121 .action-empty-actions-v121 .primary-btn,
+.messages-page-v121 .action-empty-actions-v121 .secondary-btn{
+  white-space:normal !important;
+}
+
+/* Défensif : garantir l'espace entre les onglets et le panneau Groupes */
+.messages-hub-clean-v171 .hub-subnav-v121{margin-bottom:12px !important;}
+.messages-hub-clean-v171 .groups-panel-v2{margin-top:6px !important;}

@@ -1,0 +1,1195 @@
+/* ===================================================================
+   Volyptia — Redesign v110
+   Remplace / surcharge les anciens styles pour les 12 sections.
+   Ce fichier est importé APRÈS styles.css (priorité supérieure).
+   =================================================================== */
+
+/* ─── Variables communes ─────────────────────────────────────────── */
+:root {
+  --v110-pink: #d93c86;
+  --v110-pink-soft: #ff8fc5;
+  --v110-purple: #8b3eca;
+  --v110-gold: #e8c97a;
+  --v110-dark: #07040f;
+  --v110-surface: rgba(255,255,255,.045);
+  --v110-border: rgba(255,143,197,.14);
+  --v110-border-active: rgba(255,143,197,.4);
+  --v110-text: rgba(255,255,255,.9);
+  --v110-muted: rgba(255,255,255,.5);
+  --v110-radius: 22px;
+  --v110-radius-sm: 14px;
+  --v110-btn-h: 48px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   1. LANDING PAGE — hero grand format, premium
+   ═══════════════════════════════════════════════════════════════════ */
+.landing-page {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(217,60,134,.22), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139,62,202,.14), transparent),
+    #070410 !important;
+}
+
+/* landing-header — transparent, flotte sur le hero */
+.landing-header {
+  display: none !important;
+}
+
+.landing-brand strong {
+  font-size: 1.55rem !important;
+  background: linear-gradient(90deg, #fff 0%, #ffb6d9 60%, var(--v110-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero plein écran */
+.landing-hero {
+  min-height: calc(100svh - 64px) !important;
+  grid-template-columns: 1fr !important;
+  justify-items: center;
+  text-align: center;
+  padding: clamp(48px,10vw,100px) clamp(16px,6vw,80px) 80px !important;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 20%, rgba(217,60,134,.18), transparent),
+    radial-gradient(ellipse 50% 35% at 20% 80%, rgba(139,62,202,.12), transparent),
+    #07040f !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.landing-hero-overlay { display: none !important; }
+
+.landing-hero-copy {
+  max-width: 680px;
+  position: relative;
+  z-index: 1;
+}
+
+.landing-hero-copy .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border: 1px solid var(--v110-border-active);
+  border-radius: 999px;
+  background: rgba(217,60,134,.1);
+  color: var(--v110-pink-soft) !important;
+  font-size: .78rem !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.landing-hero-copy h1 {
+  font-size: clamp(2.8rem,7vw,5.5rem) !important;
+  line-height: 1.0 !important;
+  font-weight: 700 !important;
+  letter-spacing: -.04em !important;
+  color: #fff !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.landing-hero-copy h1 span {
+  background: linear-gradient(90deg, var(--v110-pink), var(--v110-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.landing-hero-copy > p {
+  font-size: clamp(.95rem,2vw,1.1rem) !important;
+  color: var(--v110-muted) !important;
+  max-width: 420px;
+  margin: 0 auto 2.5rem !important;
+  line-height: 1.6 !important;
+}
+
+.landing-hero-actions {
+  display: flex !important;
+  gap: 12px !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+}
+
+.landing-btn-primary.large,
+.landing-btn-outline.large {
+  min-height: var(--v110-btn-h) !important;
+  min-width: 188px !important;
+  padding: 0 28px !important;
+  border-radius: 999px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .01em !important;
+}
+
+.landing-btn-primary {
+  background: linear-gradient(135deg, var(--v110-pink), var(--v110-purple)) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 8px 32px rgba(217,60,134,.38) !important;
+}
+
+.landing-btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 14px 40px rgba(217,60,134,.52) !important;
+  filter: brightness(1.08) !important;
+}
+
+.landing-btn-outline {
+  background: transparent !important;
+  border: 1.5px solid rgba(255,143,197,.55) !important;
+  color: var(--v110-pink-soft) !important;
+}
+
+.landing-btn-outline:hover {
+  background: rgba(217,60,134,.12) !important;
+  border-color: var(--v110-pink-soft) !important;
+  color: #fff !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Bandeau trust */
+.landing-trust-row {
+  display: flex !important;
+  gap: 16px !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  padding: 40px clamp(16px,4vw,48px) !important;
+}
+
+.landing-trust-card {
+  flex: 1 1 200px;
+  max-width: 240px;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  padding: 20px 22px !important;
+  border-radius: var(--v110-radius-sm) !important;
+  border: 1px solid var(--v110-border) !important;
+  background: var(--v110-surface) !important;
+}
+
+.landing-trust-card h3 {
+  font-size: .95rem !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  margin: 0 0 4px !important;
+}
+
+.landing-trust-card p { font-size: .82rem !important; color: var(--v110-muted) !important; margin: 0 !important; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. AUTH — carte glass flottante
+   ═══════════════════════════════════════════════════════════════════ */
+.floating-auth-backdrop {
+  background: rgba(4,2,10,.72) !important;
+  backdrop-filter: blur(18px) !important;
+}
+
+.floating-auth-card {
+  background: rgba(14,8,26,.96) !important;
+  border: 1px solid var(--v110-border-active) !important;
+  border-radius: 26px !important;
+  box-shadow: 0 32px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(255,143,197,.06) !important;
+  max-height: 92svh !important;
+  overflow-y: auto !important;
+}
+
+.landing-auth-head { padding: 0 0 8px !important; }
+.landing-auth-head h2 {
+  font-size: 1.55rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -.03em !important;
+  color: #fff !important;
+  margin-bottom: 16px !important;
+}
+
+.landing-auth-switch {
+  background: rgba(255,255,255,.05) !important;
+  border-radius: 999px !important;
+  padding: 3px !important;
+  gap: 2px !important;
+  border: 1px solid var(--v110-border) !important;
+}
+
+.landing-auth-switch button {
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  font-size: .84rem !important;
+  padding: 7px 20px !important;
+  color: var(--v110-muted) !important;
+  transition: all .15s !important;
+}
+
+.landing-auth-switch button.active {
+  background: linear-gradient(90deg, var(--v110-pink), var(--v110-purple)) !important;
+  color: #fff !important;
+}
+
+.landing-form .field span,
+.landing-form .field label > span { font-size: .82rem !important; font-weight: 500 !important; color: var(--v110-muted) !important; }
+
+.landing-form .field input,
+.landing-form .field select,
+.landing-form .field textarea {
+  border-radius: 12px !important;
+  border-color: rgba(255,143,197,.2) !important;
+  background: rgba(255,255,255,.04) !important;
+  color: #fff !important;
+  font-size: .9rem !important;
+}
+
+.landing-form .field input:focus,
+.landing-form .field select:focus {
+  border-color: rgba(255,143,197,.5) !important;
+  box-shadow: 0 0 0 3px rgba(217,60,134,.12) !important;
+  outline: none !important;
+}
+
+.landing-form .landing-btn-primary.full {
+  min-height: var(--v110-btn-h) !important;
+  border-radius: 999px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .01em !important;
+  background: linear-gradient(135deg, var(--v110-pink), var(--v110-purple)) !important;
+  box-shadow: 0 8px 28px rgba(217,60,134,.35) !important;
+  margin-top: 4px !important;
+}
+
+.landing-check-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  padding: 10px 14px !important;
+  border: 1px solid var(--v110-border) !important;
+  border-radius: 12px !important;
+  background: rgba(217,60,134,.05) !important;
+  font-size: .82rem !important;
+  line-height: 1.5 !important;
+  cursor: pointer !important;
+}
+
+.landing-check-row input[type=checkbox] {
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: var(--v110-pink) !important;
+  flex-shrink: 0 !important;
+  margin-top: 1px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   4. TINDER — carte profil grande, boutons gros
+   ═══════════════════════════════════════════════════════════════════ */
+.tinder-page-v66 {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 18px !important;
+  padding: 20px 16px 32px !important;
+}
+
+.tinder-intro-v66 {
+  width: 100% !important;
+  max-width: 520px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 18px !important;
+  border-radius: var(--v110-radius-sm) !important;
+  border: 1px solid var(--v110-border) !important;
+  background: var(--v110-surface) !important;
+}
+
+.tinder-stage-v66 {
+  width: 100% !important;
+  max-width: 520px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 18px !important;
+}
+
+.tinder-card-v66 {
+  width: 100% !important;
+  border-radius: 28px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--v110-border) !important;
+  background: rgba(12,8,20,.9) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,.6) !important;
+  transition: transform .18s ease, opacity .18s ease !important;
+}
+
+.tinder-photo-v66 {
+  height: clamp(320px, 55svh, 500px) !important;
+  position: relative !important;
+  cursor: pointer !important;
+  display: block !important;
+  width: 100% !important;
+  border: none !important;
+  background-size: cover !important;
+  background-position: center top !important;
+}
+
+.tinder-gradient-v66 {
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(0,0,0,.2) 55%,
+    rgba(0,0,0,.85) 100%
+  ) !important;
+}
+
+.tinder-badge-left-v66,
+.tinder-badge-right-v66,
+.tinder-verified-v66,
+.tinder-lock-v66 {
+  padding: 5px 11px !important;
+  border-radius: 999px !important;
+  font-size: .75rem !important;
+  font-weight: 700 !important;
+  backdrop-filter: blur(10px) !important;
+  background: rgba(7,4,15,.65) !important;
+  border: 1px solid rgba(255,255,255,.16) !important;
+}
+
+.tinder-badge-right-v66 {
+  background: rgba(60,220,120,.2) !important;
+  border-color: rgba(60,220,120,.45) !important;
+  color: #78f0a8 !important;
+}
+
+.tinder-identity-v66 {
+  padding: 14px 20px 20px !important;
+}
+
+.tinder-identity-v66 h3 {
+  font-size: clamp(1.8rem,6vw,2.6rem) !important;
+  font-weight: 700 !important;
+  letter-spacing: -.03em !important;
+  color: #fff !important;
+  line-height: 1 !important;
+  margin: 4px 0 !important;
+}
+
+.tinder-identity-v66 p,
+.tinder-identity-v66 small { font-size: .85rem !important; color: rgba(255,255,255,.72) !important; }
+
+.tinder-info-v66 {
+  padding: 14px 20px 20px !important;
+  border-top: 1px solid var(--v110-border) !important;
+}
+
+.tinder-info-v66 p { font-size: .88rem !important; line-height: 1.55 !important; color: rgba(255,255,255,.75) !important; }
+
+/* Chips intérêts */
+.tinder-chips-v66 span {
+  padding: 5px 12px !important;
+  border-radius: 999px !important;
+  background: rgba(217,60,134,.12) !important;
+  border: 1px solid rgba(255,143,197,.22) !important;
+  color: var(--v110-pink-soft) !important;
+  font-size: .78rem !important;
+  font-weight: 500 !important;
+}
+
+/* Boutons actions Tinder */
+.tinder-actions-v66 {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  max-width: 400px !important;
+}
+
+.tinder-action-v66 {
+  min-height: 72px !important;
+  border-radius: 20px !important;
+  border: 1.5px solid rgba(255,255,255,.1) !important;
+  background: rgba(255,255,255,.06) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  cursor: pointer !important;
+  transition: transform .14s, background .14s, border-color .14s !important;
+}
+
+.tinder-action-v66:hover { transform: translateY(-3px) !important; }
+.tinder-action-v66:active { transform: scale(.96) !important; }
+
+.tinder-action-v66.pass {
+  background: rgba(255,80,100,.08) !important;
+  border-color: rgba(255,80,100,.25) !important;
+}
+.tinder-action-v66.pass span { color: #ff6b7a !important; font-size: 1.6rem !important; }
+
+.tinder-action-v66.message {
+  background: rgba(120,190,255,.08) !important;
+  border-color: rgba(120,190,255,.22) !important;
+}
+.tinder-action-v66.message span { color: #7bc8ff !important; font-size: 1.5rem !important; }
+
+.tinder-action-v66.heart {
+  background: rgba(217,60,134,.1) !important;
+  border-color: rgba(255,143,197,.28) !important;
+}
+.tinder-action-v66.heart span { color: var(--v110-pink-soft) !important; font-size: 1.6rem !important; }
+.tinder-action-v66.heart.active {
+  background: rgba(217,60,134,.28) !important;
+  border-color: var(--v110-pink) !important;
+  box-shadow: 0 0 22px rgba(217,60,134,.35) !important;
+}
+
+.tinder-action-v66 em { font-size: .78rem !important; color: var(--v110-muted) !important; }
+.tinder-action-v66:disabled { opacity: .38 !important; cursor: not-allowed !important; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   5. RECHERCHE — filtres à gauche, grille propre à droite
+   ═══════════════════════════════════════════════════════════════════ */
+.search-advanced-grid-v72 {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(140px,1fr)) !important;
+  gap: 10px !important;
+}
+
+.search-range-grid-v72 {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   6. ALBUMS — verrou rose, card épurée
+   ═══════════════════════════════════════════════════════════════════ */
+.social-album-preview.locked {
+  border-color: rgba(255,143,197,.35) !important;
+  background: rgba(217,60,134,.07) !important;
+}
+
+.social-album-preview.locked .album-preview-cover span { color: var(--v110-pink-soft) !important; font-size: 1.3rem !important; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   8. FICHE PROFIL FLOTTANTE — slide desktop + plein écran mobile
+   ═══════════════════════════════════════════════════════════════════ */
+.profile-panel-backdrop-v97 {
+  background: rgba(4,2,10,.62) !important;
+  backdrop-filter: blur(14px) !important;
+  justify-content: flex-end !important;
+  align-items: stretch !important;
+}
+
+.profile-panel-v97 {
+  width: min(480px, 100vw) !important;
+  max-width: 100% !important;
+  height: 100svh !important;
+  max-height: none !important;
+  border-radius: 24px 0 0 24px !important;
+  border: 1px solid var(--v110-border) !important;
+  border-right: none !important;
+  background: rgba(10,6,20,.98) !important;
+  box-shadow: -24px 0 80px rgba(0,0,0,.6) !important;
+  display: grid !important;
+  grid-template-rows: auto auto 1fr !important;
+  overflow: hidden !important;
+  animation: slideInRight .22s ease !important;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(40px); opacity: .6; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.profile-panel-hero-v97 {
+  height: 220px !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+}
+
+.profile-panel-hero-fade-v97 {
+  background: linear-gradient(to bottom, transparent 20%, rgba(10,6,20,.5) 60%, rgba(10,6,20,.97) 100%) !important;
+}
+
+.profile-panel-identity-v97 { padding: 0 20px 18px !important; }
+
+.profile-panel-name-v97 h2 {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -.03em !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.profile-panel-online-v97 {
+  font-size: .7rem !important;
+  padding: 3px 8px !important;
+  border-radius: 999px !important;
+  background: rgba(60,220,120,.18) !important;
+  border: 1px solid rgba(60,220,120,.4) !important;
+  color: #7aefaa !important;
+}
+
+.profile-panel-actions-v97 {
+  padding: 14px 16px !important;
+  background: rgba(14,9,24,.85) !important;
+  border-bottom: 1px solid var(--v110-border) !important;
+  gap: 8px !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.profile-action-btn-v97 {
+  flex: 1 !important;
+  min-height: 58px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  background: rgba(255,255,255,.055) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  cursor: pointer !important;
+  transition: transform .14s, background .14s, border-color .14s !important;
+  color: #fff !important;
+}
+
+.profile-action-btn-v97:hover { transform: translateY(-2px) !important; border-color: var(--v110-border-active) !important; }
+.profile-action-btn-v97.heart { background: rgba(217,60,134,.1) !important; border-color: rgba(255,143,197,.22) !important; }
+.profile-action-btn-v97.heart.active { background: rgba(217,60,134,.28) !important; border-color: var(--v110-pink) !important; }
+.profile-action-btn-v97.chat { background: rgba(120,190,255,.08) !important; border-color: rgba(120,190,255,.2) !important; }
+.profile-action-btn-v97.follow.active { background: rgba(90,220,140,.12) !important; border-color: rgba(90,220,140,.35) !important; color: #7aefaa !important; }
+
+.profile-panel-scroll-v97 {
+  overflow-y: auto !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255,143,197,.2) transparent !important;
+}
+
+.profile-panel-section-v97 {
+  padding: 18px 20px !important;
+  border-bottom: 1px solid var(--v110-border) !important;
+}
+
+.profile-panel-section-v97 h3 {
+  font-size: .82rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .07em !important;
+  color: var(--v110-pink-soft) !important;
+  margin-bottom: 10px !important;
+}
+
+.profile-panel-stats-v97 {
+  display: grid !important;
+  grid-template-columns: repeat(4,1fr) !important;
+  gap: 0 !important;
+  background: rgba(255,255,255,.03) !important;
+  border-bottom: 1px solid var(--v110-border) !important;
+}
+
+.profile-stat {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  padding: 14px 8px !important;
+  border-right: 1px solid var(--v110-border) !important;
+  gap: 3px !important;
+}
+
+.profile-stat:last-child { border-right: none !important; }
+.profile-stat strong { font-size: 1.15rem !important; font-weight: 700 !important; color: #fff !important; }
+.profile-stat em { font-size: .68rem !important; color: var(--v110-muted) !important; font-style: normal !important; }
+
+/* Mobile : plein écran depuis le bas */
+@media (max-width: 600px) {
+  .profile-panel-backdrop-v97 { align-items: flex-end !important; justify-content: center !important; }
+  .profile-panel-v97 {
+    width: 100vw !important;
+    height: 94svh !important;
+    border-radius: 24px 24px 0 0 !important;
+    border: 1px solid var(--v110-border) !important;
+    border-bottom: none !important;
+    animation: slideInUp .22s ease !important;
+  }
+  @keyframes slideInUp {
+    from { transform: translateY(40px); opacity: .6; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   10. PAYWALL — flou, carte lisible, non-agressif
+   ═══════════════════════════════════════════════════════════════════ */
+.paywall-overlay {
+  position: fixed !important;
+  z-index: 60 !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(480px, calc(100vw - 2rem)) !important;
+  padding: clamp(1.4rem,4vw,2.2rem) !important;
+  text-align: center !important;
+  border: 1px solid var(--v110-border-active) !important;
+  border-radius: 28px !important;
+  background: rgba(10,5,20,.94) !important;
+  backdrop-filter: blur(24px) !important;
+  box-shadow: 0 32px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(255,143,197,.08) !important;
+}
+
+.paywall-overlay .eyebrow {
+  font-size: .72rem !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  color: var(--v110-pink-soft) !important;
+  margin-bottom: .8rem !important;
+}
+
+.paywall-overlay h2 {
+  font-size: clamp(1.4rem,4vw,2rem) !important;
+  font-weight: 700 !important;
+  letter-spacing: -.03em !important;
+  color: #fff !important;
+  margin: 0 0 .6rem !important;
+}
+
+.paywall-overlay p { color: var(--v110-muted) !important; font-size: .9rem !important; margin: 0 0 1.4rem !important; }
+
+.mini-prices {
+  display: flex !important;
+  gap: 8px !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 1.4rem !important;
+}
+
+.mini-prices span {
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--v110-border) !important;
+  background: var(--v110-surface) !important;
+  font-size: .82rem !important;
+  font-weight: 600 !important;
+  color: var(--v110-gold) !important;
+}
+
+.paywall-overlay .primary-btn {
+  min-height: var(--v110-btn-h) !important;
+  width: 100% !important;
+  border-radius: 999px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, var(--v110-pink), var(--v110-purple)) !important;
+  border: none !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  box-shadow: 0 8px 28px rgba(217,60,134,.38) !important;
+  transition: transform .14s, box-shadow .14s !important;
+}
+
+.paywall-overlay .primary-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 14px 36px rgba(217,60,134,.52) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   3 / 9 — ACCUEIL & MON PROFIL — tuiles propres
+   ═══════════════════════════════════════════════════════════════════ */
+.home-simple-cta-v98 {
+  background: linear-gradient(110deg, var(--v110-pink), var(--v110-purple)) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 12px 36px rgba(217,60,134,.3) !important;
+}
+
+.home-simple-tile-v98 {
+  border-radius: 20px !important;
+  border: 1px solid var(--v110-border) !important;
+  background: var(--v110-surface) !important;
+  transition: transform .15s, border-color .15s, background .15s !important;
+}
+
+.home-simple-tile-v98:hover {
+  transform: translateY(-3px) !important;
+  border-color: var(--v110-border-active) !important;
+  background: rgba(217,60,134,.08) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   12. CHAT INSTANTANÉ — bulle rose
+   ═══════════════════════════════════════════════════════════════════ */
+.instant-chat-bubble-v47,
+.floating-chat-bubble {
+  background: linear-gradient(135deg, var(--v110-pink), var(--v110-purple)) !important;
+  box-shadow: 0 8px 28px rgba(217,60,134,.45) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   GLOBAL — boutons & champs harmonisés
+   ═══════════════════════════════════════════════════════════════════ */
+.primary-btn {
+  background: linear-gradient(135deg, var(--v110-pink), var(--v110-purple)) !important;
+  border: none !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+}
+
+.primary-wine {
+  background: linear-gradient(135deg, var(--v110-pink), var(--v110-purple)) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+.outline-gold {
+  border-color: rgba(232,201,122,.45) !important;
+  color: var(--v110-gold) !important;
+}
+
+/* Chips / tags globaux */
+.social-chip-row span {
+  border-radius: 999px !important;
+  font-size: .78rem !important;
+}
+
+/* ===================================================================
+   Améliorations v111 — toutes les corrections de l'audit
+   =================================================================== */
+
+/* ─── 1. PRICE CARDS — hiérarchie claire, plan recommandé ─────────── */
+
+.pricing-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  margin: 1rem 0 !important;
+}
+
+.price-card {
+  position: relative !important;
+  padding: 20px 18px 22px !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  background: rgba(255,255,255,.04) !important;
+  display: grid !important;
+  gap: 6px !important;
+  transition: transform .16s, border-color .16s !important;
+  overflow: hidden !important;
+}
+
+.price-card:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(255,143,197,.3) !important;
+}
+
+.price-card.selected {
+  border-color: var(--v110-pink) !important;
+  background: rgba(217,60,134,.1) !important;
+  box-shadow: 0 0 0 1px rgba(255,143,197,.18), 0 12px 36px rgba(217,60,134,.22) !important;
+  outline: none !important;
+}
+
+/* Glow de fond pour la carte sélectionnée */
+.price-card.selected::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: radial-gradient(ellipse at 50% 0%, rgba(217,60,134,.18), transparent 70%) !important;
+  pointer-events: none !important;
+}
+
+/* Badge "Le plus choisi" sur le 2e plan */
+.price-card:nth-child(2)::after {
+  content: 'Le plus choisi' !important;
+  position: absolute !important;
+  top: -1px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  padding: 3px 12px !important;
+  background: linear-gradient(90deg, var(--v110-pink), var(--v110-purple)) !important;
+  border-radius: 0 0 12px 12px !important;
+  font-size: .68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .04em !important;
+  color: #fff !important;
+  white-space: nowrap !important;
+}
+
+.price-card:nth-child(2) {
+  border-color: rgba(217,60,134,.35) !important;
+  padding-top: 28px !important;
+}
+
+.price-card .eyebrow {
+  font-size: .68rem !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+  color: var(--v110-pink-soft) !important;
+  margin: 0 !important;
+}
+
+.price-card h3 {
+  font-size: .92rem !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  margin: 0 !important;
+}
+
+.price-card strong {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem) !important;
+  font-weight: 700 !important;
+  letter-spacing: -.03em !important;
+  color: #fff !important;
+  line-height: 1 !important;
+  margin: 4px 0 !important;
+}
+
+.price-card small {
+  font-size: .78rem !important;
+  color: var(--v110-muted) !important;
+}
+
+.price-card .secondary-btn {
+  margin-top: 6px !important;
+  min-height: 40px !important;
+  border-radius: 999px !important;
+  font-size: .84rem !important;
+  font-weight: 700 !important;
+}
+
+.price-card.selected .secondary-btn {
+  background: linear-gradient(135deg, var(--v110-pink), var(--v110-purple)) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+}
+
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+}
+@media (max-width: 480px) {
+  .pricing-grid { grid-template-columns: 1fr !important; }
+  .price-card:nth-child(2) { order: -1 !important; }
+}
+
+/* ─── 2. CARTES PROFIL RECHERCHE — online dot, ratio photo ────────── */
+
+.social-profile-card {
+  border-radius: 20px !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  background: rgba(12,8,20,.7) !important;
+  transition: transform .15s, border-color .15s !important;
+}
+
+.social-profile-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(255,143,197,.28) !important;
+}
+
+/* Profile photo ratio 4:5 */
+.social-profile-cover,
+.search-profile-cover-v66 {
+  min-height: 0 !important;
+  aspect-ratio: 4 / 5 !important;
+  background-size: cover !important;
+  background-position: center top !important;
+}
+
+/* Online badge — vert vif, point animé */
+.online-badge {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(22,120,60,.88) !important;
+  border: 1px solid rgba(60,220,120,.45) !important;
+  color: #9ff3bd !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+}
+
+.online-badge::before {
+  content: '' !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: #5ef0a0 !important;
+  animation: onlinePulse 2s ease-in-out infinite !important;
+  flex-shrink: 0 !important;
+}
+
+@keyframes onlinePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .6; transform: scale(.8); }
+}
+
+/* Dot vert sur l'avatar dans la recherche */
+.social-profile-headline .avatar {
+  position: relative !important;
+}
+
+/* Verified badge plus visible */
+.verified-badge {
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(30,80,160,.7) !important;
+  border: 1px solid rgba(100,160,255,.45) !important;
+  color: #a8d4ff !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+}
+
+/* Profile card body amélioré */
+.social-profile-body {
+  padding: .95rem !important;
+  gap: .7rem !important;
+}
+
+.social-profile-card h3 {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -.02em !important;
+}
+
+.profile-hook {
+  font-size: .82rem !important;
+  line-height: 1.5 !important;
+  color: rgba(255,255,255,.65) !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+/* ─── 3. BULLES DE MESSAGES — coin pointu côté émetteur ───────────── */
+
+.message-bubble {
+  border-radius: 18px 18px 18px 4px !important;
+  padding: .75rem .9rem !important;
+  font-size: .88rem !important;
+  line-height: 1.55 !important;
+}
+
+.message-bubble.mine {
+  border-radius: 18px 4px 18px 18px !important;
+  background: rgba(217,60,134,.18) !important;
+  border-color: rgba(217,60,134,.32) !important;
+}
+
+/* ─── 4. PARAMÈTRES — blocs distincts avec icône ──────────────────── */
+
+.settings-page-v68 .section-heading h2 {
+  font-size: clamp(1.6rem,3vw,2.2rem) !important;
+  letter-spacing: -.03em !important;
+}
+
+.settings-grid-v68 {
+  gap: 14px !important;
+}
+
+/* Header de chaque bloc settings */
+.settings-page-v68 .panel {
+  border-radius: 20px !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  background: rgba(12,8,20,.7) !important;
+  padding: 1.1rem 1.25rem !important;
+}
+
+/* Toggle notifications */
+.notification-toggle-v68 {
+  border-radius: 14px !important;
+  padding: .85rem 1rem !important;
+  transition: background .14s, border-color .14s !important;
+}
+
+.notification-toggle-v68:hover {
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(255,143,197,.2) !important;
+}
+
+.notification-toggle-v68.active {
+  background: rgba(217,60,134,.1) !important;
+  border-color: rgba(255,143,197,.35) !important;
+}
+
+.notification-toggle-v68 em {
+  background: rgba(255,143,197,.15) !important;
+  color: var(--v110-pink-soft) !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  padding: 3px 10px !important;
+}
+
+.notification-toggle-v68:not(.active) em {
+  background: rgba(255,255,255,.07) !important;
+  color: var(--v110-muted) !important;
+}
+
+/* Blocs état appareil */
+.client-status-grid-v68 span {
+  border-radius: 12px !important;
+  padding: .7rem .9rem !important;
+  font-size: .84rem !important;
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+}
+
+.support-card-v68 textarea {
+  border-radius: 14px !important;
+  border-color: rgba(255,255,255,.12) !important;
+  background: rgba(255,255,255,.05) !important;
+  font-size: .88rem !important;
+  line-height: 1.6 !important;
+}
+
+.support-card-v68 textarea:focus {
+  border-color: rgba(255,143,197,.4) !important;
+  outline: none !important;
+}
+
+/* ─── 5. ACCUEIL — avatar plus grand, tuiles avec description ─────── */
+
+.home-simple-head-v98 .avatar {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 1.3rem !important;
+  border: 2px solid rgba(255,143,197,.35) !important;
+  box-shadow: 0 0 0 3px rgba(217,60,134,.12) !important;
+}
+
+.home-simple-head-v98 h2 {
+  font-size: clamp(1.35rem,4vw,1.9rem) !important;
+  letter-spacing: -.03em !important;
+}
+
+/* Tuiles avec description */
+.home-simple-tile-v98 {
+  padding: 18px 12px 16px !important;
+  gap: 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* ─── 6. BOUTON BLOQUER — discret, tout en bas ────────────────────── */
+
+.profile-panel-section-v97 .danger-outline-btn {
+  background: transparent !important;
+  border: 1px solid rgba(255,80,80,.2) !important;
+  color: rgba(255,130,130,.6) !important;
+  border-radius: 999px !important;
+  font-size: .8rem !important;
+  min-height: 38px !important;
+  transition: all .15s !important;
+}
+
+.profile-panel-section-v97 .danger-outline-btn:hover {
+  border-color: rgba(255,80,80,.5) !important;
+  color: rgba(255,130,130,.9) !important;
+  background: rgba(255,80,80,.07) !important;
+}
+
+/* ─── 7. CONTEXT-NAV MOBILE — cible tactile 44px ─────────────────── */
+
+@media (max-width: 900px) {
+  .pro-context-nav button {
+    min-height: 44px !important;
+    padding: 0 14px !important;
+  }
+}
+
+/* ─── 8. PRICING MOBILE — safe-area Android ──────────────────────── */
+
+@media (max-width: 900px) {
+  .pro-bottom-nav {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* ─── 9. LEAFLET MAP — pan après popup sur mobile ────────────────── */
+
+/* Forcer le z-index de la popup au-dessus du panneau liste */
+@media (max-width: 600px) {
+  .venues-map-v96 .leaflet-popup-pane {
+    z-index: 650 !important;
+  }
+  .venues-map-v96 .leaflet-popup {
+    margin-bottom: 90px !important;
+  }
+}
+
+/* ─── 10. COHÉRENCE TYPOGRAPHIQUE — tailles de texte normalisées ──── */
+
+/* Hint / aide → .72rem */
+.hint, .landing-demo-text, .landing-legal-note,
+.profile-panel-section-v97 .hint,
+.settings-page-v68 .hint,
+.support-card-v68 + p {
+  font-size: .72rem !important;
+  line-height: 1.55 !important;
+  color: rgba(255,255,255,.45) !important;
+}
+
+/* Secondary text → .82rem */
+.profile-hook, .card-desc,
+.social-profile-card small,
+.venue-info-v96 small,
+.tinder-info-v66 p {
+  font-size: .82rem !important;
+}
+
+/* Eyebrow unifié */
+.eyebrow {
+  font-size: .72rem !important;
+  letter-spacing: .07em !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+}
+
+/* ─── 11. ABONNEMENT — section-heading améliorée ─────────────────── */
+
+.subscription-page .section-heading h2 {
+  font-size: clamp(1.6rem,3vw,2.4rem) !important;
+  letter-spacing: -.03em !important;
+}
+
+.subscription-status {
+  border-radius: 18px !important;
+  border: 1px solid rgba(255,255,255,.1) !important;
+  background: rgba(255,255,255,.04) !important;
+  padding: 1rem 1.25rem !important;
+}
+
+.subscription-status strong {
+  font-size: .95rem !important;
+  font-weight: 600 !important;
+  color: var(--v110-pink-soft) !important;
+}
+
+.subscription-status p {
+  font-size: .82rem !important;
+  color: var(--v110-muted) !important;
+  margin: 4px 0 0 !important;
+}
+
+.promo-panel {
+  border-radius: 18px !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+  background: rgba(255,255,255,.04) !important;
+  padding: 1rem 1.25rem !important;
+}
+
+.promo-panel h3 {
+  font-size: .92rem !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  margin-bottom: .75rem !important;
+}
+

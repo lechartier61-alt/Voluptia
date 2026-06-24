@@ -1,0 +1,76 @@
+/* ============================================================================
+   V183 — Polish graphique du hub messagerie (harmonisation Direction A)
+   Habille les sections autour de la conversation : sous-onglets, Groupes,
+   en-tête de conversation, bandeau sécurité. Thème sombre intime cohérent.
+   ============================================================================ */
+.messages-hub-clean-v171{
+  --mz-bg:#0C0810; --mz-surface:#15101B; --mz-line:rgba(255,255,255,.07);
+  --mz-ink:#F3ECF4; --mz-muted:#9C8FA8; --mz-faint:#6E6478;
+  --mz-sent:#A23E6B; --mz-rose:#E573A4; --mz-online:#5BD6A0;
+  background:var(--mz-bg) !important;
+}
+.messages-hub-clean-v171 .hub-content-v65{background:transparent !important;}
+
+/* ---- Sous-onglets (Conversations / Alertes …) ---- */
+.messages-hub-clean-v171 .hub-subnav-v121{
+  gap:6px !important;border:none !important;background:var(--mz-bg) !important;padding:8px 2px 10px !important;
+  border-bottom:1px solid var(--mz-line) !important;border-radius:0 !important;
+  position:sticky !important;top:0 !important;z-index:6 !important;
+}
+.messages-hub-clean-v171 .hub-subnav-v121 button{
+  border:none !important;background:transparent !important;color:var(--mz-muted) !important;
+  border-radius:0 !important;padding:6px 4px 10px !important;position:relative;font-weight:600;box-shadow:none !important;
+}
+.messages-hub-clean-v171 .hub-subnav-v121 button span small{display:none !important;}
+.messages-hub-clean-v171 .hub-subnav-v121 button.active{color:var(--mz-ink) !important;}
+.messages-hub-clean-v171 .hub-subnav-v121 button.active::after{
+  content:"";position:absolute;left:4px;right:4px;bottom:-1px;height:2.5px;border-radius:3px;background:var(--mz-rose);
+}
+.messages-hub-clean-v171 .hub-subnav-v121 button .hub-subnav-badge-v121,
+.messages-hub-clean-v171 .hub-subnav-v121 button b{
+  background:var(--mz-rose) !important;color:#1a0a12 !important;
+}
+
+/* ---- Panneau Groupes (compact) ---- */
+.messages-hub-clean-v171 .groups-panel-v2{
+  border:1px solid var(--mz-line) !important;background:var(--mz-surface) !important;border-radius:16px !important;
+  padding:.7rem .8rem !important;margin:12px 0 !important;
+}
+.messages-hub-clean-v171 .groups-head-v2 h3{color:var(--mz-ink) !important;font-size:1rem !important;
+  font-family:Georgia,serif;font-weight:500;}
+.messages-hub-clean-v171 .groups-head-v2 .hint{color:var(--mz-faint) !important;font-size:.72rem !important;}
+.messages-hub-clean-v171 .groups-head-v2 button{
+  background:transparent !important;border:1px solid var(--mz-line) !important;color:var(--mz-ink) !important;
+  border-radius:999px !important;padding:8px 14px !important;font-size:.85rem !important;
+}
+.messages-hub-clean-v171 .group-card-v2{
+  border:1px solid var(--mz-line) !important;background:rgba(255,255,255,.02) !important;border-radius:12px !important;
+}
+
+/* ---- En-tête de conversation : actions compactes, plus de chevauchement ---- */
+.messages-page-v121 .chat-header-actions-v121{
+  display:flex !important;gap:6px !important;margin-left:auto !important;width:auto !important;flex:0 0 auto;
+}
+.messages-page-v121 .chat-header-actions-v121 .small-btn,
+.messages-page-v121 .chat-header-actions-v121 .secondary-btn{
+  white-space:nowrap !important;font-size:11.5px !important;padding:7px 10px !important;border-radius:11px !important;
+}
+@media (max-width:760px){
+  /* l'en-tête garde tout sur une ligne ; les libellés restent courts */
+  .messages-page-v121 .chat-header.v47-chat-header{flex-wrap:nowrap !important;}
+  .messages-page-v121 .chat-header > div{min-width:0;}
+  .messages-page-v121 .chat-header-actions-v121{width:auto !important;margin-left:auto !important;justify-content:flex-end !important;}
+  .messages-page-v121 .v28-status-pill{display:none !important;} /* statut déjà sous le nom, on évite l'encombrement */
+}
+
+/* ---- Bandeau "chat instantané"/sécurité plus discret ---- */
+.messages-hub-clean-v171 .v28-messenger::before{display:none !important;} /* retire le bandeau rose "Chat privé instantané" */
+.messages-hub-clean-v171 .instant-chat-launch-title,
+.messages-hub-clean-v171 .v47-chat-safety p{color:var(--mz-muted) !important;}
+
+/* ---- Conversation ouverte sur mobile : vue quasi plein écran ---- */
+@media (max-width:900px){
+  .messages-hub-clean-v171:has(.messenger.has-active-v182) .groups-panel-v2{display:none !important;}
+  .messages-hub-clean-v171:has(.messenger.has-active-v182) .hub-subnav-v121{display:none !important;}
+  .messages-hub-clean-v171:has(.messenger.has-active-v182) .messages-hero-v121{display:none !important;}
+}

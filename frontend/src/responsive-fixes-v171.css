@@ -1,0 +1,461 @@
+/* ============================================================================
+   V171 — Responsive global : ordinateur, tablette, téléphone, portrait/paysage
+   Chargé en dernier afin de neutraliser les anciennes règles conflictuelles.
+   ========================================================================== */
+
+/* Base anti-débordement commune à toutes les pages. */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+video,
+canvas,
+svg,
+iframe {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.page,
+.social-page,
+.hub-page-v65,
+.hub-content-v65,
+.pro-workspace,
+.main-zone,
+.glass,
+.panel,
+article,
+section,
+main,
+aside,
+nav,
+header,
+footer,
+form,
+[class*="grid"],
+[class*="row"] {
+  min-width: 0;
+}
+
+/* Les longues valeurs utilisateur ne doivent jamais élargir la page. */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+small,
+strong,
+span,
+a,
+button,
+label,
+li,
+dd,
+dt {
+  overflow-wrap: anywhere;
+}
+
+/* Les contenus médias restent dans leur carte, quelle que soit leur source. */
+img,
+video {
+  height: auto;
+}
+
+/* Carte des membres : la carte commence maintenant directement, sans hero. */
+.member-map-page-v114 {
+  gap: 0 !important;
+}
+.member-map-shell-v114 {
+  margin-top: 0 !important;
+}
+
+/* Messagerie : suppression du hero et récupération de l'espace utile. */
+.messages-page-v121 {
+  gap: 0 !important;
+}
+.messages-page-v121 > .v28-messenger,
+.messages-page-v121 > .v47-messenger {
+  margin-top: 0 !important;
+}
+
+/* Panneau profil : une seule zone collante (la topbar). Les actions et onglets
+   restent dans le flux sur tablettes/téléphones pour ne plus masquer le contenu. */
+@media (max-width: 1024px) {
+  .profile-action-row-v116,
+  .profile-tabs-v116 {
+    position: static !important;
+    top: auto !important;
+    inset-block-start: auto !important;
+  }
+
+  .profile-panel-scroll-v116 {
+    scroll-padding-top: 0 !important;
+    overscroll-behavior: contain;
+  }
+
+  .profile-action-row-v116 {
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+  .profile-tabs-v116 {
+    border-top: 1px solid rgba(255,255,255,.05);
+  }
+}
+
+/* Sous-navigation des hubs : visible, tactile et défilable sans recouvrir la page. */
+@media (max-width: 900px) {
+  .hub-subnav-v65,
+  .hub-subnav-v121,
+  .v28-subtab-row,
+  .pro-context-nav {
+    position: relative !important;
+    top: auto !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+    scroll-padding-inline: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .hub-subnav-v65 button,
+  .hub-subnav-v121 button,
+  .v28-subtab-row button,
+  .pro-context-nav button {
+    flex: 0 0 auto !important;
+    scroll-snap-align: start;
+    min-height: 44px;
+  }
+
+  .hub-subnav-v65 {
+    border-radius: 18px !important;
+    padding-bottom: 7px !important;
+  }
+
+  .hub-header-v65,
+  .hub-header-v100 {
+    min-width: 0;
+  }
+
+  .hub-header-actions-v65 {
+    max-width: 100%;
+  }
+}
+
+/* Messagerie sur tablette et téléphone. */
+@media (max-width: 980px) {
+  .messages-page-v121 .v28-messenger {
+    min-height: calc(100dvh - 178px) !important;
+  }
+
+  .v28-conversation-scroll {
+    max-width: 100%;
+  }
+
+  .v28-chat-panel,
+  .v47-chat-panel {
+    min-width: 0;
+  }
+
+  .v28-message-form,
+  .v47-message-form {
+    max-width: 100%;
+  }
+}
+
+/* Cookie consent : compact, défilable et boutons empilés sur petits écrans. */
+.cookie-consent-card-v1 {
+  max-height: min(72dvh, 540px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 540px) {
+  .cookie-consent-v1 {
+    padding: 8px;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .cookie-consent-card-v1 {
+    width: 100%;
+    gap: .65rem;
+    padding: .82rem;
+    border-radius: 16px;
+  }
+
+  .cookie-consent-body-v1 p {
+    font-size: .8rem;
+    line-height: 1.45;
+  }
+
+  .cookie-consent-actions-v1 {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .cookie-consent-actions-v1 .cookie-btn-v1 {
+    width: 100%;
+    min-height: 44px;
+    flex: none !important;
+  }
+
+  .cookie-consent-row-v1 {
+    align-items: flex-start;
+    gap: .7rem;
+  }
+}
+
+/* Petits téléphones : cartes, formulaires et actions ne doivent jamais sortir. */
+@media (max-width: 720px) {
+  .page,
+  .social-page,
+  .hub-content-v65,
+  .main-zone {
+    max-width: 100%;
+  }
+
+  .profile-action-row-v116 {
+    gap: .42rem;
+    padding: .62rem;
+  }
+
+  .profile-big-action-v116 {
+    min-height: 48px;
+    padding-inline: .35rem;
+  }
+
+  .profile-tabs-v116 {
+    gap: .18rem;
+    padding: .5rem .55rem;
+  }
+
+  .profile-tabs-v116 button {
+    min-width: 0;
+    min-height: 48px;
+  }
+
+  .profile-light-actions-v149 {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .profile-light-actions-v149 button {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    min-height: 44px;
+  }
+
+  .profile-summary-card-v116,
+  .profile-about-box-v116,
+  .profile-chip-block-v116,
+  .profile-members-detail-v116 article,
+  .profile-info-pair-v116 {
+    max-width: 100%;
+  }
+
+  .profile-summary-title-v116 {
+    min-width: 0;
+  }
+
+  .profile-summary-title-v116 h2 {
+    max-width: 100%;
+  }
+
+  .v28-conversation-item {
+    max-width: calc(100vw - 36px);
+  }
+
+  .v28-message-bubble,
+  .v47-message-bubble {
+    max-width: 92% !important;
+  }
+
+  .form-grid.two,
+  .form-grid.three,
+  .settings-grid,
+  .premium-value-grid-v121,
+  .admin-focus-strip-v121 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile-action-row-v116 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .profile-big-action-v116 {
+    flex-direction: column;
+    gap: .16rem;
+    font-size: .72rem;
+  }
+
+  .profile-tabs-v116 span {
+    font-size: .6rem;
+  }
+
+  .profile-post-card-v116 header {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .profile-post-card-v116 header > button {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    min-height: 42px;
+  }
+}
+
+/* Téléphones/tablettes en paysage : réduire les éléments fixes et rendre tout
+   le contenu accessible même avec une hauteur de 320 à 500 px. */
+@media (max-height: 560px) and (pointer: coarse) {
+  .profile-action-row-v116,
+  .profile-tabs-v116,
+  .hub-subnav-v65,
+  .hub-subnav-v121,
+  .v28-message-form {
+    position: static !important;
+    top: auto !important;
+    bottom: auto !important;
+  }
+
+  .profile-mobile-topbar-v116 {
+    padding-block: .35rem;
+  }
+
+  .profile-hero-media-v116 {
+    height: clamp(150px, 42vh, 220px) !important;
+  }
+
+  .v28-messenger,
+  .v28-chat-panel,
+  .v47-chat-panel {
+    min-height: auto !important;
+  }
+
+  .v28-message-stream {
+    min-height: 160px !important;
+  }
+
+  .pro-bottom-nav {
+    padding-top: 4px !important;
+    padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .pro-bottom-nav button {
+    min-height: 46px !important;
+  }
+
+  .pro-bottom-nav button span {
+    display: none !important;
+  }
+
+  .cookie-consent-card-v1 {
+    max-height: 82dvh;
+  }
+}
+
+/* Tablettes portrait/paysage : les grands formulaires utilisent deux colonnes
+   seulement lorsqu'il reste réellement assez de place. */
+@media (min-width: 721px) and (max-width: 1180px) {
+  .profile-panel-v116 {
+    width: min(620px, 100%);
+  }
+
+  .home-page-grid-v53,
+  .premium-value-grid-v121,
+  .admin-focus-strip-v121 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Accessibilité : limiter les animations si l'utilisateur le demande. */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}
+
+/* Une transformation conservée par l'animation d'entrée faisait de la page un
+   bloc contenant pour les modales `position: fixed`. Après défilement, le panneau
+   profil pouvait donc s'ouvrir hors de l'écran. L'animation V171 ne transforme
+   plus les conteneurs qui peuvent héberger une modale. */
+@media (prefers-reduced-motion: no-preference) {
+  .page,
+  .hub-page-v65,
+  .social-page {
+    animation-name: pageFade-v171 !important;
+    animation-duration: .22s !important;
+    animation-timing-function: ease-out !important;
+    animation-fill-mode: none !important;
+  }
+
+  @keyframes pageFade-v171 {
+    from { opacity: .01; }
+    to { opacity: 1; }
+  }
+}
+
+/* Les anciennes versions forçaient encore une hauteur de 94svh avec !important.
+   V171 impose le vrai plein écran sur téléphone. */
+@media (max-width: 720px) {
+  .profile-panel-backdrop-v116 {
+    align-items: stretch !important;
+    justify-content: center !important;
+  }
+
+  .profile-panel-v116 {
+    width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Messagerie V171 : la barre supérieure de l'application indique déjà la
+   rubrique active. On supprime donc aussi le second bloc de présentation et
+   on rapproche directement les onglets du contenu. */
+.messages-hub-clean-v171 {
+  padding-top: 0 !important;
+}
+.messages-hub-clean-v171 > .hub-subnav-v65 {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 720px) {
+  .profile-panel-backdrop-v116 {
+    inset: 0 !important;
+    padding: 0 !important;
+  }
+
+  .profile-panel-v116 {
+    margin: 0 !important;
+    align-self: stretch !important;
+  }
+}

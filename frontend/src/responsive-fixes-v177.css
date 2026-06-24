@@ -1,0 +1,423 @@
+/* ============================================================================
+   V177 — Carte Découvrir plein écran utile + onglets glissants + icônes centrées
+   ========================================================================== */
+
+/* Variables communes : utilisées sur toutes les pages avec navigation mobile. */
+:root {
+  --v177-bottom-nav-height: 64px;
+  --v177-bottom-nav-gap: 12px;
+}
+
+/* Les icônes SVG doivent être centrées dans tous les boutons de navigation. */
+.mobile-bottom-nav button i,
+.social-bottom-nav button i,
+.pro-bottom-nav button i,
+.hub-subnav-v65 button i,
+.hub-subnav-v121 button i,
+.pro-context-nav button i,
+.pro-section-shortcuts button i,
+.pro-section-title i,
+.drawer-nav section button em {
+  display: grid !important;
+  place-items: center !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
+.mobile-bottom-nav button i .nav-icon-v101,
+.social-bottom-nav button i .nav-icon-v101,
+.pro-bottom-nav button i .nav-icon-v101,
+.hub-subnav-v65 button i .nav-icon-v101,
+.hub-subnav-v121 button i .nav-icon-v101,
+.pro-context-nav button i .nav-icon-v101,
+.pro-section-shortcuts button i .nav-icon-v101,
+.pro-section-title i .nav-icon-v101,
+.drawer-nav section button em .nav-icon-v101 {
+  display: block !important;
+  margin: 0 auto !important;
+  transform: none !important;
+}
+
+/* HubSubNav global : rendu plus compact sur toutes les pages (Découvrir, Médias,
+   Messages, profil, administration si présent). Sur ordinateur/tablette, on évite
+   les gros boutons qui mangent la hauteur. */
+.hub-subnav-v65,
+.hub-subnav-v121 {
+  gap: 8px !important;
+  padding: 6px !important;
+  border-radius: 18px !important;
+  align-items: center !important;
+}
+
+.hub-subnav-v65 button,
+.hub-subnav-v121 button {
+  min-height: 46px !important;
+  padding: 8px 12px !important;
+  border-radius: 14px !important;
+  display: inline-flex !important;
+  grid-template-columns: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-align: center !important;
+}
+
+.hub-subnav-v65 button i,
+.hub-subnav-v121 button i {
+  flex: 0 0 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+.hub-subnav-v65 button i .nav-icon-v101,
+.hub-subnav-v121 button i .nav-icon-v101 {
+  width: 21px !important;
+  height: 21px !important;
+}
+
+.hub-subnav-v65 button span,
+.hub-subnav-v121 button span {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 0 !important;
+}
+
+.hub-subnav-v65 button strong,
+.hub-subnav-v121 button strong {
+  font-size: .88rem !important;
+  line-height: 1.05 !important;
+  white-space: nowrap !important;
+}
+
+.hub-subnav-v65 button small,
+.hub-subnav-v121 button small {
+  display: none !important;
+}
+
+.hub-subnav-v65 button em,
+.hub-subnav-v121 button em {
+  display: inline-grid !important;
+  place-items: center !important;
+  min-width: 20px !important;
+  height: 20px !important;
+  padding: 0 6px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+/* Mobile : la barre d'onglets devient une petite barre horizontale glissante.
+   Elle ne s'empile plus en gros blocs 2x2 au-dessus de la carte. */
+@media (max-width: 760px) {
+  :root {
+    --v177-bottom-nav-height: 62px;
+    --v177-bottom-nav-gap: 10px;
+  }
+
+  body,
+  .app-shell,
+  .pro-workspace,
+  .main-zone,
+  .page {
+    overscroll-behavior-x: none;
+  }
+
+  .hub-page-v65 {
+    gap: 8px !important;
+  }
+
+  .hub-subnav-v65,
+  .hub-subnav-v121 {
+    position: relative !important;
+    top: auto !important;
+    z-index: 20 !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scroll-snap-type: x proximity !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 8px !important;
+    padding: 5px !important;
+    border-radius: 17px !important;
+    min-height: 48px !important;
+    background: rgba(12, 7, 15, .72) !important;
+    backdrop-filter: blur(16px) saturate(1.12) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.12) !important;
+  }
+
+  .hub-subnav-v65::-webkit-scrollbar,
+  .hub-subnav-v121::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .hub-subnav-v65 button,
+  .hub-subnav-v121 button {
+    flex: 0 0 auto !important;
+    min-width: auto !important;
+    width: auto !important;
+    min-height: 40px !important;
+    height: 40px !important;
+    padding: 0 11px !important;
+    border-radius: 13px !important;
+    gap: 7px !important;
+    scroll-snap-align: start !important;
+    white-space: nowrap !important;
+  }
+
+  .hub-subnav-v65 button i,
+  .hub-subnav-v121 button i {
+    flex-basis: 22px !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+  }
+
+  .hub-subnav-v65 button i .nav-icon-v101,
+  .hub-subnav-v121 button i .nav-icon-v101 {
+    width: 19px !important;
+    height: 19px !important;
+  }
+
+  .hub-subnav-v65 button strong,
+  .hub-subnav-v121 button strong {
+    font-size: .82rem !important;
+    letter-spacing: -.01em !important;
+  }
+
+  .hub-subnav-v65 button em,
+  .hub-subnav-v121 button em {
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 5px !important;
+    font-size: .68rem !important;
+  }
+
+  /* Page Découvrir / Carte : la carte utilise l'écran, le panneau d'aide ne la masque plus. */
+  .discover-map-full-v176 {
+    min-height: calc(100dvh - 92px) !important;
+    padding: 6px 8px 0 !important;
+    gap: 6px !important;
+  }
+
+  .discover-map-full-v176 > .hub-content-v65,
+  .discover-map-full-v176 .member-map-page-v114,
+  .discover-map-full-v176 .member-map-shell-v114,
+  .discover-map-full-v176 .member-map-canvas-v114 {
+    min-height: calc(100dvh - 132px) !important;
+    height: calc(100dvh - 132px) !important;
+  }
+
+  .discover-map-full-v176 .member-map-shell-v114 {
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    border-color: rgba(255, 143, 197, .14) !important;
+  }
+
+  .discover-map-full-v176 .member-map-hint-v114 {
+    top: auto !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: calc(var(--v177-bottom-nav-height) + var(--v177-bottom-nav-gap) + env(safe-area-inset-bottom, 0px)) !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 9px 11px !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    background: rgba(10, 5, 13, .62) !important;
+  }
+
+  .discover-map-full-v176 .member-map-hint-v114 strong {
+    font-size: .82rem !important;
+    line-height: 1.1 !important;
+    white-space: nowrap !important;
+  }
+
+  .discover-map-full-v176 .member-map-hint-v114 span {
+    font-size: .72rem !important;
+    line-height: 1.2 !important;
+    max-width: 56% !important;
+    text-align: right !important;
+  }
+
+  .discover-map-full-v176 .member-map-floating-v114 {
+    top: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: calc(var(--v177-bottom-nav-height) + var(--v177-bottom-nav-gap) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Barre du bas : même rendu sur toutes les pages, plus compacte, flottante,
+     transparente et avec les icônes parfaitement centrées. */
+  .mobile-bottom-nav.pro-bottom-nav,
+  .mobile-bottom-nav.social-bottom-nav,
+  .pro-bottom-nav,
+  .social-bottom-nav {
+    position: fixed !important;
+    left: max(12px, env(safe-area-inset-left, 0px)) !important;
+    right: max(12px, env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    width: auto !important;
+    height: var(--v177-bottom-nav-height) !important;
+    min-height: var(--v177-bottom-nav-height) !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    align-items: stretch !important;
+    gap: 5px !important;
+    padding: 5px !important;
+    border: 1px solid rgba(255, 143, 197, .22) !important;
+    border-radius: 22px !important;
+    background: linear-gradient(180deg, rgba(32, 24, 35, .66), rgba(11, 7, 15, .54)) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .42), inset 0 1px 0 rgba(255, 255, 255, .08) !important;
+    backdrop-filter: blur(18px) saturate(1.12) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.12) !important;
+    overflow: hidden !important;
+  }
+
+  .mobile-bottom-nav.pro-bottom-nav button,
+  .mobile-bottom-nav.social-bottom-nav button,
+  .pro-bottom-nav button,
+  .social-bottom-nav button {
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    padding: 0 !important;
+    border-radius: 17px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    background: rgba(255,255,255,.025) !important;
+  }
+
+  .mobile-bottom-nav.pro-bottom-nav button span,
+  .mobile-bottom-nav.social-bottom-nav button span,
+  .pro-bottom-nav button span,
+  .social-bottom-nav button span {
+    display: none !important;
+  }
+
+  .mobile-bottom-nav.pro-bottom-nav button i,
+  .mobile-bottom-nav.social-bottom-nav button i,
+  .pro-bottom-nav button i,
+  .social-bottom-nav button i {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .mobile-bottom-nav.pro-bottom-nav button i .nav-icon-v101,
+  .mobile-bottom-nav.social-bottom-nav button i .nav-icon-v101,
+  .pro-bottom-nav button i .nav-icon-v101,
+  .social-bottom-nav button i .nav-icon-v101 {
+    width: 25px !important;
+    height: 25px !important;
+  }
+
+  .mobile-bottom-nav.pro-bottom-nav button.active,
+  .mobile-bottom-nav.social-bottom-nav button.active,
+  .pro-bottom-nav button.active,
+  .social-bottom-nav button.active {
+    background: linear-gradient(135deg, rgba(217, 60, 134, .50), rgba(255, 143, 197, .18)) !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 143, 197, .34), 0 8px 22px rgba(217,60,134,.18) !important;
+  }
+
+  .mobile-bottom-nav b,
+  .pro-bottom-nav b,
+  .social-bottom-nav b {
+    top: 7px !important;
+    right: 18% !important;
+    min-width: 17px !important;
+    height: 17px !important;
+    font-size: .62rem !important;
+    display: inline-grid !important;
+    place-items: center !important;
+  }
+
+  .pro-workspace,
+  .main-zone,
+  .hub-content-v65,
+  .page {
+    padding-bottom: calc(var(--v177-bottom-nav-height) + 24px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .discover-map-full-v176,
+  .discover-map-full-v176 > .hub-content-v65,
+  .discover-map-full-v176 .member-map-page-v114 {
+    padding-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --v177-bottom-nav-height: 58px;
+    --v177-bottom-nav-gap: 8px;
+  }
+
+  .hub-subnav-v65 button,
+  .hub-subnav-v121 button {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding-inline: 9px !important;
+  }
+
+  .hub-subnav-v65 button strong,
+  .hub-subnav-v121 button strong {
+    font-size: .78rem !important;
+  }
+
+  .discover-map-full-v176 > .hub-content-v65,
+  .discover-map-full-v176 .member-map-page-v114,
+  .discover-map-full-v176 .member-map-shell-v114,
+  .discover-map-full-v176 .member-map-canvas-v114 {
+    min-height: calc(100dvh - 124px) !important;
+    height: calc(100dvh - 124px) !important;
+  }
+
+  .discover-map-full-v176 .member-map-hint-v114 span {
+    display: none !important;
+  }
+
+  .mobile-bottom-nav.pro-bottom-nav,
+  .mobile-bottom-nav.social-bottom-nav,
+  .pro-bottom-nav,
+  .social-bottom-nav {
+    left: 8px !important;
+    right: 8px !important;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    border-radius: 20px !important;
+  }
+
+  .mobile-bottom-nav.pro-bottom-nav button i .nav-icon-v101,
+  .mobile-bottom-nav.social-bottom-nav button i .nav-icon-v101,
+  .pro-bottom-nav button i .nav-icon-v101,
+  .social-bottom-nav button i .nav-icon-v101 {
+    width: 23px !important;
+    height: 23px !important;
+  }
+}

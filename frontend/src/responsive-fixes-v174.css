@@ -1,0 +1,344 @@
+/* ============================================================================
+   V174 — Corrections responsive suite aux captures utilisateur du 18/06/2026
+   - Découvrir / Recherche : suppression des débordements et thème sombre mobile
+   - Mon espace : barre de sauvegarde remise dans le flux sur téléphone
+   ========================================================================== */
+
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.app-shell,
+.main-zone,
+.page,
+.hub-page-v65,
+.social-page,
+.profile-discovery-page,
+.search-redesign-v170,
+.my-profile-page-v25,
+.styled-profile-form-v25 {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+@media (max-width: 720px) {
+  /* En-tête de hub plus compact : la barre haute indique déjà la page active. */
+  .hub-header-v100 {
+    margin: 0 0 12px !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+    gap: 6px !important;
+  }
+
+  .hub-header-v100 h2 {
+    font-size: clamp(1.35rem, 8vw, 2rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  .hub-header-v100 p {
+    font-size: .94rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Les sous-onglets ne partent plus hors écran : 2 colonnes lisibles. */
+  .hub-subnav-v65,
+  .hub-subnav-v121 {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 8px !important;
+    border-radius: 20px !important;
+    scroll-snap-type: none !important;
+  }
+
+  .hub-subnav-v65 button,
+  .hub-subnav-v121 button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    padding: 10px 8px !important;
+    border-radius: 16px !important;
+    gap: 8px !important;
+  }
+
+  .hub-subnav-v65 button span,
+  .hub-subnav-v121 button span {
+    min-width: 0 !important;
+  }
+
+  .hub-subnav-v65 button small,
+  .hub-subnav-v121 button small {
+    display: none !important;
+  }
+
+  .hub-subnav-v65 button strong,
+  .hub-subnav-v121 button strong {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  /* Recherche/Découvrir : l'ancien CSS V170 imposait un thème clair. */
+  .search-redesign-v170 {
+    gap: 10px !important;
+    padding: 0 !important;
+  }
+
+  .search-topbar-v170,
+  .search-maintabs-v170 {
+    position: relative !important;
+    top: auto !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: rgba(13, 7, 15, .92) !important;
+    color: #fff8ef !important;
+    border: 1px solid rgba(255, 143, 197, .13) !important;
+    box-shadow: 0 14px 34px rgba(0,0,0,.18) !important;
+    backdrop-filter: blur(16px) saturate(120%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(120%) !important;
+  }
+
+  .search-topbar-v170 {
+    padding: 8px !important;
+    border-radius: 18px !important;
+    gap: 8px !important;
+  }
+
+  .search-topbar-input-v170 {
+    height: 44px !important;
+    min-width: 0 !important;
+    background: rgba(255,255,255,.065) !important;
+    border-color: rgba(255,255,255,.12) !important;
+    color: #fff8ef !important;
+  }
+
+  .search-topbar-input-v170 input {
+    color: #fff8ef !important;
+  }
+
+  .search-topbar-input-v170 input::placeholder {
+    color: rgba(255,236,230,.46) !important;
+  }
+
+  .search-topbar-clear,
+  .search-topbar-view button {
+    background: rgba(255,255,255,.075) !important;
+    border-color: rgba(255,255,255,.14) !important;
+    color: #fff8ef !important;
+  }
+
+  .search-topbar-view {
+    gap: 5px !important;
+  }
+
+  .search-topbar-view button {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .search-maintabs-v170 {
+    padding: 5px !important;
+    border-radius: 18px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .search-maintabs-v170 button {
+    color: rgba(255,236,230,.62) !important;
+    padding: 10px 6px !important;
+    border-radius: 14px !important;
+    min-width: 0 !important;
+  }
+
+  .search-maintabs-v170 button.active {
+    color: #fff !important;
+    background: linear-gradient(135deg, rgba(255,125,184,.26), rgba(242,197,124,.16)) !important;
+  }
+
+  .search-maintabs-v170 button.active::after {
+    display: none !important;
+  }
+
+  .search-results-v170 {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 8px 0 24px !important;
+    overflow: visible !important;
+  }
+
+  .search-results-v170 .social-title-row,
+  .profile-discovery-page .social-title-row {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    align-items: start !important;
+    margin: 0 0 12px !important;
+  }
+
+  .search-results-v170 .social-title-row > *,
+  .profile-discovery-page .social-title-row > * {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .search-results-v170 .social-title-row h2,
+  .profile-discovery-page .social-title-row h2 {
+    font-size: clamp(1.45rem, 9vw, 2.05rem) !important;
+    line-height: 1.05 !important;
+    max-width: 100% !important;
+  }
+
+  .search-results-v170 .feed-tabs.compact-tabs,
+  .profile-discovery-page .feed-tabs.compact-tabs {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 8px !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    border-radius: 22px !important;
+    padding: 8px !important;
+  }
+
+  .search-results-v170 .feed-tabs.compact-tabs button,
+  .profile-discovery-page .feed-tabs.compact-tabs button {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 12px 8px !important;
+    border-radius: 16px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: .95rem !important;
+  }
+
+  .profile-social-grid,
+  .profile-social-grid.list-view {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+  }
+
+  .profile-social-grid.list-view .social-profile-card {
+    grid-template-columns: 1fr !important;
+  }
+
+  .active-filter-row-v72 {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+
+  /* Panneau de filtres : vrai tiroir mobile, sans bloquer la navigation. */
+  .search-filter-overlay-v170 {
+    align-items: flex-end !important;
+    justify-content: stretch !important;
+    padding: 12px 10px calc(92px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .search-filter-float-v170.search-panel {
+    max-width: none !important;
+    max-height: min(76dvh, 650px) !important;
+    margin: 0 !important;
+    border-radius: 24px !important;
+  }
+
+  /* Carte membres : hauteur adaptée aux téléphones, pas de débordement horizontal. */
+  .member-map-page-v114,
+  .member-map-shell-v114,
+  .member-map-canvas-v114 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .member-map-shell-v114,
+  .member-map-canvas-v114 {
+    min-height: min(64dvh, 560px) !important;
+  }
+
+  .member-map-hint-v114 {
+    max-width: calc(100% - 24px) !important;
+  }
+
+  /* Mon espace : la sauvegarde ne flotte plus sur les champs du formulaire. */
+  .my-profile-page-v25,
+  .styled-profile-form-v25 {
+    overflow: visible !important;
+    padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .profile-savebar-v25 {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    z-index: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 18px 0 0 !important;
+    transform: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 18px 42px rgba(0,0,0,.22) !important;
+  }
+
+  .profile-savebar-v25 .primary-btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 52px !important;
+    white-space: normal !important;
+  }
+
+  .profile-pane-v25,
+  .member-card,
+  .form-grid,
+  .field,
+  .select-field,
+  .textarea-field {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .search-results-v170 .feed-tabs.compact-tabs button,
+  .profile-discovery-page .feed-tabs.compact-tabs button {
+    font-size: .86rem !important;
+    padding-inline: 6px !important;
+  }
+
+  .search-topbar-view button {
+    width: 36px !important;
+    height: 38px !important;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 1024px) {
+  .search-results-v170 .social-title-row,
+  .profile-discovery-page .social-title-row {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .search-results-v170 .feed-tabs.compact-tabs,
+  .profile-discovery-page .feed-tabs.compact-tabs {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    white-space: normal !important;
+    border-radius: 24px !important;
+  }
+
+  .search-results-v170 .feed-tabs.compact-tabs button,
+  .profile-discovery-page .feed-tabs.compact-tabs button {
+    min-width: 0 !important;
+  }
+}

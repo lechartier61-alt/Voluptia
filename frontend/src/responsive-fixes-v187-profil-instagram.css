@@ -1,0 +1,81 @@
+/* ============================================================================
+   V187 — Carte de profil façon Instagram (SocialProfileModal)
+   En-tête épuré, ligne de stats publications/abonnés/suivi(e)s,
+   rangée d'icônes-onglets (Publications / Profil(s) / Albums / Albums privés).
+   ============================================================================ */
+.profile-panel-scroll-v116{
+  --ig-ink:#F3ECF4; --ig-muted:#9C8FA8; --ig-faint:#6E6478; --ig-line:rgba(255,255,255,.10);
+  --ig-rose:#E573A4; --ig-rose2:#A23E6B;
+}
+
+/* Cover : bandeau plus fin (Instagram n'a pas de grand cover) */
+.profile-panel-scroll-v116 .profile-hero-media-v116{
+  min-height:120px !important; height:120px !important; border-radius:18px !important;
+}
+
+/* En-tête : avatar + pseudo lisibles */
+.profile-panel-scroll-v116 .profile-summary-card-v116{align-items:center !important;}
+
+/* Ligne de stats façon Instagram */
+.profile-ig-stats-v187{
+  display:flex !important; justify-content:space-around !important; gap:0 !important;
+  background:none !important; border:none !important; box-shadow:none !important;
+  padding:14px 6px 8px !important; margin:0 !important;
+}
+.profile-ig-stats-v187 span{display:flex !important;flex-direction:column;align-items:center;gap:1px;
+  border:none !important;background:none !important;padding:0 !important;box-shadow:none !important;}
+.profile-ig-stats-v187 strong{font-size:20px;font-weight:800;color:var(--ig-ink);}
+.profile-ig-stats-v187 small{font-size:13px;color:var(--ig-muted);text-transform:none !important;letter-spacing:0 !important;}
+
+/* En-tête aplati (pas de "carte dans la carte") */
+.profile-panel-scroll-v116 .profile-hero-card-v116{background:none !important;border:none !important;box-shadow:none !important;padding:0 0 4px !important;}
+.profile-panel-scroll-v116 .profile-summary-card-v116{background:none !important;border:none !important;box-shadow:none !important;padding:12px 4px 4px !important;}
+
+/* Boutons d'action façon Instagram (pilules pleine largeur) */
+.profile-action-row-v116{gap:8px !important;padding:6px 14px 4px !important;}
+.profile-action-row-v116 .profile-big-action-v116{
+  flex:1 !important;flex-direction:row !important;gap:8px;align-items:center;justify-content:center;
+  border-radius:10px !important;padding:10px !important;min-height:0 !important;
+  background:rgba(255,255,255,.06) !important;border:1px solid var(--ig-line) !important;color:var(--ig-ink) !important;
+}
+.profile-action-row-v116 .profile-big-action-v116 b{margin:0 !important;width:auto !important;height:auto !important;background:none !important;}
+.profile-action-row-v116 .profile-big-action-v116 b svg{width:18px;height:18px}
+.profile-action-row-v116 .profile-big-action-v116.follow{background:linear-gradient(135deg,var(--ig-rose),var(--ig-rose2)) !important;border-color:transparent !important;color:#fff !important;}
+.profile-action-row-v116 .profile-big-action-v116.follow.active{background:rgba(255,255,255,.06) !important;color:var(--ig-ink) !important;}
+
+/* Rangée d'icônes-onglets façon Instagram */
+.profile-tabs-v116{
+  display:flex !important;gap:0 !important;margin-top:12px !important;background:none !important;
+  border-top:1px solid var(--ig-line) !important;border-bottom:1px solid var(--ig-line) !important;border-radius:0 !important;padding:0 !important;
+}
+.profile-tabs-v116 button{
+  flex:1 !important;flex-direction:column !important;align-items:center !important;gap:0 !important;
+  background:none !important;border:none !important;border-radius:0 !important;box-shadow:none !important;
+  padding:12px 0 10px !important;position:relative;color:var(--ig-faint) !important;min-width:0 !important;
+}
+.profile-tabs-v116 button i{display:grid;place-items:center}
+.profile-tabs-v116 button i svg{width:25px;height:25px}
+.profile-tabs-v116 button span{display:none !important;} /* icônes seules, façon Instagram */
+.profile-tabs-v116 button em{
+  position:absolute;top:5px;left:calc(50% + 9px);background:var(--ig-rose);color:#1a0a12;
+  border-radius:999px;font-size:10px;line-height:1.5;padding:0 5px;font-style:normal;font-weight:700;
+}
+.profile-tabs-v116 button.active{color:var(--ig-ink) !important;}
+.profile-tabs-v116 button.active::after{content:"";position:absolute;left:24%;right:24%;bottom:-1px;height:2px;border-radius:2px;background:var(--ig-rose);}
+
+/* Pas de pastilles (compteurs) sur les onglets */
+.profile-tabs-v116 button em{display:none !important;}
+
+/* 1ère catégorie = mur de photos façon Instagram (3 colonnes, tuiles carrées) */
+.profile-wall-v187{padding:2px 0 0 !important;}
+.profile-wall-grid-v187{
+  display:grid !important;grid-template-columns:repeat(3,1fr) !important;gap:2px !important;margin:0 !important;
+}
+.profile-wall-grid-v187 .profile-photo-tile-v116{
+  aspect-ratio:1/1 !important;height:auto !important;min-height:0 !important;width:auto !important;border-radius:0 !important;
+  background-size:cover !important;background-position:center !important;position:relative;margin:0 !important;
+}
+.profile-wall-grid-v187 .profile-photo-tile-v116 span{
+  position:absolute;top:5px;right:6px;font-size:13px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));
+}
+.profile-wall-grid-v187 .profile-photo-tile-v116 small{display:none !important;}

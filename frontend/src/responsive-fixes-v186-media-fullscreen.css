@@ -1,0 +1,71 @@
+/* ============================================================================
+   V186 — Médias en plein écran façon TikTok
+   - Plus de gros titre "Médias" ni d'onglets (retirés dans le JSX)
+   - Chaque vidéo occupe tout l'écran, défilement vertical par "snap"
+   - Barres de navigation (haut + bas) par-dessus la vidéo
+   ============================================================================ */
+
+/* Page média full-bleed, sans marge ni padding */
+.media-fullscreen-v186{padding:0 !important;margin:0 !important;max-width:none !important;}
+.media-fullscreen-v186 .hub-content-v65,
+.media-fullscreen-v186 .media-content-v65{padding:0 !important;margin:0 !important;}
+.media-fullscreen-v186 .toktak-page{padding:0 !important;margin:0 !important;}
+
+/* Masquer la barre de titre du fil (eyebrow "Toktak" + stats) */
+.media-fullscreen-v186 .toktak-topline{display:none !important;}
+
+/* Toolbar (Publier / Son) -> boutons flottants en overlay haut-droite */
+.media-fullscreen-v186 .toktak-toolbar{
+  position:fixed !important;
+  top:calc(env(safe-area-inset-top) + 74px); right:12px; left:auto; z-index:60;
+  width:auto !important; margin:0 !important; padding:0 !important;
+  background:none !important; border:none !important; box-shadow:none !important;
+  display:flex; flex-direction:column; gap:8px; align-items:flex-end;
+}
+.media-fullscreen-v186 .toktak-toolbar .primary-btn,
+.media-fullscreen-v186 .toktak-toolbar .secondary-btn{
+  border-radius:999px !important; padding:.5rem .85rem !important; font-size:.8rem !important;
+  background:rgba(0,0,0,.45) !important; border:1px solid rgba(255,255,255,.2) !important;
+  color:#fff !important; backdrop-filter:blur(8px); white-space:nowrap;
+}
+
+/* Le fil prend tout l'écran ; défilement vertical plein écran par snap */
+.media-fullscreen-v186 .v64-toktak-feed-shell{
+  gap:0 !important; height:100dvh !important; width:100vw; max-width:none !important;
+  overflow-y:auto; scroll-snap-type:y mandatory; -webkit-overflow-scrolling:touch;
+  margin:0 !important; padding:0 !important;
+}
+
+/* Chaque vidéo = un écran complet */
+.media-fullscreen-v186 .toktak-card{
+  width:100vw !important; max-width:none !important; height:100dvh !important; min-height:100dvh !important;
+  margin:0 !important; border-radius:0 !important; border:none !important;
+  scroll-snap-align:start; scroll-snap-stop:always;
+}
+.media-fullscreen-v186 .toktak-stage{
+  width:100% !important; height:100dvh !important; max-height:none !important;
+  border-radius:0 !important; aspect-ratio:auto !important;
+}
+.media-fullscreen-v186 .toktak-video{
+  width:100% !important; height:100% !important; object-fit:cover !important;
+}
+
+/* Façon TikTok : le défilement change de vidéo -> on retire les flèches ↑↓ (on garde le son) */
+.media-fullscreen-v186 .toktak-video-controls button:first-child,
+.media-fullscreen-v186 .toktak-video-controls button:last-child{display:none !important;}
+
+/* État vide centré plein écran */
+.media-fullscreen-v186 .toktak-feed-shell .action-empty-v121{
+  margin:auto !important; min-height:100dvh; justify-content:center;
+}
+
+/* --- Barres de navigation PAR-DESSUS la vidéo --- */
+body:has(.media-fullscreen-v186) .pro-topbar{
+  position:fixed !important; top:0; left:0; right:0; z-index:55;
+  background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0)) !important;
+  border:none !important; box-shadow:none !important; backdrop-filter:blur(4px);
+}
+body:has(.media-fullscreen-v186) .mobile-bottom-nav{
+  background:linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,0)) !important;
+  border-top:none !important; box-shadow:none !important; backdrop-filter:blur(6px); z-index:55;
+}

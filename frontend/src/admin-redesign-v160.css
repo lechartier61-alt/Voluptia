@@ -1,0 +1,221 @@
+
+/* ============================================================
+   Volyptia — Admin redesign v160 ("velvet midnight")
+   Scoped under .vadm so the rest of the app is untouched.
+   ============================================================ */
+.vadm{
+  --v-rose:#ff7eb6;
+  --v-rose-deep:#c0286f;
+  --v-gold:#e7c08a;
+  --v-mint:#6ee7b7;
+  --v-amber:#f4b350;
+  --v-coral:#ff6f6f;
+  --v-ink:#fbeef2;
+  --v-muted:#b598a4;
+  --v-faint:#866976;
+  --v-faint2:#8c6f7c;
+  --v-glass:rgba(43,22,40,.55);
+  --v-glass2:rgba(54,28,50,.46);
+  --v-line:rgba(255,228,240,.10);
+  --v-line2:rgba(255,228,240,.18);
+  --v-serif:Georgia,'Times New Roman',serif;
+  position:relative;
+}
+.vadm::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;
+  background:
+    radial-gradient(680px 420px at 8% -6%, rgba(192,40,111,.20), transparent 60%),
+    radial-gradient(560px 460px at 98% 2%, rgba(231,192,138,.08), transparent 55%);
+}
+.vadm > *{position:relative;z-index:1}
+
+/* headings get the serif personality */
+.vadm h2,.vadm h3{font-family:var(--v-serif);font-weight:600;letter-spacing:.1px}
+.vadm .eyebrow{color:var(--v-gold);letter-spacing:.18em;text-transform:uppercase;font-size:.7rem;font-weight:600}
+
+/* glass surfaces */
+.vadm .glass,.vadm .panel.glass,.vadm article.glass{
+  background:var(--v-glass)!important;
+  border:1px solid var(--v-line)!important;
+  border-radius:20px!important;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 24px 60px -28px rgba(0,0,0,.65)!important;
+}
+
+/* hero */
+.vadm .admin-hero-v52{padding:22px 24px!important}
+.vadm .admin-hero-v52 h2{font-size:1.9rem!important;background:linear-gradient(120deg,#fff 20%,var(--v-rose))!important;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.vadm .admin-money-card-v52{background:linear-gradient(135deg,rgba(231,192,138,.14),rgba(192,40,111,.12))!important;border:1px solid var(--v-line2)!important;border-radius:16px!important}
+.vadm .admin-live-row span{background:rgba(255,255,255,.04);border:1px solid var(--v-line);border-radius:20px;padding:5px 11px;font-size:.78rem}
+
+/* ============ floating tab bar (signature) ============ */
+.vadm-tabbar{
+  position:sticky;top:8px;z-index:20;
+  display:flex;gap:8px;flex-wrap:wrap;
+  padding:10px;margin:18px 0;
+  background:var(--v-glass);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1px solid var(--v-line);border-radius:20px;
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.7);
+}
+.vadm-tab{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 13px;border-radius:14px;border:1px solid transparent;
+  background:transparent;color:var(--v-muted);cursor:pointer;
+  transition:transform .18s, background .18s, color .18s, box-shadow .25s;
+}
+.vadm-tab:hover{color:var(--v-ink);background:rgba(255,126,182,.08);transform:translateY(-1px)}
+.vadm-tab-ic{
+  width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;font-size:1rem;
+  background:rgba(255,255,255,.05);border:1px solid var(--v-line);transition:.2s;
+}
+.vadm-tab-copy{display:flex;flex-direction:column;line-height:1.15;text-align:left;min-width:0}
+.vadm-tab-copy strong{font-size:.9rem;font-weight:600;color:var(--v-ink);white-space:nowrap}
+.vadm-tab-copy small{font-size:.7rem;color:var(--v-faint2);white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+.vadm-tab-badge{font-style:normal;font-size:.68rem;font-weight:700;color:var(--v-faint2);background:rgba(255,255,255,.05);border-radius:20px;padding:3px 9px;white-space:nowrap}
+/* active — glowing rose pill */
+.vadm-tab.active{
+  background:linear-gradient(100deg,rgba(255,126,182,.24),rgba(192,40,111,.18));
+  border-color:rgba(255,126,182,.42);color:#fff;
+  box-shadow:0 0 24px rgba(255,126,182,.26), inset 0 0 16px rgba(255,126,182,.08);
+}
+.vadm-tab.active .vadm-tab-ic{background:linear-gradient(135deg,var(--v-rose),var(--v-rose-deep));border-color:transparent;box-shadow:0 6px 16px -6px var(--v-rose-deep)}
+.vadm-tab.active .vadm-tab-copy strong{color:#fff}
+.vadm-tab.active .vadm-tab-badge{color:var(--v-rose);background:rgba(255,126,182,.14)}
+
+/* mobile dock kept hidden (app already has a bottom nav) */
+.vadm-dock{display:none}
+
+/* section banner */
+.vadm .admin-section-banner-v80{
+  background:linear-gradient(100deg,rgba(192,40,111,.14),rgba(43,22,40,.4))!important;
+  border:1px solid var(--v-line)!important;border-radius:16px!important;
+}
+.vadm .admin-section-banner-v80 strong{font-family:var(--v-serif)}
+
+/* command center quick actions */
+.vadm .admin-command-card-v80{
+  background:var(--v-glass2)!important;border:1px solid var(--v-line)!important;border-radius:16px!important;
+  transition:transform .18s, border-color .18s, box-shadow .25s;
+}
+.vadm .admin-command-card-v80:hover{transform:translateY(-2px);border-color:var(--v-line2)!important;box-shadow:0 18px 40px -20px rgba(192,40,111,.5)!important}
+.vadm .admin-command-card-v80 strong{font-family:var(--v-serif);font-size:1.5rem}
+.vadm .admin-command-card-v80.danger{border-color:rgba(255,111,111,.3)!important}
+.vadm .admin-command-card-v80.premium{border-color:rgba(231,192,138,.3)!important}
+
+/* KPI cards */
+.vadm .admin-kpi-v52{
+  background:var(--v-glass)!important;border:1px solid var(--v-line)!important;border-radius:18px!important;
+  position:relative;overflow:hidden;
+}
+.vadm .admin-kpi-v52 strong{font-family:var(--v-serif);font-size:1.9rem!important}
+.vadm .admin-kpi-icon-v136{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  background:rgba(255,255,255,.05);border:1px solid var(--v-line);
+}
+.vadm .admin-kpi-v52.gold .admin-kpi-icon-v136{background:linear-gradient(135deg,rgba(231,192,138,.3),rgba(176,125,61,.22));border-color:transparent}
+.vadm .admin-kpi-v52.pink .admin-kpi-icon-v136{background:linear-gradient(135deg,rgba(255,126,182,.3),rgba(192,40,111,.22));border-color:transparent;color:#fff}
+
+/* metric lists, breakdowns, bars */
+.vadm .admin-metrics-list-v52 span,.vadm .admin-breakdown-v52 span,.vadm .admin-city-grid-v52 span{
+  background:rgba(255,255,255,.04);border:1px solid var(--v-line);border-radius:12px;
+}
+.vadm .admin-metrics-list-v52 b,.vadm .admin-breakdown-v52 b,.vadm .admin-city-grid-v52 b{color:var(--v-ink)}
+.vadm .admin-bar-row-v52 em i{background:linear-gradient(90deg,var(--v-rose),var(--v-rose-deep))!important;box-shadow:0 0 14px rgba(255,126,182,.4)}
+
+/* secret box */
+.vadm .admin-secret-box-v58{background:linear-gradient(135deg,rgba(231,192,138,.12),rgba(43,22,40,.5))!important;border:1px solid rgba(231,192,138,.3)!important}
+.vadm .admin-secret-box-v58 code{color:var(--v-gold)}
+
+/* generic primary buttons inside admin keep brand rose */
+.vadm .primary-btn,.vadm .small-btn:hover{box-shadow:0 10px 24px -12px var(--v-rose-deep)}
+
+/* ============ Vue membre ============ */
+.vadm-viewas{padding:20px!important}
+.vadm-muted{color:var(--v-faint2);font-size:.9rem;text-align:center;padding:18px}
+
+.vadm-privbanner{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:14px;margin-bottom:16px;background:rgba(231,192,138,.08);border:1px solid rgba(231,192,138,.28)}
+.vadm-privbanner.sm{padding:11px 14px;margin:0 0 4px}
+.vadm-privbanner span{font-size:1.2rem;flex:none}
+.vadm-privbanner p{margin:0;font-size:.84rem;color:var(--v-ink);line-height:1.45}
+.vadm-privbanner p b{color:var(--v-gold)}
+
+.vadm-search-field{display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.26);border:1px solid var(--v-line);border-radius:13px;padding:10px 14px;margin-bottom:16px}
+.vadm-search-field span{opacity:.6}
+.vadm-search-field input{background:none;border:none;outline:none;color:var(--v-ink);font-size:.9rem;width:100%;font-family:inherit}
+.vadm-search-field input::placeholder{color:var(--v-faint2)}
+
+.vadm-pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.vadm-pcard{display:flex;flex-direction:column;padding:0;overflow:hidden;cursor:pointer;text-align:left;
+  background:var(--v-glass2);border:1px solid var(--v-line);border-radius:18px;transition:transform .2s, border-color .2s, box-shadow .25s}
+.vadm-pcard:hover{transform:translateY(-3px);border-color:var(--v-line2);box-shadow:0 26px 50px -22px rgba(192,40,111,.5)}
+.vadm-pcover{height:120px;position:relative;display:grid;place-items:center}
+.vadm-pava{font-family:var(--v-serif);font-size:2rem;font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+.vadm-pdot{position:absolute;left:10px;top:10px;width:9px;height:9px;border-radius:50%}
+.vadm-pdot.on{background:var(--v-mint);box-shadow:0 0 8px var(--v-mint)}
+.vadm-pdot.off{background:rgba(255,255,255,.4)}
+.vadm-pmeta{padding:12px 14px;display:flex;flex-direction:column;gap:3px}
+.vadm-pnm{font-weight:600;font-size:.93rem;color:var(--v-ink)}
+.vadm-pmeta small{color:var(--v-faint2);font-size:.76rem}
+.vadm-vrf{color:var(--v-rose);font-style:normal}
+.vadm-ptags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.vadm-tag{font-style:normal;font-size:.66rem;font-weight:700;padding:3px 8px;border-radius:20px}
+.vadm-tag.gold{color:var(--v-gold);background:rgba(231,192,138,.14)}
+.vadm-tag.mint{color:var(--v-mint);background:rgba(110,231,183,.14)}
+.vadm-tag.amber{color:var(--v-amber);background:rgba(244,179,80,.14)}
+.vadm-tag.coral{color:var(--v-coral);background:rgba(255,111,111,.14)}
+.vadm-tag.mute{color:var(--v-muted);background:rgba(255,255,255,.06)}
+
+/* full profile viewer overlay */
+.vadm-viewer{position:fixed;inset:0;z-index:1200;overflow-y:auto;background:rgba(8,3,8,.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:vadmFade .25s}
+@keyframes vadmFade{from{opacity:0}to{opacity:1}}
+.vadm-sheet{max-width:880px;margin:0 auto;min-height:100%}
+.vadm-vbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:linear-gradient(100deg,rgba(192,40,111,.94),rgba(155,30,90,.94));backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.12)}
+.vadm-eye{width:32px;height:32px;border-radius:9px;background:rgba(255,255,255,.16);display:grid;place-items:center;flex:none;font-size:1.05rem;color:#fff}
+.vadm-vt{flex:1;line-height:1.2;min-width:0;color:#fff}
+.vadm-vt b{font-size:.92rem;font-weight:700;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vadm-vt small{font-size:.74rem;color:rgba(255,255,255,.8)}
+.vadm-back{padding:9px 16px;border-radius:11px;background:rgba(255,255,255,.16);color:#fff;font-weight:600;font-size:.85rem;border:1px solid rgba(255,255,255,.22);cursor:pointer}
+.vadm-back:hover{background:rgba(255,255,255,.28)}
+.vadm-vbody{padding:22px 18px 60px;background:#160a17;min-height:60vh}
+
+.vadm-phero{display:flex;gap:18px;align-items:center}
+.vadm-bigava{width:90px;height:90px;border-radius:24px;flex:none;display:grid;place-items:center;font-family:var(--v-serif);font-size:2.3rem;font-weight:600;color:#fff}
+.vadm-phero h2{margin:0;font-size:1.8rem;color:var(--v-ink)}
+.vadm-psub{color:var(--v-muted);margin:4px 0 0;font-size:.92rem}
+
+.vadm-block{margin-top:26px}
+.vadm-lbl{display:flex;align-items:center;gap:9px;font-family:var(--v-serif);font-size:1.12rem;font-weight:600;color:var(--v-ink);margin-bottom:14px}
+.vadm-lbl.priv{color:var(--v-gold)}
+.vadm-cc{font-size:.72rem;font-weight:600;color:var(--v-faint2);background:rgba(255,255,255,.05);padding:3px 9px;border-radius:20px;font-family:system-ui,sans-serif}
+.vadm-sublbl{font-size:.84rem;color:var(--v-muted);margin-bottom:8px}
+.vadm-headline{color:var(--v-ink);font-size:1rem;margin:0 0 8px;font-weight:600}
+.vadm-bio{color:var(--v-ink);line-height:1.65;font-size:.94rem;background:var(--v-glass2);border:1px solid var(--v-line);border-radius:16px;padding:16px 18px}
+.vadm-ichips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.vadm-ichips span{font-size:.8rem;padding:7px 13px;border-radius:20px;background:rgba(255,126,182,.1);border:1px solid rgba(255,126,182,.2);color:var(--v-rose)}
+.vadm-look{color:var(--v-muted);font-size:.86rem;margin-top:14px}
+.vadm-look b{color:var(--v-ink)}
+
+.vadm-mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.vadm-tile{aspect-ratio:1;border-radius:14px;position:relative;overflow:hidden;display:grid;place-items:center;border:1px solid var(--v-line)}
+.vadm-tile img{width:100%;height:100%;object-fit:cover;display:block}
+.vadm-tile-ic{font-size:1.5rem;opacity:.85}
+.vadm-tile-vid{position:absolute;left:8px;bottom:8px;font-size:.66rem;font-weight:700;background:rgba(12,6,12,.55);padding:3px 8px;border-radius:20px;color:#fff;backdrop-filter:blur(4px)}
+
+.vadm-vactions{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;padding-top:20px;border-top:1px solid var(--v-line)}
+.vadm-ghost{padding:10px 16px;border-radius:12px;border:1px solid var(--v-line2);background:rgba(255,255,255,.04);color:var(--v-ink);font-weight:600;font-size:.85rem;cursor:pointer;transition:.18s}
+.vadm-ghost:hover{background:rgba(255,126,182,.1);transform:translateY(-1px)}
+
+/* responsive */
+@media(max-width:760px){
+  .vadm-tabbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:9px;top:6px}
+  .vadm-tabbar::-webkit-scrollbar{display:none}
+  .vadm-tab{flex:none}
+  .vadm-tab-copy small{display:none}
+  .vadm-phero{flex-direction:column;text-align:center}
+  .vadm-vt small{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .vadm *,.vadm-viewer{animation:none!important;transition:none!important}
+}

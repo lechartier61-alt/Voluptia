@@ -1,0 +1,59 @@
+/* ============================================================================
+   V179 — CORRECTIF DÉFILEMENT MOBILE (définitif)
+   ----------------------------------------------------------------------------
+   CAUSE RACINE
+   styles.css applique « html { height: 100% } » de façon globale. Cette
+   hauteur FIXE verrouille la hauteur du document à celle de la fenêtre.
+   Sur téléphone, le navigateur ne peut alors plus faire défiler le contenu
+   qui dépasse l'écran : la page paraît « figée » et on ne peut pas se
+   déplacer. Sur ordinateur, la molette contourne souvent le blocage, ce qui
+   donnait l'impression que « ça marche sur PC mais pas sur mobile ».
+
+   CORRECTION
+   On remplace la hauteur fixe par une hauteur AUTOMATIQUE (avec min-height),
+   et on garantit le défilement vertical de tout le document. On conserve
+   l'anti-débordement horizontal. Importé en dernier pour gagner la cascade.
+   ============================================================================ */
+
+html {
+  height: auto !important;       /* on retire le verrou de hauteur fixe */
+  min-height: 100%;
+}
+
+body {
+  height: auto !important;
+  min-height: 100dvh;
+  overflow-x: clip !important;    /* on garde l'anti-débordement latéral */
+  overflow-y: visible !important; /* le document peut défiler verticalement */
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  height: auto !important;
+  min-height: 100dvh;
+  overflow: visible !important;
+}
+
+/* Aucune enveloppe de page ne doit emprisonner la hauteur ni couper le
+   défilement vertical. On NE touche PAS aux conteneurs spéciaux qui doivent
+   rester en plein écran (carte « Découvrir », panneaux/modales, sidebar). */
+.app-shell,
+.pro-user-shell,
+.pro-workspace,
+.main-zone,
+.page,
+.blurred-site {
+  height: auto !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+
+/* On autorise explicitement le geste de défilement vertical au toucher
+   sur les grandes zones de contenu. */
+.app-shell,
+.pro-user-shell,
+.pro-workspace,
+.main-zone,
+.page {
+  touch-action: pan-y pinch-zoom;
+}

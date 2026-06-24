@@ -1,0 +1,19 @@
+COMMENT FAIRE LE PUSH FORCE
+
+1. Extrais ce zip.
+2. Entre dans le dossier extrait.
+3. Clic droit dans le dossier > Open Git Bash here.
+4. Lance :
+
+   ./push_force_gitbash.sh
+
+Le script pousse vers :
+https://github.com/lechartier61-alt/Voluptia.git
+
+Si GitHub demande un mot de passe, utilise un Personal Access Token GitHub,
+pas ton mot de passe GitHub.
+
+Le script utilise :
+git push --force-with-lease origin main
+
+C'est un push forcé plus sûr que --force.

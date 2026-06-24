@@ -1,0 +1,568 @@
+/* V178 — Accueil transformé en fil d’actualité social premium */
+.social-home-v178 {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  padding: clamp(12px, 3vw, 24px) clamp(12px, 3vw, 24px) calc(120px + env(safe-area-inset-bottom));
+  display: grid;
+  gap: 16px;
+}
+
+.social-home-header-v178 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: clamp(16px, 4vw, 26px);
+  border: 1px solid rgba(255, 143, 197, .22);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255, 78, 166, .18), transparent 38%),
+    linear-gradient(135deg, rgba(30, 8, 24, .92), rgba(12, 7, 13, .88));
+  box-shadow: 0 20px 70px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+.social-home-header-v178 h2 {
+  margin: 4px 0 8px;
+  font-size: clamp(1.8rem, 7vw, 3.2rem);
+  line-height: .95;
+  letter-spacing: -.045em;
+}
+
+.social-home-header-v178 p:not(.eyebrow) {
+  margin: 0;
+  color: rgba(255,255,255,.68);
+  font-size: clamp(.98rem, 3.8vw, 1.16rem);
+  line-height: 1.5;
+}
+
+.social-home-header-actions-v178 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.social-icon-btn-v178,
+.composer-actions-v178 button,
+.home-composer-tools-v178 button,
+.feed-filter-row-v178 button,
+.feed-post-actions-v178 button,
+.home-suggestion-grid-v178 button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.social-icon-btn-v178 {
+  width: 48px;
+  height: 48px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.08);
+  color: #fff8ef;
+  display: grid;
+  place-items: center;
+}
+.social-icon-btn-v178 .nav-icon-v101 { width: 22px; height: 22px; }
+
+.composer-card-v178 {
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(26, 16, 25, .72);
+  backdrop-filter: blur(18px);
+  padding: 14px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.composer-placeholder-v178 {
+  min-height: 48px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.78);
+  text-align: left;
+  padding: 0 16px;
+  font-weight: 750;
+}
+
+.composer-actions-v178 {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.composer-actions-v178 button,
+.home-composer-tools-v178 button {
+  min-height: 42px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  background: rgba(255,255,255,.06);
+  color: #fff8ef;
+  font-weight: 850;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.composer-actions-v178 svg,
+.home-composer-tools-v178 svg { width: 18px; height: 18px; }
+
+.active-members-v178 {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  scrollbar-width: none;
+}
+.active-members-v178::-webkit-scrollbar { display: none; }
+.active-member-v178 {
+  flex: 0 0 74px;
+  border: 0;
+  background: transparent;
+  color: #fff8ef;
+  display: grid;
+  gap: 7px;
+  justify-items: center;
+  text-align: center;
+}
+.active-member-v178 strong {
+  max-width: 74px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .78rem;
+}
+.active-avatar-wrap-v178 { position: relative; display: inline-grid; }
+.active-avatar-wrap-v178 .avatar { width: 58px; height: 58px; }
+.active-avatar-wrap-v178 i {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 13px;
+  height: 13px;
+  border-radius: 99px;
+  background: #42e88b;
+  border: 2px solid #170912;
+  box-shadow: 0 0 14px rgba(66,232,139,.75);
+}
+.active-member-empty-v178 {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px dashed rgba(255,255,255,.14);
+  border-radius: 18px;
+  color: rgba(255,255,255,.58);
+}
+
+.feed-filter-row-v178 {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 0 10px;
+  scrollbar-width: none;
+}
+.feed-filter-row-v178::-webkit-scrollbar { display: none; }
+.feed-filter-row-v178 button {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.13);
+  background: rgba(255,255,255,.065);
+  color: rgba(255,255,255,.78);
+  padding: 11px 15px;
+  font-weight: 850;
+}
+.feed-filter-row-v178 button.active {
+  color: #fff;
+  border-color: rgba(255, 108, 183, .62);
+  background: linear-gradient(135deg, rgba(255, 61, 151, .92), rgba(118, 41, 102, .72));
+  box-shadow: 0 12px 34px rgba(255, 61, 151, .24);
+}
+
+.feed-list-v178 { display: grid; gap: 16px; }
+
+.feed-post-card-v178,
+.home-suggestions-v178,
+.feed-empty-v178 {
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,.12);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255, 91, 173, .10), transparent 36%),
+    rgba(24, 14, 23, .74);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 60px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.07);
+  overflow: visible;
+}
+.feed-post-card-v178 { padding: 14px; }
+.feed-post-head-v178 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.feed-author-v178 {
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #fff8ef;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  padding: 0;
+}
+.feed-author-v178 span { min-width: 0; display: grid; gap: 2px; }
+.feed-author-v178 strong { font-size: 1rem; }
+.feed-author-v178 small {
+  color: rgba(255,255,255,.55);
+  font-size: .78rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.feed-post-menu-v178 { position: relative; flex: 0 0 auto; }
+.feed-post-menu-v178 summary {
+  list-style: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.feed-post-menu-v178 summary::-webkit-details-marker { display: none; }
+.feed-post-menu-v178 div {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  width: 220px;
+  padding: 8px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(18, 10, 17, .96);
+  box-shadow: 0 18px 44px rgba(0,0,0,.46);
+  z-index: 20;
+  display: grid;
+  gap: 6px;
+}
+.feed-post-menu-v178 button {
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: rgba(255,255,255,.86);
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 750;
+}
+.feed-post-menu-v178 button:hover { background: rgba(255,255,255,.08); }
+
+.feed-post-text-v178 {
+  margin: 14px 2px;
+  color: rgba(255,255,255,.88);
+  line-height: 1.55;
+  font-size: 1rem;
+  white-space: pre-wrap;
+}
+.feed-post-media-v178 {
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.10);
+  margin-top: 12px;
+}
+.feed-post-media-v178 img,
+.feed-post-media-v178 video {
+  width: 100%;
+  display: block;
+  max-height: min(68vh, 620px);
+  object-fit: cover;
+  background: #050308;
+}
+.feed-post-media-v178.video video { object-fit: contain; }
+.feed-post-meta-v178 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,.58);
+  font-size: .82rem;
+  padding: 12px 2px 4px;
+}
+.feed-post-actions-v178 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  border-top: 1px solid rgba(255,255,255,.09);
+  margin-top: 8px;
+  padding-top: 10px;
+}
+.feed-post-actions-v178 button {
+  min-height: 40px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 15px;
+  background: rgba(255,255,255,.055);
+  color: rgba(255,255,255,.82);
+  font-weight: 850;
+  font-size: .82rem;
+}
+.feed-post-actions-v178 button.active {
+  color: #fff;
+  background: rgba(255, 74, 162, .22);
+  border-color: rgba(255, 113, 189, .45);
+}
+.feed-comments-v178 {
+  display: grid;
+  gap: 10px;
+  padding-top: 12px;
+}
+.feed-comment-v178 {
+  display: grid;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.055);
+}
+.feed-comment-v178 strong { font-size: .82rem; color: #ffb4dc; }
+.feed-comment-v178 span { color: rgba(255,255,255,.82); line-height: 1.45; }
+.feed-comments-v178 form {
+  display: flex;
+  gap: 8px;
+}
+.feed-comments-v178 input {
+  min-width: 0;
+  flex: 1;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.25);
+  color: #fff;
+  padding: 0 12px;
+}
+.feed-comments-v178 button {
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff4fa3, #ffb36b);
+  color: #1b0712;
+  font-weight: 950;
+  padding: 0 14px;
+}
+
+.home-suggestions-v178 { padding: 16px; }
+.home-suggestions-head-v178 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.home-suggestions-head-v178 h3 { margin: 0; font-size: 1.18rem; }
+.home-suggestion-grid-v178 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+.home-suggestion-grid-v178 article {
+  min-width: 0;
+  border-radius: 20px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.10);
+  padding: 12px;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  text-align: center;
+}
+.home-suggestion-grid-v178 strong { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.home-suggestion-grid-v178 small { color: rgba(255,255,255,.58); }
+.home-suggestion-grid-v178 button {
+  width: 100%;
+  border: 0;
+  border-radius: 13px;
+  padding: 9px 10px;
+  background: rgba(255, 86, 170, .18);
+  color: #fff;
+  font-weight: 900;
+}
+
+.feed-empty-v178 {
+  padding: 28px 18px;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+}
+.feed-empty-v178 strong { font-size: 1.25rem; }
+.feed-empty-v178 span { color: rgba(255,255,255,.62); }
+
+.home-composer-backdrop-v178 {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: rgba(0,0,0,.68);
+  backdrop-filter: blur(10px);
+  display: grid;
+  place-items: end center;
+  padding: 16px;
+}
+.home-composer-modal-v178 {
+  width: min(100%, 680px);
+  max-height: min(88vh, 760px);
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 78, 166, .22), transparent 34%),
+    linear-gradient(145deg, rgba(31, 13, 29, .98), rgba(12, 7, 13, .98));
+  padding: 16px;
+  box-shadow: 0 30px 100px rgba(0,0,0,.62);
+  display: grid;
+  gap: 12px;
+}
+.home-composer-head-v178 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.home-composer-head-v178 > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.home-composer-head-v178 span { display: grid; gap: 2px; }
+.home-composer-head-v178 strong { font-size: 1.1rem; }
+.home-composer-head-v178 small { color: rgba(255,255,255,.58); line-height: 1.35; }
+.home-composer-head-v178 > button {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font-size: 1.6rem;
+}
+.home-composer-modal-v178 textarea,
+.home-composer-visibility-v178 select {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 20px;
+  background: rgba(0,0,0,.28);
+  color: #fff;
+  padding: 14px;
+  font: inherit;
+  resize: vertical;
+}
+.home-composer-preview-v178 {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.12);
+  background: #050308;
+}
+.home-composer-preview-v178 img,
+.home-composer-preview-v178 video {
+  width: 100%;
+  max-height: 46vh;
+  object-fit: contain;
+  display: block;
+}
+.home-composer-preview-v178 button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0,0,0,.68);
+  color: #fff;
+  padding: 8px 12px;
+  font-weight: 850;
+}
+.home-composer-tools-v178 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.home-composer-visibility-v178 {
+  display: grid;
+  gap: 8px;
+  color: rgba(255,255,255,.72);
+  font-weight: 850;
+}
+.home-composer-modal-v178 .primary-btn {
+  min-height: 50px;
+  border-radius: 18px;
+}
+
+@media (max-width: 720px) {
+  .social-home-v178 { padding-inline: 10px; gap: 13px; }
+  .social-home-header-v178 { border-radius: 24px; }
+  .social-home-header-actions-v178 { gap: 8px; }
+  .social-icon-btn-v178 { width: 44px; height: 44px; }
+  .feed-post-actions-v178 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-suggestion-grid-v178 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-composer-backdrop-v178 { padding: 10px; align-items: end; }
+  .home-composer-modal-v178 { border-radius: 26px 26px 18px 18px; }
+}
+
+@media (max-width: 390px) {
+  .social-home-header-v178 { padding: 16px; }
+  .composer-card-v178 { grid-template-columns: 1fr; }
+  .composer-card-v178 > .avatar { display: none; }
+  .composer-actions-v178 button span { display: none; }
+  .feed-post-card-v178 { padding: 12px; border-radius: 24px; }
+  .feed-post-actions-v178 button { font-size: .78rem; }
+}
+
+/* ============================================================================
+   V178 — CORRECTIF DÉFILEMENT : page figée après connexion (toutes les pages)
+   .main-zone est une cellule de grille (1fr) dans .pro-workspace sur ordinateur
+   et tablette. Avec « overflow: clip » sur les deux axes, sa taille minimale de
+   grille tombe à 0 : la cellule ne s'agrandit pas avec son contenu et le coupe
+   sans permettre de défiler. On ne coupe donc que l'horizontal (anti-débordement
+   latéral) et on laisse le vertical s'étendre normalement → la page défile.
+   ========================================================================== */
+.pro-workspace .main-zone {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* ============================================================================
+   V178 — Garde-fou défilement mobile : aucun conteneur d'enveloppe ne doit
+   clipper verticalement le contenu, sur téléphone et tablette.
+   ========================================================================== */
+@media (max-width: 1180px) {
+  .app-shell,
+  .pro-user-shell,
+  .pro-workspace,
+  .main-zone,
+  .blurred-site {
+    overflow-y: visible;
+    max-height: none;
+    height: auto;
+  }
+}
+
+/* ============================================================================
+   V178 — Renforcement défilement mobile (anti-débordement horizontal qui, sur
+   Chrome Android, peut « dézoomer pour tenir » et figer le défilement vertical).
+   On borne la largeur de toutes les enveloppes à l'écran et on autorise la
+   croissance verticale. Sans !important sur les enfants interactifs (carte,
+   vidéos) qui gèrent leurs propres gestes.
+   ========================================================================== */
+@media (max-width: 1180px) {
+  .app-shell,
+  .pro-user-shell,
+  .pro-workspace,
+  .main-zone,
+  .blurred-site,
+  .page,
+  .hub-content-v65 {
+    max-width: 100% !important;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+}

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Volyptia · Console admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Velvet midnight palette */
+    --bg:#100711;
+    --bg-2:#160a17;
+    --ink:#fbeef2;
+    --muted:#b598a4;
+    --faint:#7d6470;
+    --rose:#ff7eb6;
+    --rose-deep:#c0286f;
+    --gold:#e7c08a;        /* champagne — the velvet-rope accent */
+    --mint:#6ee7b7;
+    --amber:#f4b350;
+    --coral:#ff6f6f;
+    --glass:rgba(43,22,40,.58);
+    --glass-2:rgba(54,28,50,.5);
+    --line:rgba(255,228,240,.09);
+    --line-strong:rgba(255,228,240,.16);
+    --shadow:0 24px 60px -24px rgba(0,0,0,.7);
+    --rail-w:248px;
+    --radius:20px;
+    --serif:'Fraunces',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* warm plum ambience instead of flat black */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(820px 520px at 12% -8%, rgba(192,40,111,.30), transparent 60%),
+      radial-gradient(700px 560px at 96% 4%, rgba(231,192,138,.10), transparent 55%),
+      radial-gradient(900px 700px at 70% 110%, rgba(255,126,182,.12), transparent 60%);
+  }
+  ::selection{background:rgba(255,126,182,.32)}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  :focus-visible{outline:2px solid var(--rose);outline-offset:2px;border-radius:8px}
+
+  /* ---------- shell ---------- */
+  .app{position:relative;z-index:1;min-height:100vh;padding:22px 26px 120px calc(var(--rail-w) + 50px)}
+
+  /* ---------- floating top bar ---------- */
+  .topbar{
+    position:sticky;top:18px;z-index:40;
+    display:flex;align-items:center;gap:16px;
+    padding:12px 14px 12px 20px;margin-bottom:26px;
+    background:var(--glass);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+    border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);
+  }
+  .brandmark{display:flex;align-items:center;gap:11px;min-width:0}
+  .orb{
+    width:30px;height:30px;border-radius:50%;flex:none;
+    background:radial-gradient(circle at 32% 28%, #ffd2e7, var(--rose) 38%, var(--rose-deep) 78%);
+    box-shadow:0 0 22px rgba(255,126,182,.55), inset 0 0 8px rgba(255,255,255,.4);
+  }
+  .brandmark b{font-family:var(--serif);font-weight:600;font-size:1.16rem;letter-spacing:.2px}
+  .brandmark span{color:var(--faint);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
+  .topbar .ctx{margin-left:6px;display:flex;flex-direction:column;line-height:1.15;min-width:0;flex:1}
+  .topbar .ctx em{font-style:normal;color:var(--faint);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase}
+  .topbar .ctx strong{font-family:var(--serif);font-weight:500;font-size:1.02rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .search{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:12px;padding:8px 12px;min-width:0;max-width:240px;flex:1}
+  .search input{background:none;border:none;color:var(--ink);font-size:.86rem;width:100%;outline:none}
+  .search input::placeholder{color:var(--faint)}
+  .search svg{flex:none;opacity:.6}
+  .icon-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.03);transition:.18s;flex:none}
+  .icon-btn:hover{background:rgba(255,126,182,.12);border-color:var(--line-strong);transform:translateY(-1px)}
+  .admin-chip{display:flex;align-items:center;gap:9px;padding:5px 12px 5px 6px;border-radius:30px;background:rgba(255,255,255,.04);border:1px solid var(--line);flex:none}
+  .admin-chip i{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#caa063);display:grid;place-items:center;font-style:normal;font-weight:700;color:#3a2410;font-size:.82rem}
+  .admin-chip small{font-size:.82rem;color:var(--muted)}
+  .admin-chip small b{color:var(--ink);font-weight:600;display:block;line-height:1.1}
+
+  /* ---------- floating tab rail (the signature) ---------- */
+  .rail{
+    position:fixed;top:18px;left:18px;bottom:18px;width:var(--rail-w);z-index:45;
+    display:flex;flex-direction:column;
+    padding:18px 14px;
+    background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);
+  }
+  .rail-head{padding:6px 10px 16px;border-bottom:1px solid var(--line);margin-bottom:12px}
+  .rail-head p{margin:0;font-family:var(--serif);font-size:1.28rem;font-weight:600}
+  .rail-head small{color:var(--faint);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+  .nav{position:relative;display:flex;flex-direction:column;gap:3px;flex:1;overflow-y:auto;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  /* sliding glow indicator */
+  .nav-glow{
+    position:absolute;left:0;right:0;height:46px;border-radius:14px;z-index:0;
+    background:linear-gradient(100deg, rgba(255,126,182,.26), rgba(192,40,111,.20));
+    border:1px solid rgba(255,126,182,.4);
+    box-shadow:0 0 22px rgba(255,126,182,.28), inset 0 0 18px rgba(255,126,182,.1);
+    transition:transform .42s cubic-bezier(.34,1.3,.5,1), height .3s ease;
+    pointer-events:none;
+  }
+  .tab{
+    position:relative;z-index:1;display:flex;align-items:center;gap:12px;
+    padding:11px 12px;border-radius:14px;text-align:left;color:var(--muted);
+    transition:color .2s, transform .2s;width:100%;
+  }
+  .tab i{
+    width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;font-size:1.02rem;
+    background:rgba(255,255,255,.05);border:1px solid var(--line);transition:.2s;
+  }
+  .tab .lbl{display:flex;flex-direction:column;line-height:1.18;min-width:0;flex:1}
+  .tab .lbl b{font-weight:600;font-size:.92rem;color:var(--ink);transition:.2s}
+  .tab .lbl small{font-size:.7rem;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tab .count{font-size:.72rem;font-weight:700;color:var(--faint);background:rgba(255,255,255,.05);padding:2px 8px;border-radius:20px;flex:none}
+  .tab:hover{color:var(--ink);transform:translateX(2px)}
+  .tab:hover i{background:rgba(255,126,182,.14)}
+  .tab.active .lbl b{color:#fff}
+  .tab.active i{background:linear-gradient(135deg,var(--rose),var(--rose-deep));border-color:transparent;box-shadow:0 6px 16px -6px rgba(192,40,111,.7)}
+  .tab.active .count{color:var(--rose);background:rgba(255,126,182,.14)}
+  .rail-foot{padding:12px 10px 2px;border-top:1px solid var(--line);margin-top:8px;font-size:.7rem;color:var(--faint);display:flex;align-items:center;gap:7px}
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  /* ---------- stage / sections ---------- */
+  .stage{max-width:1180px}
+  section.view{display:none;animation:rise .5s cubic-bezier(.2,.7,.3,1)}
+  section.view.on{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:4px 0 20px}
+  .head .eyebrow{margin:0 0 4px;color:var(--gold);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+  .head h2{margin:0;font-family:var(--serif);font-weight:600;font-size:1.85rem;line-height:1.05}
+  .head p.sub{margin:6px 0 0;color:var(--muted);font-size:.9rem;max-width:54ch}
+
+  .glass{background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+
+  /* KPI cards */
+  .kpi{padding:18px 18px 16px;position:relative;overflow:hidden}
+  .kpi .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:1.15rem;margin-bottom:14px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+  .kpi strong{display:block;font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1}
+  .kpi span{display:block;color:var(--muted);font-size:.82rem;margin-top:6px}
+  .kpi em{font-style:normal;font-size:.74rem;font-weight:600;margin-top:9px;display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px}
+  .up{color:var(--mint);background:rgba(110,231,183,.12)}
+  .down{color:var(--coral);background:rgba(255,111,111,.12)}
+  .kpi.rose .ic{background:linear-gradient(135deg,rgba(255,126,182,.3),rgba(192,40,111,.22));border-color:transparent;color:#fff}
+  .kpi.gold .ic{background:linear-gradient(135deg,rgba(231,192,138,.32),rgba(202,160,99,.2));border-color:transparent;color:#3a2410}
+
+  .panel{padding:20px}
+  .panel h3{margin:0;font-family:var(--serif);font-weight:600;font-size:1.18rem}
+  .panel .ph p{margin:0;color:var(--gold);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+  .ph{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+  .metrics{display:flex;flex-direction:column;gap:11px}
+  .metrics .row{display:flex;align-items:center;justify-content:space-between;font-size:.88rem;color:var(--muted);padding-bottom:11px;border-bottom:1px solid var(--line)}
+  .metrics .row:last-child{border:none;padding:0}
+  .metrics .row b{color:var(--ink);font-size:1.02rem;font-weight:600}
+
+  /* engagement bars */
+  .bars{display:flex;flex-direction:column;gap:14px}
+  .bar{display:grid;grid-template-columns:1fr 2.2fr auto;gap:12px;align-items:center}
+  .bar .who{display:flex;flex-direction:column;line-height:1.2;font-size:.86rem;font-weight:600}
+  .bar .who small{font-weight:400;color:var(--faint);font-size:.72rem}
+  .bar .track{height:9px;border-radius:20px;background:rgba(255,255,255,.06);overflow:hidden}
+  .bar .track i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--rose),var(--rose-deep));box-shadow:0 0 14px rgba(255,126,182,.4)}
+  .bar b{font-size:.92rem;min-width:42px;text-align:right}
+
+  .chips-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+  .chips-row span{font-size:.78rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);padding:6px 11px;border-radius:20px}
+  .chips-row span b{color:var(--ink);margin-left:6px}
+
+  /* tables / member rows */
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+  .seg{display:flex;gap:3px;padding:4px;background:rgba(0,0,0,.26);border:1px solid var(--line);border-radius:13px}
+  .seg button{padding:7px 14px;border-radius:9px;font-size:.82rem;font-weight:600;color:var(--muted);transition:.18s}
+  .seg button.on{background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;box-shadow:0 6px 16px -8px var(--rose-deep)}
+  .grow{flex:1}
+  .ghost-btn{padding:8px 14px;border-radius:11px;border:1px solid var(--line-strong);font-size:.82rem;font-weight:600;color:var(--ink);background:rgba(255,255,255,.03);transition:.18s;display:inline-flex;gap:7px;align-items:center}
+  .ghost-btn:hover{background:rgba(255,126,182,.1);transform:translateY(-1px)}
+
+  .list{display:flex;flex-direction:column;gap:9px}
+  .item{display:flex;align-items:center;gap:14px;padding:13px 15px;border-radius:15px;background:var(--glass-2);border:1px solid var(--line);transition:.18s;cursor:pointer}
+  .item:hover{border-color:var(--line-strong);background:rgba(64,33,58,.62);transform:translateX(2px)}
+  .ava{width:44px;height:44px;border-radius:13px;flex:none;display:grid;place-items:center;font-family:var(--serif);font-weight:600;font-size:1.1rem;color:#fff;position:relative}
+  .dot{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;border:2.5px solid var(--bg-2)}
+  .dot.on{background:var(--mint);box-shadow:0 0 8px var(--mint)}
+  .dot.off{background:var(--faint)}
+  .who-main{flex:1;min-width:0}
+  .who-main .nm{display:flex;align-items:center;gap:8px;font-weight:600;font-size:.96rem}
+  .who-main .nm .vrf{color:var(--rose);display:inline-flex}
+  .who-main .meta{color:var(--faint);font-size:.78rem;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:280px}
+  .tag{font-size:.68rem;font-weight:600;padding:4px 9px;border-radius:20px;white-space:nowrap}
+  .t-rose{color:var(--rose);background:rgba(255,126,182,.13)}
+  .t-gold{color:var(--gold);background:rgba(231,192,138,.13)}
+  .t-mint{color:var(--mint);background:rgba(110,231,183,.13)}
+  .t-amber{color:var(--amber);background:rgba(244,179,80,.14)}
+  .t-coral{color:var(--coral);background:rgba(255,111,111,.14)}
+  .t-mute{color:var(--muted);background:rgba(255,255,255,.05)}
+  .chev{color:var(--faint);flex:none}
+
+  /* moderation queue */
+  .qcard{padding:16px 18px;border-left:3px solid var(--coral);display:flex;flex-direction:column;gap:12px}
+  .qcard.warn{border-left-color:var(--amber)}
+  .qcard.low{border-left-color:var(--gold)}
+  .qcard .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .qcard .top .sev{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:20px}
+  .qcard p.reason{margin:0;font-size:.9rem;color:var(--ink);line-height:1.5}
+  .qcard .by{font-size:.78rem;color:var(--faint)}
+  .qcard .acts{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
+  .act{padding:7px 13px;border-radius:10px;font-size:.8rem;font-weight:600;transition:.16s;border:1px solid transparent}
+  .act.warn{color:var(--amber);background:rgba(244,179,80,.12);border-color:rgba(244,179,80,.2)}
+  .act.hide{color:var(--muted);background:rgba(255,255,255,.05);border-color:var(--line)}
+  .act.ban{color:var(--coral);background:rgba(255,111,111,.12);border-color:rgba(255,111,111,.22)}
+  .act.ok{color:var(--mint);background:rgba(110,231,183,.12);border-color:rgba(110,231,183,.2)}
+  .act:hover{transform:translateY(-1px);filter:brightness(1.15)}
+
+  /* revenue spark */
+  .spark{display:flex;align-items:flex-end;gap:7px;height:120px;margin-top:6px}
+  .spark .col{flex:1;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,var(--rose),rgba(192,40,111,.35));position:relative;transition:.3s;min-height:6px}
+  .spark .col:hover{filter:brightness(1.2)}
+  .spark .col span{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:.66rem;color:var(--faint)}
+
+  /* promo / influencer cards */
+  .promo{padding:16px 18px;display:flex;align-items:center;gap:14px}
+  .promo .code{font-family:var(--serif);font-weight:600;font-size:1.05rem;letter-spacing:.5px;padding:8px 14px;border-radius:11px;background:rgba(231,192,138,.1);border:1px dashed rgba(231,192,138,.4);color:var(--gold);flex:none}
+  .promo .pinfo{flex:1;min-width:0}
+  .promo .pinfo b{font-weight:600;font-size:.92rem}
+  .promo .pinfo small{display:block;color:var(--faint);font-size:.78rem;margin-top:2px}
+  .switch{width:46px;height:26px;border-radius:20px;background:rgba(255,255,255,.1);position:relative;transition:.22s;flex:none;border:1px solid var(--line)}
+  .switch.on{background:linear-gradient(135deg,var(--mint),#3fb98a)}
+  .switch::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.22s}
+  .switch.on::after{transform:translateX(20px)}
+
+  /* venues */
+  .venue{padding:15px 17px;display:flex;align-items:center;gap:13px}
+  .venue .pin{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:none;background:rgba(255,126,182,.12);font-size:1.1rem}
+  .venue .vinfo{flex:1;min-width:0}
+  .venue .vinfo b{font-weight:600;font-size:.92rem}
+  .venue .vinfo small{display:block;color:var(--faint);font-size:.78rem;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  /* system checklist */
+  .check{padding:15px 18px;display:flex;align-items:flex-start;gap:13px}
+  .check .ck{width:26px;height:26px;border-radius:8px;flex:none;display:grid;place-items:center;font-size:.9rem;font-weight:700;margin-top:1px}
+  .check.done .ck{background:rgba(110,231,183,.15);color:var(--mint)}
+  .check.todo .ck{background:rgba(244,179,80,.15);color:var(--amber)}
+  .check.block .ck{background:rgba(255,111,111,.15);color:var(--coral)}
+  .check .cb{flex:1}
+  .check .cb b{font-weight:600;font-size:.92rem}
+  .check .cb small{display:block;color:var(--muted);font-size:.81rem;margin-top:3px;line-height:1.5}
+  .check .ctag{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:4px 9px;border-radius:20px;flex:none;margin-top:1px}
+
+  /* ---------- floating drawer ---------- */
+  .scrim{position:fixed;inset:0;z-index:60;background:rgba(8,3,8,.6);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:.25s}
+  .scrim.on{opacity:1;visibility:visible}
+  .drawer{position:fixed;top:14px;right:14px;bottom:14px;width:min(420px,calc(100vw - 28px));z-index:61;
+    background:var(--glass);backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);
+    border:1px solid var(--line-strong);border-radius:24px;box-shadow:var(--shadow);
+    transform:translateX(calc(100% + 24px));transition:transform .4s cubic-bezier(.3,.9,.3,1);
+    display:flex;flex-direction:column;overflow:hidden}
+  .drawer.on{transform:none}
+  .drawer .dh{padding:22px 22px 18px;border-bottom:1px solid var(--line);position:relative}
+  .drawer .dh .x{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:rgba(255,255,255,.04)}
+  .drawer .dh .x:hover{background:rgba(255,111,111,.14)}
+  .dbody{padding:20px 22px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:18px}
+  .duser{display:flex;align-items:center;gap:14px}
+  .duser .ava{width:58px;height:58px;border-radius:16px;font-size:1.4rem}
+  .duser h3{margin:0;font-family:var(--serif);font-size:1.3rem;font-weight:600}
+  .duser p{margin:3px 0 0;color:var(--faint);font-size:.84rem}
+  .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .dstat{background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+  .dstat span{display:block;color:var(--faint);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+  .dstat b{display:block;font-family:var(--serif);font-size:1.3rem;font-weight:600;margin-top:4px}
+  .dsec-label{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .dacts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .dact{padding:12px;border-radius:13px;font-size:.85rem;font-weight:600;border:1px solid var(--line);background:rgba(255,255,255,.04);display:flex;align-items:center;gap:9px;transition:.16s;text-align:left}
+  .dact:hover{transform:translateY(-1px);background:rgba(255,126,182,.1)}
+  .dact.danger{color:var(--coral);border-color:rgba(255,111,111,.25);background:rgba(255,111,111,.08)}
+  .dact.danger:hover{background:rgba(255,111,111,.16)}
+  .dact.gold{color:var(--gold);border-color:rgba(231,192,138,.25);background:rgba(231,192,138,.08)}
+  .dact.gold:hover{background:rgba(231,192,138,.16)}
+  .dact .di{font-size:1.05rem}
+
+  /* ---------- floating FAB ---------- */
+  .fab{position:fixed;right:26px;bottom:26px;z-index:50;height:56px;padding:0 22px 0 18px;border-radius:30px;
+    background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:#fff;font-weight:700;font-size:.92rem;
+    display:flex;align-items:center;gap:10px;box-shadow:0 16px 40px -10px rgba(192,40,111,.7);transition:.2s}
+  .fab:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 22px 50px -10px rgba(192,40,111,.8)}
+  .fab .plus{font-size:1.4rem;line-height:1}
+
+  /* ---------- floating mobile dock ---------- */
+  .dock{display:none}
+
+  /* ---------- toast ---------- */
+  .toasts{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:80;display:flex;flex-direction:column;gap:10px;align-items:center;width:max-content;max-width:92vw}
+  .toast{display:flex;align-items:center;gap:11px;padding:13px 18px;border-radius:14px;background:rgba(28,14,26,.92);backdrop-filter:blur(18px);border:1px solid var(--line-strong);box-shadow:var(--shadow);font-size:.88rem;animation:toastin .3s cubic-bezier(.2,.8,.3,1)}
+  .toast i{width:9px;height:9px;border-radius:50%;flex:none}
+  .toast.ok i{background:var(--mint);box-shadow:0 0 8px var(--mint)}
+  .toast.warn i{background:var(--amber)}
+  .toast.bad i{background:var(--coral)}
+  @keyframes toastin{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:980px){
+    :root{--rail-w:0px}
+    .app{padding:14px 14px 110px}
+    .rail{display:none}
+    .topbar{top:10px}
+    .topbar .ctx{display:none}
+    .g2,.g3,.g4{grid-template-columns:1fr 1fr}
+    .fab{bottom:92px;right:16px}
+    .dock{
+      display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:55;
+      padding:8px;gap:2px;justify-content:space-around;
+      background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      border:1px solid var(--line-strong);border-radius:22px;box-shadow:var(--shadow);
+      padding-bottom:max(8px,env(safe-area-inset-bottom));
+    }
+    .dock button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 2px;border-radius:14px;color:var(--faint);transition:.18s}
+    .dock button i{font-size:1.18rem;line-height:1}
+    .dock button small{font-size:.6rem;font-weight:600;letter-spacing:.01em}
+    .dock button.on{color:#fff;background:linear-gradient(135deg,rgba(255,126,182,.28),rgba(192,40,111,.2))}
+    .dock button.on i{filter:drop-shadow(0 0 8px rgba(255,126,182,.6))}
+  }
+  @media(max-width:560px){
+    .head h2{font-size:1.5rem}
+    .g4,.g3{grid-template-columns:1fr 1fr}
+    .g2{grid-template-columns:1fr}
+    .tags{max-width:120px}
+    .dacts,.dgrid{grid-template-columns:1fr}
+    .kpi strong{font-size:1.6rem}
+    .dock button small{display:none}
+    .dock button i{font-size:1.34rem}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+
+  /* ---------- Vue membre : grid + viewer ---------- */
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+  .pcard{padding:0;overflow:hidden;cursor:pointer;transition:.2s;display:flex;flex-direction:column}
+  .pcard:hover{transform:translateY(-3px);border-color:var(--line-strong);box-shadow:0 26px 50px -20px rgba(192,40,111,.5)}
+  .pcard .cover{height:128px;position:relative;display:grid;place-items:center}
+  .pcard .cover .pava{font-family:var(--serif);font-size:2.1rem;font-weight:600;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+  .pcard .cover .lockcount{position:absolute;top:10px;right:10px;display:flex;gap:5px}
+  .pcard .cover .lockcount span{font-size:.66rem;font-weight:700;padding:4px 8px;border-radius:20px;background:rgba(12,6,12,.6);backdrop-filter:blur(6px);display:flex;align-items:center;gap:4px}
+  .pcard .pmeta{padding:12px 14px}
+  .pcard .pmeta .nm{display:flex;align-items:center;gap:6px;font-weight:600;font-size:.95rem}
+  .pcard .pmeta .nm .vrf{color:var(--rose)}
+  .pcard .pmeta small{display:block;color:var(--faint);font-size:.76rem;margin-top:2px}
+  .pcard .pdot{position:absolute;left:10px;top:10px;width:9px;height:9px;border-radius:50%}
+  .pcard .pdot.on{background:var(--mint);box-shadow:0 0 8px var(--mint)}
+  .pcard .pdot.off{background:rgba(255,255,255,.4)}
+
+  /* full profile viewer overlay */
+  .viewer{position:fixed;inset:0;z-index:70;display:none;overflow-y:auto;padding:0;background:rgba(8,3,8,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .viewer.on{display:block;animation:fade .25s}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .vsheet{max-width:860px;margin:0 auto;min-height:100%}
+  /* sticky admin override bar */
+  .vbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;padding:14px 18px;
+    background:linear-gradient(100deg,rgba(192,40,111,.92),rgba(155,30,90,.92));backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.12)}
+  .vbar .eye{width:32px;height:32px;border-radius:9px;background:rgba(255,255,255,.16);display:grid;place-items:center;flex:none;font-size:1.05rem}
+  .vbar .vt{flex:1;line-height:1.2;min-width:0}
+  .vbar .vt b{font-size:.92rem;font-weight:700;display:block}
+  .vbar .vt small{font-size:.74rem;color:rgba(255,255,255,.78)}
+  .vbar .back{padding:9px 16px;border-radius:11px;background:rgba(255,255,255,.16);font-weight:600;font-size:.85rem;border:1px solid rgba(255,255,255,.2)}
+  .vbar .back:hover{background:rgba(255,255,255,.26)}
+  .vbody{padding:22px 18px 60px}
+  /* profile hero */
+  .phero{display:flex;gap:18px;align-items:center;margin-bottom:8px}
+  .phero .bigava{width:96px;height:96px;border-radius:26px;flex:none;display:grid;place-items:center;font-family:var(--serif);font-size:2.4rem;font-weight:600;color:#fff;position:relative}
+  .phero h2{margin:0;font-family:var(--serif);font-size:1.9rem;font-weight:600;display:flex;align-items:center;gap:9px}
+  .phero h2 .vrf{color:var(--rose);font-size:1.2rem}
+  .phero .psub{color:var(--muted);margin:4px 0 0;font-size:.92rem}
+  .phero .ptags{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+
+  .pblock{margin-top:24px}
+  .pblock .lbl{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:1.12rem;font-weight:600;margin-bottom:14px}
+  .pblock .lbl .cc{font-size:.72rem;font-weight:600;color:var(--faint);background:rgba(255,255,255,.05);padding:3px 9px;border-radius:20px;font-family:var(--sans)}
+  .pblock .lbl.priv{color:var(--gold)}
+  .bio{color:var(--ink);line-height:1.65;font-size:.94rem;background:var(--glass-2);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .ichips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .ichips span{font-size:.8rem;padding:7px 13px;border-radius:20px;background:rgba(255,126,182,.1);border:1px solid rgba(255,126,182,.2);color:var(--rose)}
+
+  /* media grid */
+  .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+  .tile{aspect-ratio:1;border-radius:14px;position:relative;overflow:hidden;display:grid;place-items:center;border:1px solid var(--line);cursor:zoom-in;transition:.18s}
+  .tile:hover{transform:scale(1.02);border-color:var(--line-strong)}
+  .tile .ti{font-size:1.5rem;opacity:.85;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+  .tile .vid{position:absolute;left:8px;bottom:8px;font-size:.66rem;font-weight:700;background:rgba(12,6,12,.55);padding:3px 8px;border-radius:20px;backdrop-filter:blur(4px)}
+  .tile.locked::after{content:"🔓";position:absolute;top:8px;right:8px;font-size:.8rem;background:rgba(231,192,138,.22);border:1px solid rgba(231,192,138,.45);width:24px;height:24px;border-radius:50%;display:grid;place-items:center}
+
+  /* private album admin banner */
+  .privbanner{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:14px;margin-bottom:14px;
+    background:rgba(231,192,138,.08);border:1px solid rgba(231,192,138,.28)}
+  .privbanner .pb-ic{font-size:1.2rem;flex:none}
+  .privbanner p{margin:0;font-size:.84rem;color:var(--ink);line-height:1.45}
+  .privbanner p b{color:var(--gold)}
+
+  .vactions{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+
+  @media(max-width:560px){
+    .phero{flex-direction:column;text-align:center;align-items:center}
+    .phero .bigava{width:80px;height:80px}
+    .phero h2{font-size:1.5rem;justify-content:center}
+    .vbar .vt small{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- floating tab rail -->
+<aside class="rail" aria-label="Navigation administration">
+  <div class="rail-head">
+    <p>Volyptia</p>
+    <small>Console admin</small>
+  </div>
+  <nav class="nav" id="nav">
+    <div class="nav-glow" id="glow"></div>
+    <!-- tabs injected -->
+  </nav>
+  <div class="rail-foot"><span class="pulse"></span> Système en ligne · v0.47</div>
+</aside>
+
+<!-- floating top bar -->
+<header class="topbar">
+  <div class="brandmark">
+    <div class="orb"></div>
+    <div>
+      <b>Volyptia</b><br>
+      <span>Administration</span>
+    </div>
+  </div>
+  <div class="ctx">
+    <em id="ctxEyebrow">Tableau de bord</em>
+    <strong id="ctxTitle">Vue d'ensemble</strong>
+  </div>
+  <label class="search">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="globalSearch" type="search" placeholder="Rechercher un membre…">
+  </label>
+  <button class="icon-btn" title="Actualiser" onclick="toast('Données actualisées','ok')">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+  </button>
+  <div class="admin-chip">
+    <i>É</i>
+    <small>Connecté<b>Émerick · propriétaire</b></small>
+  </div>
+</header>
+
+<!-- mobile floating dock -->
+<nav class="dock" id="dock" aria-label="Navigation mobile"></nav>
+
+<main class="app">
+  <div class="stage" id="stage"><!-- views injected --></div>
+</main>
+
+<!-- floating FAB -->
+<button class="fab" id="fab" onclick="fabAction()"><span class="plus">+</span><span id="fabLabel">Nouveau</span></button>
+
+<!-- floating drawer -->
+<div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-label="Fiche membre"></aside>
+
+<!-- full profile viewer (admin "view as member") -->
+<div class="viewer" id="viewer" aria-label="Profil en vue membre"></div>
+
+<!-- toasts -->
+<div class="toasts" id="toasts"></div>
+
+<script>
+/* ============ MOCK DATA (mirrors backend /admin/overview shapes) ============ */
+const NAV = [
+  {id:'overview', icon:'◈', label:"Vue d'ensemble", sub:'KPIs & activité', eyebrow:'Tableau de bord', count:''},
+  {id:'members',  icon:'❤', label:'Membres',        sub:'Comptes & profils', eyebrow:'Communauté', count:'1 284'},
+  {id:'viewas',   icon:'◉', label:'Vue membre',     sub:'Voir profils & albums', eyebrow:'Modération', count:''},
+  {id:'moderation',icon:'⚑', label:'Modération',     sub:'Signalements', eyebrow:'Sécurité', count:'4'},
+  {id:'revenue',  icon:'◆', label:'Revenus',         sub:'Abonnements & achats', eyebrow:'Finances', count:''},
+  {id:'influencers',icon:'✦',label:'Influenceurs',   sub:'Partenaires & commissions', eyebrow:'Croissance', count:'3'},
+  {id:'promos',   icon:'%',  label:'Codes promo',     sub:'Réductions & accès', eyebrow:'Croissance', count:'3'},
+  {id:'venues',   icon:'⌖',  label:'Lieux',           sub:'Carte des clubs', eyebrow:'Découverte', count:'4'},
+  {id:'system',   icon:'⚙',  label:'Système',         sub:'Config & lancement', eyebrow:'Plateforme', count:'!'},
+];
+
+const AVA = ['linear-gradient(135deg,#ff7eb6,#c0286f)','linear-gradient(135deg,#e7c08a,#b07d3d)','linear-gradient(135deg,#9b8cff,#5a3fb9)','linear-gradient(135deg,#6ee7b7,#2f9e78)','linear-gradient(135deg,#ff9d7e,#c0532a)','linear-gradient(135deg,#7ec8ff,#2f6fb9)'];
+
+const members = [
+  {id:1, pseudo:'Aurore & Tom', type:'Couple', city:'Paris', age:'31 & 34', role:'member', verified:true, online:true, status:'active', premium:true, hearts:284, followers:96, views:1820, joined:'il y a 3 j'},
+  {id:2, pseudo:'NoxLune', type:'Femme', city:'Lyon', age:'28', role:'member', verified:true, online:true, status:'active', premium:false, hearts:512, followers:204, views:3120, joined:'il y a 1 mois'},
+  {id:3, pseudo:'MidnightJay', type:'Homme', city:'Marseille', age:'37', role:'influencer', verified:true, online:false, status:'active', premium:true, hearts:140, followers:880, views:2200, joined:'il y a 2 mois'},
+  {id:4, pseudo:'VelvetDuo', type:'Couple', city:'Bordeaux', age:'29 & 30', role:'member', verified:false, online:false, status:'hidden', premium:false, hearts:42, followers:18, views:340, joined:'il y a 5 j'},
+  {id:5, pseudo:'SamSoir', type:'Homme', city:'Lille', age:'41', role:'member', verified:false, online:false, status:'suspended', premium:false, hearts:8, followers:3, views:90, joined:'il y a 12 j', reason:'Signalements répétés'},
+  {id:6, pseudo:'IrisVe', type:'Femme', city:'Nantes', age:'33', role:'member', verified:true, online:true, status:'active', premium:true, hearts:330, followers:150, views:2640, joined:'il y a 3 sem'},
+  {id:7, pseudo:'Émerick', type:'Admin', city:'Paris', age:'—', role:'admin', verified:true, online:true, status:'active', premium:true, hearts:0, followers:0, views:0, joined:'fondateur'},
+  {id:8, pseudo:'LunaNoire', type:'Femme', city:'Toulouse', age:'26', role:'member', verified:false, online:false, status:'active', premium:false, hearts:74, followers:40, views:610, joined:'hier'},
+];
+
+const reports = [
+  {sev:'high', sevLabel:'Élevé', target:'SamSoir', by:'NoxLune', reason:"Messages insistants malgré refus explicite. Capture d'écran fournie par le membre.", when:'il y a 2 h'},
+  {sev:'high', sevLabel:'Élevé', target:'GhostX', by:'IrisVe', reason:"Photo de profil ne correspond pas à la personne — suspicion de faux compte.", when:'il y a 5 h'},
+  {sev:'warn', sevLabel:'Moyen', target:'VelvetDuo', by:'Aurore & Tom', reason:'Contenu d\'album limite signalé pour vérification.', when:'hier'},
+  {sev:'low', sevLabel:'Faible', target:'LunaNoire', by:'Anonyme', reason:'Pseudo proche d\'une marque déposée.', when:'il y a 2 j'},
+];
+
+const influencers = [
+  {name:'MidnightJay', code:'JAY30', rate:25, uses:148, earned:740, city:'Marseille'},
+  {name:'Camille Noir', code:'CAMILLE', rate:20, uses:92, earned:368, city:'Paris'},
+  {name:'Studio Velours', code:'VELOURS15', rate:15, uses:54, earned:162, city:'Lyon'},
+];
+
+const promos = [
+  {code:'WELCOME1MOIS', label:'1 mois offert', detail:'100% · 30 jours · 1 usage/profil', active:true, uses:'312 usages'},
+  {code:'SUMMER25', label:'-25% abonnement', detail:'Réduction · valable jusqu\'au 31/08', active:true, uses:'88 usages'},
+  {code:'VIPLAUNCH', label:'-50% lancement', detail:'Réduction · 200 usages max', active:false, uses:'200 / 200'},
+];
+
+const venues = [
+  {name:'Le Boudoir Rouge', type:'Club libertin', addr:'12 rue de la Soif, 75011 Paris', located:true},
+  {name:'Villa Écarlate', type:'Sauna privé', addr:'4 av. des Tilleuls, 69006 Lyon', located:true},
+  {name:'Maison Velours', type:'Club échangiste', addr:'Adresse à localiser', located:false},
+  {name:'L\'Annexe', type:'Bar à thème', addr:'8 quai Neuf, 33000 Bordeaux', located:true},
+];
+
+const checklist = [
+  {state:'block', tag:'Bloquant', tagClass:'t-coral', title:'Mentions légales & CGU à compléter', detail:'~20 champs [À VALIDER] : identité éditeur, hébergeur, DPO, juridiction. Obligatoire avant ouverture publique.'},
+  {state:'block', tag:'Bloquant', tagClass:'t-coral', title:'Identifiants admin définitifs', detail:'Définir ADMIN_EMAIL + ADMIN_INITIAL_PASSWORD forts dans les variables Render.'},
+  {state:'block', tag:'Bloquant', tagClass:'t-coral', title:'Paiement Stripe (clés live)', detail:'STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET + endpoint webhook. Sinon abonnements bloqués.'},
+  {state:'todo', tag:'Important', tagClass:'t-amber', title:'Emails Resend', detail:'Sans RESEND_API_KEY, vérification de compte et reset MDP ne partent pas (mode log).'},
+  {state:'todo', tag:'Important', tagClass:'t-amber', title:'Connexion Google', detail:'GOOGLE_CLIENT_ID + VITE_GOOGLE_CLIENT_ID (variable de build à vérifier au déploiement).'},
+  {state:'done', tag:'Prêt', tagClass:'t-mint', title:'Base de données PostgreSQL', detail:'Branchée via render.yaml, durable et sauvegardée.'},
+  {state:'done', tag:'Prêt', tagClass:'t-mint', title:'Vérification signatures (Stripe & Google)', detail:'Webhooks signés et jetons Google validés via JWKS. Mots de passe en scrypt.'},
+];
+
+/* ============ helpers ============ */
+const $=s=>document.querySelector(s);
+const stage=$('#stage');
+const nf=n=>Number(n).toLocaleString('fr-FR');
+const initial=s=>s.replace(/[^A-Za-zÀ-ÿ]/g,'').charAt(0).toUpperCase()||'?';
+const avaFor=id=>AVA[id%AVA.length];
+
+function toast(msg,kind='ok'){
+  const t=document.createElement('div');
+  t.className='toast '+kind;
+  t.innerHTML=`<i></i>${msg}`;
+  $('#toasts').appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(10px)';setTimeout(()=>t.remove(),300);},2600);
+}
+
+/* ============ views ============ */
+function kpiCard(ic,val,lbl,trend,cls=''){
+  return `<div class="glass kpi ${cls}"><div class="ic">${ic}</div><strong>${val}</strong><span>${lbl}</span>${trend?`<em class="${trend.dir}">${trend.dir==='up'?'▲':'▼'} ${trend.v}</em>`:''}</div>`;
+}
+
+function viewOverview(){
+  const bars=members.filter(m=>m.role!=='admin').sort((a,b)=>(b.hearts+b.followers+b.views)-(a.hearts+a.followers+a.views)).slice(0,5);
+  const max=Math.max(...bars.map(m=>m.hearts+m.followers+m.views));
+  return `
+  <div class="head"><div><p class="eyebrow">Tableau de bord</p><h2>Vue d'ensemble</h2><p class="sub">L'état vivant de la communauté Volyptia, en un coup d'œil.</p></div></div>
+  <div class="grid g4" style="margin-bottom:16px">
+    ${kpiCard('❤','1 284','Membres actifs',{dir:'up',v:'+48 / 7j'},'rose')}
+    ${kpiCard('✓','842','Profils vérifiés',{dir:'up',v:'+12'},'')}
+    ${kpiCard('◆','318','Abonnés premium',{dir:'up',v:'+9'},'gold')}
+    ${kpiCard('⚑','4','Signalements ouverts',{dir:'down',v:'-2'},'')}
+  </div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <article class="glass panel">
+      <div class="ph"><div><p>Communauté</p><h3>Profils & activité</h3></div></div>
+      <div class="metrics">
+        <div class="row">Profils visibles <b>1 142</b></div>
+        <div class="row">Profils masqués / admin <b>142</b></div>
+        <div class="row">Coups de cœur <b>18 940</b></div>
+        <div class="row">Vues de profil <b>94 210</b></div>
+      </div>
+      <div class="chips-row"><span>Couples<b>418</b></span><span>Femmes<b>506</b></span><span>Hommes<b>360</b></span></div>
+    </article>
+    <article class="glass panel">
+      <div class="ph"><div><p>Plateforme</p><h3>Messages & médias</h3></div></div>
+      <div class="metrics">
+        <div class="row">Conversations <b>6 410</b></div>
+        <div class="row">Messages échangés <b>128 503</b></div>
+        <div class="row">Albums privés <b>2 044</b></div>
+        <div class="row">Demandes d'album en attente <b>57</b></div>
+      </div>
+      <div class="chips-row"><span>Vidéos<b>1 209</b></span><span>Photos<b>22 870</b></span></div>
+    </article>
+  </div>
+  <div class="grid g2">
+    <article class="glass panel">
+      <div class="ph"><div><p>Engagement</p><h3>Top profils</h3></div></div>
+      <div class="bars">
+        ${bars.map(m=>{const s=m.hearts+m.followers+m.views;return `<div class="bar"><span class="who">${m.pseudo}<small>${m.city} · ${m.type}</small></span><span class="track"><i style="width:${Math.max(8,s/max*100)}%"></i></span><b>${nf(s)}</b></div>`;}).join('')}
+      </div>
+    </article>
+    <article class="glass panel">
+      <div class="ph"><div><p>Géographie</p><h3>Top villes</h3></div></div>
+      <div class="chips-row" style="margin:0;padding:0;border:none">
+        <span>Paris<b>312</b></span><span>Lyon<b>188</b></span><span>Marseille<b>164</b></span>
+        <span>Bordeaux<b>121</b></span><span>Lille<b>98</b></span><span>Nantes<b>87</b></span>
+        <span>Toulouse<b>76</b></span><span>Nice<b>64</b></span>
+      </div>
+    </article>
+  </div>`;
+}
+
+let memberFilter='Tous';
+function viewMembers(){
+  return `
+  <div class="head"><div><p class="eyebrow">Communauté</p><h2>Membres</h2><p class="sub">Gérer les comptes : vérifier, accorder le premium, suspendre, supprimer.</p></div></div>
+  <div class="toolbar">
+    <div class="seg" id="memberSeg">
+      ${['Tous','Vérifiés','Premium','Suspendus','Masqués','Admins'].map(f=>`<button class="${f===memberFilter?'on':''}" onclick="setMemberFilter('${f}')">${f}</button>`).join('')}
+    </div>
+    <span class="grow"></span>
+    <button class="ghost-btn" onclick="toast('Export CSV des membres lancé','ok')">⬇ Exporter</button>
+  </div>
+  <div class="list" id="memberList">${renderMembers()}</div>`;
+}
+function renderMembers(){
+  const q=($('#globalSearch')?.value||'').toLowerCase();
+  let rows=members.filter(m=>{
+    if(memberFilter==='Vérifiés'&&!m.verified)return false;
+    if(memberFilter==='Premium'&&!m.premium)return false;
+    if(memberFilter==='Suspendus'&&m.status!=='suspended')return false;
+    if(memberFilter==='Masqués'&&m.status!=='hidden')return false;
+    if(memberFilter==='Admins'&&m.role!=='admin')return false;
+    if(q&&!(m.pseudo.toLowerCase().includes(q)||m.city.toLowerCase().includes(q)))return false;
+    return true;
+  });
+  if(!rows.length)return `<div class="glass panel" style="text-align:center;color:var(--muted)">Aucun membre ne correspond. <br><small style="color:var(--faint)">Ajustez le filtre ou la recherche.</small></div>`;
+  return rows.map(m=>{
+    const tags=[];
+    if(m.role==='admin')tags.push('<span class="tag t-gold">Admin</span>');
+    if(m.role==='influencer')tags.push('<span class="tag t-rose">Influenceur</span>');
+    if(m.premium)tags.push('<span class="tag t-gold">Premium</span>');
+    if(m.verified)tags.push('<span class="tag t-mint">Vérifié</span>');
+    if(m.status==='suspended')tags.push('<span class="tag t-coral">Suspendu</span>');
+    if(m.status==='hidden')tags.push('<span class="tag t-mute">Masqué</span>');
+    return `<div class="item" onclick="openDrawer(${m.id})">
+      <div class="ava" style="background:${avaFor(m.id)}">${initial(m.pseudo)}<span class="dot ${m.online?'on':'off'}"></span></div>
+      <div class="who-main">
+        <div class="nm">${m.pseudo} ${m.verified?'<span class="vrf">✓</span>':''}</div>
+        <div class="meta">${m.type} · ${m.city} · ${m.age} ans · inscrit ${m.joined}</div>
+      </div>
+      <div class="tags">${tags.join('')}</div>
+      <span class="chev">›</span>
+    </div>`;
+  }).join('');
+}
+function setMemberFilter(f){memberFilter=f;document.querySelectorAll('#memberSeg button').forEach(b=>b.classList.toggle('on',b.textContent===f));$('#memberList').innerHTML=renderMembers();}
+
+function viewModeration(){
+  return `
+  <div class="head"><div><p class="eyebrow">Sécurité</p><h2>Modération</h2><p class="sub">File des signalements à traiter. Avertir, masquer, bannir ou classer sans suite.</p></div></div>
+  <div class="grid g3" style="margin-bottom:16px">
+    ${kpiCard('⚑','4','Signalements ouverts','','')}
+    ${kpiCard('⏱','2,4 h','Délai moyen de traitement','','')}
+    ${kpiCard('✓','37','Résolus ce mois','','')}
+  </div>
+  <div class="list">
+    ${reports.map((r,i)=>`<article class="glass qcard ${r.sev==='high'?'':r.sev==='warn'?'warn':'low'}">
+      <div class="top">
+        <div style="display:flex;align-items:center;gap:10px"><div class="ava" style="width:36px;height:36px;border-radius:11px;font-size:.95rem;background:${avaFor(i+2)}">${initial(r.target)}</div><div><b style="font-size:.95rem">${r.target}</b><div class="by">signalé par ${r.by} · ${r.when}</div></div></div>
+        <span class="sev ${r.sev==='high'?'t-coral':r.sev==='warn'?'t-amber':'t-gold'}">${r.sevLabel}</span>
+      </div>
+      <p class="reason">${r.reason}</p>
+      <div class="acts">
+        <button class="act warn" onclick="toast('Avertissement envoyé à ${r.target}','warn')">Avertir</button>
+        <button class="act hide" onclick="toast('Profil de ${r.target} masqué','ok')">Masquer le profil</button>
+        <button class="act ban" onclick="toast('${r.target} suspendu · sessions révoquées','bad')">Bannir</button>
+        <button class="act ok" onclick="toast('Signalement classé sans suite','ok')">Classer</button>
+      </div>
+    </article>`).join('')}
+  </div>`;
+}
+
+function viewRevenue(){
+  const data=[42,58,51,67,73,69,88,94,82,101,118,132];
+  const maxV=Math.max(...data);
+  const labels=['J','F','M','A','M','J','J','A','S','O','N','D'];
+  return `
+  <div class="head"><div><p class="eyebrow">Finances</p><h2>Revenus</h2><p class="sub">Abonnements actifs, revenus récurrents et achats ponctuels.</p></div></div>
+  <div class="grid g4" style="margin-bottom:16px">
+    ${kpiCard('◆','4 770 €','MRR estimé',{dir:'up',v:'+14%'},'gold')}
+    ${kpiCard('❤','318','Abonnés actifs',{dir:'up',v:'+9'},'rose')}
+    ${kpiCard('↻','62%','Taux de reconduction','','')}
+    ${kpiCard('⊕','1 209','Achats ponctuels','','')}
+  </div>
+  <article class="glass panel" style="margin-bottom:16px">
+    <div class="ph"><div><p>12 derniers mois</p><h3>Revenus mensuels (k€)</h3></div></div>
+    <div class="spark">${data.map((v,i)=>`<div class="col" style="height:${v/maxV*100}%" title="${v}k€"><span>${labels[i]}</span></div>`).join('')}</div>
+    <div style="height:24px"></div>
+  </article>
+  <div class="grid g2">
+    <article class="glass panel"><div class="ph"><div><p>Répartition</p><h3>Par formule</h3></div></div>
+      <div class="metrics">
+        <div class="row">Mensuel — 14,90 € <b>184</b></div>
+        <div class="row">Trimestriel — 34,90 € <b>96</b></div>
+        <div class="row">Annuel — 99 € <b>38</b></div>
+      </div></article>
+    <article class="glass panel"><div class="ph"><div><p>Derniers paiements</p><h3>Activité</h3></div></div>
+      <div class="metrics">
+        <div class="row">NoxLune · Trimestriel <b>34,90 €</b></div>
+        <div class="row">Aurore & Tom · Annuel <b>99,00 €</b></div>
+        <div class="row">IrisVe · Mensuel <b>14,90 €</b></div>
+        <div class="row">MidnightJay · Boost album <b>4,90 €</b></div>
+      </div></article>
+  </div>`;
+}
+
+function viewInfluencers(){
+  return `
+  <div class="head"><div><p class="eyebrow">Croissance</p><h2>Influenceurs</h2><p class="sub">Partenaires, leurs codes, commissions et gains estimés.</p></div></div>
+  <div class="list">
+    ${influencers.map((f,i)=>`<article class="glass promo">
+      <div class="ava" style="width:46px;height:46px;border-radius:13px;background:${avaFor(i+1)}">${initial(f.name)}</div>
+      <div class="pinfo"><b>${f.name}</b><small>${f.city} · code <b style="color:var(--gold)">${f.code}</b> · ${f.uses} utilisations</small></div>
+      <div style="text-align:right"><div style="font-family:var(--serif);font-size:1.2rem;font-weight:600">${f.rate}%</div><small style="color:var(--faint);font-size:.74rem">commission</small></div>
+      <div style="text-align:right;min-width:90px"><div style="font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--gold)">${f.earned} €</div><small style="color:var(--faint);font-size:.74rem">gains</small></div>
+    </article>`).join('')}
+  </div>`;
+}
+
+function viewPromos(){
+  return `
+  <div class="head"><div><p class="eyebrow">Croissance</p><h2>Codes promo</h2><p class="sub">Réductions et accès offerts. Activez ou désactivez en un geste.</p></div></div>
+  <div class="list">
+    ${promos.map((p,i)=>`<article class="glass promo">
+      <div class="code">${p.code}</div>
+      <div class="pinfo"><b>${p.label}</b><small>${p.detail} · ${p.uses}</small></div>
+      <div class="switch ${p.active?'on':''}" onclick="togglePromo(this,'${p.code}')"></div>
+    </article>`).join('')}
+  </div>`;
+}
+
+function viewVenues(){
+  return `
+  <div class="head"><div><p class="eyebrow">Découverte</p><h2>Lieux</h2><p class="sub">Clubs et adresses affichés sur la carte des membres.</p></div></div>
+  <div class="list">
+    ${venues.map(v=>`<article class="glass venue">
+      <div class="pin">${v.located?'📍':'⚠'}</div>
+      <div class="vinfo"><b>${v.name}</b><small>${v.type} · ${v.addr}</small></div>
+      ${v.located?'<span class="tag t-mint">Localisé</span>':'<span class="tag t-amber">À localiser</span>'}
+    </article>`).join('')}
+  </div>`;
+}
+
+function viewSystem(){
+  return `
+  <div class="head"><div><p class="eyebrow">Plateforme</p><h2>Système & lancement</h2><p class="sub">Configuration du déploiement et points à régler avant l'ouverture officielle.</p></div></div>
+  <div class="grid g3" style="margin-bottom:16px">
+    ${kpiCard('🟢','En ligne','État du service','','')}
+    ${kpiCard('🗄','PostgreSQL','Base de données','','')}
+    ${kpiCard('⚠','3','Points bloquants','','')}
+  </div>
+  <article class="glass panel" style="margin-bottom:16px">
+    <div class="ph"><div><p>Avant l'ouverture publique</p><h3>Liste de contrôle</h3></div></div>
+    <div class="list">
+      ${checklist.map(c=>`<div class="check ${c.state}">
+        <div class="ck">${c.state==='done'?'✓':c.state==='todo'?'!':'✕'}</div>
+        <div class="cb"><b>${c.title}</b><small>${c.detail}</small></div>
+        <span class="ctag ${c.tagClass}">${c.tag}</span>
+      </div>`).join('')}
+    </div>
+  </article>
+  <div class="grid g2">
+    <article class="glass panel"><div class="ph"><div><p>Réglages</p><h3>Vérification d'âge</h3></div></div>
+      <div class="metrics"><div class="row">Mode actuel <b>Déclaration + CGU</b></div><div class="row">Prestataire renforcé <b style="color:var(--amber)">Désactivé</b></div></div></article>
+    <article class="glass panel"><div class="ph"><div><p>Réglages</p><h3>Paiement</h3></div></div>
+      <div class="metrics"><div class="row">Prestataire <b>Stripe</b></div><div class="row">Clés live <b style="color:var(--coral)">À configurer</b></div></div></article>
+  </div>`;
+}
+
+/* ---- Vue membre : profile detail + full viewer ---- */
+const PROFILE_X = {
+  1:{bio:"Couple complice et discret, on aime les ambiances feutrées et les rencontres qui prennent leur temps. Curieux, jamais pressés.",interests:['Soirées privées','Vin nature','Voyages','Cinéma'],looking:'Couples & femmes, dans la bienveillance',pub:6,priv:9,vids:2},
+  2:{bio:"Indépendante et sélective. Je cherche des moments intenses mais respectueux. La confiance d'abord, le reste suit.",interests:['Photographie','Danse','Clubs select','Lecture'],looking:'Hommes & couples vérifiés',pub:8,priv:14,vids:3},
+  3:{bio:"Habitué de la nuit marseillaise, je connais les bons endroits. Discrétion garantie.",interests:['Événementiel','Mixologie','Moto','Plages'],looking:'Couples libres',pub:5,priv:7,vids:1},
+  4:{bio:"On débute sur l'appli, on avance doucement. On aime apprendre à se connaître avant tout.",interests:['Cuisine','Randonnée','Séries'],looking:'Couples pour amitié et plus',pub:3,priv:5,vids:0},
+  5:{bio:"Profil actuellement sous surveillance suite à des signalements.",interests:['—'],looking:'—',pub:2,priv:1,vids:0},
+  6:{bio:"Sensuelle et cérébrale, j'aime les échanges qui commencent par une vraie conversation.",interests:['Littérature','Yoga','Œnologie','Week-ends'],looking:'Femmes & couples',pub:9,priv:11,vids:4},
+  7:{bio:"Compte administrateur de la plateforme.",interests:['—'],looking:'—',pub:0,priv:0,vids:0},
+  8:{bio:"Nouvelle ici, curieuse de découvrir l'ambiance. Bienveillance et second degré appréciés.",interests:['Musique','Festivals','Art'],looking:'À découvrir',pub:4,priv:3,vids:1},
+};
+const px=m=>PROFILE_X[m.id]||{bio:'',interests:[],looking:'—',pub:0,priv:0,vids:0};
+const TILEG=['linear-gradient(135deg,#3a1830,#160a17)','linear-gradient(135deg,#2a1426,#3d1d35)','linear-gradient(135deg,#1c2433,#2a1426)','linear-gradient(135deg,#33261c,#1c1410)','linear-gradient(135deg,#2d1830,#1a0e1c)','linear-gradient(135deg,#241c33,#160a17)'];
+function mediaTiles(n,locked,vids=0){
+  if(!n)return '<p style="color:var(--faint);font-size:.85rem">Aucun média dans cet album.</p>';
+  let out='';
+  for(let i=0;i<n;i++){
+    const isVid=i>=n-vids;
+    out+=`<div class="tile ${locked?'locked':''}" style="background:${TILEG[i%TILEG.length]}" onclick="toast('Aperçu média${locked?" · album privé · accès admin journalisé":""}','ok')"><span class="ti">${isVid?'🎬':'📷'}</span>${isVid?'<span class="vid">▶ Vidéo</span>':''}</div>`;
+  }
+  return out;
+}
+function viewViewAs(){
+  return `
+  <div class="head"><div><p class="eyebrow">Modération</p><h2>Vue membre</h2><p class="sub">Parcourez n'importe quel profil et consultez ses albums — publics comme privés — en accès admin intégral.</p></div></div>
+  <div class="privbanner" style="margin-bottom:18px"><span class="pb-ic">🔓</span><p><b>Accès intégral activé.</b> En tant qu'admin, vous voyez tous les profils et leurs albums privés sans demande d'accès. Chaque ouverture d'album privé est <b>journalisée</b> dans l'audit.</p></div>
+  <div class="pgrid">
+    ${members.map(m=>{const x=px(m);return `<article class="glass pcard" onclick="openProfileViewer(${m.id})">
+      <div class="cover" style="background:${avaFor(m.id)}">
+        <span class="pdot ${m.online?'on':'off'}"></span>
+        <span class="pava">${initial(m.pseudo)}</span>
+        <span class="lockcount">${x.priv?`<span>🔓 ${x.priv}</span>`:''}${x.vids?`<span>🎬 ${x.vids}</span>`:''}</span>
+      </div>
+      <div class="pmeta"><div class="nm">${m.pseudo} ${m.verified?'<span class="vrf">✓</span>':''}</div><small>${m.type} · ${m.city} · ${x.pub} publiques · ${x.priv} privées</small></div>
+    </article>`;}).join('')}
+  </div>`;
+}
+function openProfileViewer(id){
+  const m=members.find(x=>x.id===id);if(!m)return;const x=px(m);
+  const isAdmin=m.role==='admin';
+  $('#viewer').innerHTML=`
+   <div class="vsheet">
+     <div class="vbar">
+       <div class="eye">◉</div>
+       <div class="vt"><b>Vue membre · ${m.pseudo}</b><small>Accès admin intégral — albums privés déverrouillés · accès journalisé</small></div>
+       <button class="back" onclick="closeViewer()">← Retour</button>
+     </div>
+     <div class="vbody">
+       <div class="phero">
+         <div class="bigava" style="background:${avaFor(m.id)}">${initial(m.pseudo)}<span class="dot ${m.online?'on':'off'}" style="width:16px;height:16px;border-width:3px"></span></div>
+         <div>
+           <h2>${m.pseudo} ${m.verified?'<span class="vrf">✓</span>':''}</h2>
+           <p class="psub">${m.type} · ${m.city} · ${m.age} ans · ${m.online?'en ligne':'vu·e récemment'}</p>
+           <div class="ptags">
+             ${m.verified?'<span class="tag t-mint">Vérifié</span>':'<span class="tag t-amber">Non vérifié</span>'}
+             ${m.premium?'<span class="tag t-gold">Premium</span>':''}
+             ${m.status==='suspended'?'<span class="tag t-coral">Suspendu</span>':''}
+             ${m.status==='hidden'?'<span class="tag t-mute">Masqué</span>':''}
+             ${isAdmin?'<span class="tag t-gold">Admin</span>':''}
+           </div>
+         </div>
+       </div>
+       ${x.bio?`<div class="pblock"><div class="lbl">À propos</div><div class="bio">${x.bio}</div>
+         ${x.interests.length&&x.interests[0]!=='—'?`<div class="ichips">${x.interests.map(i=>`<span>${i}</span>`).join('')}</div>`:''}
+         ${x.looking&&x.looking!=='—'?`<p style="color:var(--muted);font-size:.86rem;margin-top:14px"><b style="color:var(--ink)">Recherche :</b> ${x.looking}</p>`:''}
+       </div>`:''}
+       <div class="pblock"><div class="lbl">Album public <span class="cc">${x.pub} média${x.pub>1?'s':''}</span></div>
+         <div class="mgrid">${mediaTiles(x.pub,false,Math.min(1,x.vids))}</div>
+       </div>
+       ${(x.priv||x.vids)&&!isAdmin?`<div class="pblock"><div class="lbl priv">🔓 Album privé <span class="cc">${x.priv} média${x.priv>1?'s':''}</span></div>
+         <div class="privbanner"><span class="pb-ic">🛡️</span><p>Album normalement verrouillé pour les membres. <b>Déverrouillé ici en mode admin</b> pour la modération. Ouverture enregistrée le ${new Date().toLocaleDateString('fr-FR')}.</p></div>
+         <div class="mgrid">${mediaTiles(x.priv,true,x.vids)}</div>
+       </div>`:''}
+       <div class="vactions">
+         <button class="ghost-btn" onclick="closeViewer();openDrawer(${m.id})">⚙ Gérer ce compte</button>
+         ${isAdmin?'':`<button class="ghost-btn" onclick="toast('Contenu transmis à la modération','warn')">⚑ Signaler un contenu</button>
+         <button class="ghost-btn" onclick="toast('${m.pseudo} masqué de la découverte','ok')">◐ Masquer le profil</button>`}
+       </div>
+     </div>
+   </div>`;
+  $('#viewer').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function closeViewer(){$('#viewer').classList.remove('on');document.body.style.overflow='';}
+
+const VIEWS={overview:viewOverview,members:viewMembers,viewas:viewViewAs,moderation:viewModeration,revenue:viewRevenue,influencers:viewInfluencers,promos:viewPromos,venues:viewVenues,system:viewSystem};
+
+/* ============ drawer ============ */
+function openDrawer(id){
+  const m=members.find(x=>x.id===id);if(!m)return;
+  const isAdmin=m.role==='admin';
+  $('#drawer').innerHTML=`
+    <div class="dh">
+      <button class="x" onclick="closeDrawer()">✕</button>
+      <div class="duser">
+        <div class="ava" style="background:${avaFor(m.id)}">${initial(m.pseudo)}<span class="dot ${m.online?'on':'off'}"></span></div>
+        <div><h3>${m.pseudo} ${m.verified?'<span style="color:var(--rose)">✓</span>':''}</h3><p>${m.type} · ${m.city} · ${m.age} ans</p></div>
+      </div>
+    </div>
+    <div class="dbody">
+      <div class="dgrid">
+        <div class="dstat"><span>Coups de cœur</span><b>${nf(m.hearts)}</b></div>
+        <div class="dstat"><span>Abonnés</span><b>${nf(m.followers)}</b></div>
+        <div class="dstat"><span>Vues profil</span><b>${nf(m.views)}</b></div>
+        <div class="dstat"><span>Statut</span><b style="font-size:1rem;color:${m.status==='suspended'?'var(--coral)':m.status==='hidden'?'var(--muted)':'var(--mint)'}">${m.status==='suspended'?'Suspendu':m.status==='hidden'?'Masqué':'Actif'}</b></div>
+      </div>
+      ${m.reason?`<div class="check block" style="padding:12px 14px;border-radius:13px;background:rgba(255,111,111,.07);border:1px solid rgba(255,111,111,.2)"><div class="ck">!</div><div class="cb"><b>Motif de suspension</b><small>${m.reason}</small></div></div>`:''}
+      ${isAdmin?'<p style="color:var(--gold);font-size:.85rem;background:rgba(231,192,138,.08);border:1px solid rgba(231,192,138,.2);padding:12px 14px;border-radius:13px;margin:0">Compte administrateur — protégé : il ne peut être ni suspendu ni supprimé depuis ce panneau.</p>':''}
+      <div class="dsec-label">Actions</div>
+      <div class="dacts">
+        <button class="dact" onclick="toast('${m.verified?'Vérification retirée':'Profil vérifié'} · ${m.pseudo}','ok')"><span class="di">${m.verified?'✓':'☆'}</span>${m.verified?'Retirer vérif.':'Vérifier'}</button>
+        <button class="dact gold" onclick="toast('Premium accordé (30 j) à ${m.pseudo}','ok')"><span class="di">◆</span>Premium 30 j</button>
+        <button class="dact" onclick="toast('Message support envoyé à ${m.pseudo}','ok')"><span class="di">✉</span>Message support</button>
+        <button class="dact" onclick="toast('Mot de passe réinitialisé · sessions fermées','ok')"><span class="di">⟳</span>Réinit. MDP</button>
+        ${isAdmin?'':`<button class="dact" onclick="toast('${m.status==='hidden'?'Profil rendu visible':'Profil masqué'} · ${m.pseudo}','ok')"><span class="di">◐</span>${m.status==='hidden'?'Rendre visible':'Masquer'}</button>
+        <button class="dact danger" onclick="toast('${m.pseudo} suspendu 7 j · déconnecté','bad')"><span class="di">⏸</span>Suspendre</button>
+        <button class="dact danger" onclick="closeDrawer();toast('Compte ${m.pseudo} supprimé · médias en rétention 6 mois','bad')"><span class="di">🗑</span>Supprimer</button>`}
+      </div>
+    </div>`;
+  $('#scrim').classList.add('on');$('#drawer').classList.add('on');
+}
+function closeDrawer(){$('#scrim').classList.remove('on');$('#drawer').classList.remove('on');}
+
+/* ============ navigation ============ */
+let active='overview';
+function buildNav(){
+  // rail
+  const nav=$('#nav');
+  NAV.forEach(n=>{
+    const b=document.createElement('button');
+    b.className='tab'+(n.id===active?' active':'');
+    b.dataset.id=n.id;
+    b.innerHTML=`<i>${n.icon}</i><span class="lbl"><b>${n.label}</b><small>${n.sub}</small></span>${n.count?`<span class="count">${n.count}</span>`:''}`;
+    b.onclick=()=>go(n.id);
+    nav.appendChild(b);
+  });
+  // mobile dock
+  const dockShort={overview:'Accueil',members:'Membres',viewas:'Profils',moderation:'Modé.',revenue:'Revenus',influencers:'Influ.',promos:'Codes',venues:'Lieux',system:'Système'};
+  const dock=$('#dock');
+  NAV.forEach(n=>{
+    const b=document.createElement('button');
+    b.className=(n.id===active?'on':'');
+    b.dataset.id=n.id;
+    b.innerHTML=`<i>${n.icon}</i><small>${dockShort[n.id]||n.label}</small>`;
+    b.onclick=()=>go(n.id);
+    dock.appendChild(b);
+  });
+}
+function moveGlow(){
+  const el=document.querySelector('.tab.active');
+  const glow=$('#glow');
+  if(el){glow.style.height=el.offsetHeight+'px';glow.style.transform=`translateY(${el.offsetTop}px)`;}
+}
+function go(id){
+  active=id;
+  const meta=NAV.find(n=>n.id===id);
+  $('#ctxTitle').textContent=meta.label;
+  $('#ctxEyebrow').textContent=meta.eyebrow;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.id===id));
+  document.querySelectorAll('.dock button').forEach(t=>t.classList.toggle('on',t.dataset.id===id));
+  moveGlow();
+  // render view
+  stage.querySelectorAll('section.view').forEach(s=>s.remove());
+  const sec=document.createElement('section');
+  sec.className='view on';
+  sec.innerHTML=VIEWS[id]();
+  stage.appendChild(sec);
+  // fab label per section
+  const fabMap={members:'Créer un compte',promos:'Nouveau code',influencers:'Ajouter un partenaire',venues:'Ajouter un lieu',moderation:'Voir l\'historique'};
+  const fab=$('#fab');
+  if(fabMap[id]){fab.style.display='flex';$('#fabLabel').textContent=fabMap[id];}
+  else{fab.style.display=['overview','revenue','system','viewas'].includes(id)?'none':'flex';}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function togglePromo(el,code){
+  el.classList.toggle('on');
+  toast('Code '+code+(el.classList.contains('on')?' activé':' désactivé'),'ok');
+}
+function fabAction(){
+  const map={members:'Formulaire de création de compte',promos:"Création d'un code promo",influencers:"Ajout d'un influenceur",venues:"Ajout d'un lieu"};
+  toast((map[active]||'Nouvel élément')+' — ouverture…','ok');
+}
+
+/* search live */
+$('#globalSearch').addEventListener('input',()=>{
+  if(active!=='members')go('members');
+  else $('#memberList').innerHTML=renderMembers();
+});
+
+window.addEventListener('resize',moveGlow);
+buildNav();
+go('overview');
+setTimeout(moveGlow,150); // after fonts settle
+</script>
+</body>
+</html>

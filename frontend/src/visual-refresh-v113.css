@@ -1,0 +1,541 @@
+/* Voluptia visual refresh v113
+   Objectif : améliorer toutes les pages sans toucher au flux produit.
+   Ce fichier est importé en dernier pour agir comme couche de finition globale. */
+:root {
+  --vr-bg-0: #070307;
+  --vr-bg-1: #130815;
+  --vr-bg-2: #211020;
+  --vr-panel: rgba(255, 255, 255, .085);
+  --vr-panel-strong: rgba(255, 255, 255, .13);
+  --vr-border: rgba(255, 255, 255, .16);
+  --vr-border-strong: rgba(255, 214, 159, .34);
+  --vr-text: #fff8f1;
+  --vr-muted: #d7c5d4;
+  --vr-soft: #a892a5;
+  --vr-gold: #f2c57c;
+  --vr-pink: #ff7db8;
+  --vr-pink-2: #ff4f9f;
+  --vr-violet: #8a5cff;
+  --vr-green: #69e6b1;
+  --vr-danger: #ff6b8d;
+  --vr-radius-xl: 28px;
+  --vr-radius-lg: 22px;
+  --vr-radius-md: 16px;
+  --vr-shadow-soft: 0 24px 70px rgba(0, 0, 0, .34);
+  --vr-shadow-glow: 0 0 0 1px rgba(255, 255, 255, .08), 0 28px 90px rgba(255, 83, 153, .14);
+}
+
+html {
+  background:
+    radial-gradient(circle at 15% -10%, rgba(255, 125, 184, .24), transparent 30%),
+    radial-gradient(circle at 90% 5%, rgba(242, 197, 124, .16), transparent 26%),
+    linear-gradient(135deg, var(--vr-bg-0), var(--vr-bg-1) 42%, #09050d);
+  color-scheme: dark;
+}
+
+body {
+  color: var(--vr-text);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 80, 160, .10), transparent 34%),
+    radial-gradient(circle at 80% 18%, rgba(138, 92, 255, .11), transparent 30%),
+    linear-gradient(180deg, rgba(7, 3, 7, .72), rgba(18, 8, 18, .98));
+  font-feature-settings: "kern", "liga", "calt";
+  text-rendering: geometricPrecision;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.35), transparent 74%);
+}
+
+* {
+  scrollbar-color: rgba(255, 125, 184, .5) rgba(255, 255, 255, .06);
+}
+
+::selection {
+  background: rgba(255, 125, 184, .35);
+  color: #fff;
+}
+
+a {
+  color: #ffd29a;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: #ffe8c2;
+}
+
+img, video {
+  border-radius: inherit;
+}
+
+.app, .page, .landing-page, .hub-page-v65, .social-page, .legal-page {
+  background: transparent !important;
+}
+
+.landing-page,
+.center-screen,
+.page,
+.hub-page-v65,
+.social-page,
+.privacy-settings-page,
+.legal-public-page {
+  position: relative;
+}
+
+.glass,
+.panel,
+.side-card,
+.profile-pane-v25,
+.profile-panel-section-v97,
+.profile-panel-albums-v97,
+.admin-panel-v52,
+.landing-trust-card,
+.legal-disclaimer,
+.chat,
+.ephemeral-media,
+.premium-cta-v101,
+.toktak-comments-sheet,
+.toktak-gradient,
+.venue-panel-v96,
+.vmap-list-v100,
+.vmap-card-v100 {
+  border: 1px solid var(--vr-border) !important;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.13), rgba(255,255,255,.055)) !important;
+  box-shadow: var(--vr-shadow-soft) !important;
+  backdrop-filter: blur(22px) saturate(130%);
+  -webkit-backdrop-filter: blur(22px) saturate(130%);
+}
+
+.glass:hover,
+.panel:hover,
+.profile-pane-v25:hover,
+.admin-panel-v52:hover,
+.landing-trust-card:hover,
+.vmap-card-v100:hover {
+  border-color: rgba(255, 214, 159, .28) !important;
+}
+
+.panel,
+.glass,
+.admin-panel-v52,
+.landing-trust-card,
+.profile-pane-v25,
+.profile-panel-section-v97,
+.profile-panel-albums-v97,
+.side-card,
+.chat {
+  border-radius: var(--vr-radius-xl) !important;
+}
+
+/* landing-header retiré du groupe glass — transparent sur le hero image */
+.app-topbar,
+.mobile-topbar-v101,
+.desktop-shell-v101,
+.main-nav-v101,
+.bottom-nav-v101,
+.subnav-v101,
+.hub-header-v100,
+.social-hero,
+.compact-hero {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.045)) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  box-shadow: 0 18px 52px rgba(0,0,0,.22) !important;
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+}
+
+.hub-header-v100,
+.social-hero,
+.compact-hero {
+  border-radius: var(--vr-radius-xl) !important;
+}
+
+/* landing-header : totalement transparent pour ne pas masquer le hero */
+.landing-header {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0 !important;
+}
+
+.landing-brand,
+.brand,
+.sidebar-brand-v101,
+.mobile-brand-v101 {
+  letter-spacing: .02em;
+}
+
+.landing-brand-logo,
+.sidebar-brand-mark-v101,
+.mobile-brand-mark-v101,
+.nav-icon-v101,
+.landing-trust-icon,
+.email-action-icon-v99 {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    0 12px 34px rgba(255, 103, 174, .22) !important;
+}
+
+h1, h2, h3,
+.panel-title-row strong,
+.section-heading,
+.pane-heading-v25,
+.social-title-row strong,
+.admin-form-heading-v64 strong,
+.admin-kpi-v52 strong {
+  color: #fffaf5;
+  letter-spacing: -.025em;
+}
+
+h1, .landing-hero h1, .legal-public-hero h1 {
+  text-wrap: balance;
+}
+
+.eyebrow,
+.hint,
+.small,
+.panel-title-row span,
+.legal-list li,
+.details-line,
+.landing-legal-note,
+.landing-check-row,
+p {
+  color: var(--vr-muted);
+}
+
+.eyebrow,
+.admin-form-heading-v64 span,
+.panel-title-row span {
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.primary-btn,
+.landing-btn-primary,
+.ui-action-accent-v71,
+.tinder-action-v66.primary,
+.profile-action-btn-v97.primary,
+button[type="submit"] {
+  background:
+    linear-gradient(135deg, var(--vr-pink), var(--vr-pink-2) 48%, #e7a955) !important;
+  color: #1b0712 !important;
+  border: 0 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.45),
+    0 18px 44px rgba(255, 79, 159, .28) !important;
+  font-weight: 900;
+}
+
+.primary-btn:hover,
+.landing-btn-primary:hover,
+.ui-action-accent-v71:hover,
+button[type="submit"]:hover {
+  transform: translateY(-1px);
+  filter: saturate(112%) brightness(1.04);
+}
+
+.secondary-btn,
+.ghost-btn,
+.small-btn,
+.landing-btn-outline,
+.profile-action-btn-v97,
+.search-action-v66,
+.tinder-action-v66,
+button:not([type]),
+button[type="button"] {
+  border-color: rgba(255,255,255,.18) !important;
+  background: rgba(255,255,255,.075) !important;
+  color: #fff4ea !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+.secondary-btn:hover,
+.ghost-btn:hover,
+.small-btn:hover,
+.landing-btn-outline:hover,
+.profile-action-btn-v97:hover,
+.search-action-v66:hover,
+.tinder-action-v66:hover {
+  border-color: rgba(255, 214, 159, .36) !important;
+  background: rgba(255,255,255,.12) !important;
+  transform: translateY(-1px);
+}
+
+input,
+select,
+textarea,
+.input,
+.SelectField,
+.luxe-slider {
+  background: rgba(8, 4, 11, .68) !important;
+  border: 1px solid rgba(255,255,255,.17) !important;
+  color: var(--vr-text) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none !important;
+  border-color: rgba(255, 125, 184, .64) !important;
+  box-shadow: 0 0 0 4px rgba(255, 125, 184, .13) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(215, 197, 212, .65);
+}
+
+.form-grid,
+.landing-grid-2,
+.admin-grid-v52,
+.admin-kpi-grid-v52,
+.social-kpis,
+.profile-edit-form {
+  gap: clamp(14px, 2vw, 22px) !important;
+}
+
+.landing-hero,
+.legal-public-hero,
+.social-hero,
+.compact-hero,
+.premium-cta-v101 {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 125, 184, .26), transparent 34%),
+    radial-gradient(circle at 92% 10%, rgba(242, 197, 124, .18), transparent 32%),
+    linear-gradient(145deg, rgba(255,255,255,.13), rgba(255,255,255,.055)) !important;
+  box-shadow: var(--vr-shadow-glow) !important;
+}
+
+.landing-hero img,
+.profile-photo,
+.profile-card img,
+.avatar,
+.lpc-avatar-v99,
+.ephemeral-media img,
+.ephemeral-media video {
+  box-shadow: 0 22px 52px rgba(0,0,0,.35);
+}
+
+.landing-check-row,
+.checks-stack > *,
+.legal-list li,
+.admin-check-row-v52,
+.admin-list-row-v52,
+.message,
+.comment-row,
+.notification-row,
+.venue-row-v96 {
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: var(--vr-radius-md) !important;
+}
+
+.feed-tabs,
+.compact-tabs,
+.legal-public-tabs,
+.subnav-v101 {
+  border-radius: 999px !important;
+  padding: 6px !important;
+  background: rgba(0,0,0,.20) !important;
+  border: 1px solid rgba(255,255,255,.11) !important;
+}
+
+.feed-tabs button,
+.compact-tabs button,
+.legal-public-tabs a,
+.subnav-v101 button,
+.bottom-nav-v101 button,
+.main-nav-v101 button {
+  border-radius: 999px !important;
+}
+
+.feed-tabs button.active,
+.compact-tabs button.active,
+.legal-public-tabs a.active,
+.subnav-v101 button.active,
+.bottom-nav-v101 button.active,
+.main-nav-v101 button.active {
+  background:
+    linear-gradient(135deg, rgba(255,125,184,.28), rgba(242,197,124,.20)) !important;
+  color: #fff !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 10px 26px rgba(0,0,0,.18) !important;
+}
+
+.admin-kpi-v52,
+.social-kpis > *,
+.profile-stat,
+.landing-trust-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-kpi-v52::after,
+.social-kpis > *::after,
+.profile-stat::after,
+.landing-trust-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -24px -42px auto;
+  width: 110px;
+  height: 110px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 125, 184, .20), transparent 70%);
+  pointer-events: none;
+}
+
+.admin-bars-v52,
+.admin-metrics-list-v52,
+.admin-form-block-v64,
+.legal-stack,
+.profile-panel-section-v97 {
+  background: rgba(0,0,0,.13) !important;
+  border-radius: var(--vr-radius-lg) !important;
+}
+
+.media-lock-badge,
+.online-badge,
+.lock-badge,
+.match-badge,
+.ok,
+.err,
+.gold,
+.green,
+.blue,
+.pink {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 10px 24px rgba(0,0,0,.22);
+}
+
+.ok, .green {
+  color: #c7ffe6 !important;
+  border-color: rgba(105, 230, 177, .36) !important;
+  background: rgba(105, 230, 177, .11) !important;
+}
+
+.err {
+  color: #ffd0dc !important;
+  border-color: rgba(255, 107, 141, .40) !important;
+  background: rgba(255, 107, 141, .11) !important;
+}
+
+.gold {
+  color: #ffe4b7 !important;
+  border-color: rgba(242, 197, 124, .38) !important;
+  background: rgba(242, 197, 124, .11) !important;
+}
+
+.pink {
+  color: #ffd2e7 !important;
+  border-color: rgba(255, 125, 184, .38) !important;
+  background: rgba(255, 125, 184, .11) !important;
+}
+
+.blue {
+  color: #d9e7ff !important;
+  border-color: rgba(138, 92, 255, .38) !important;
+  background: rgba(138, 92, 255, .11) !important;
+}
+
+.vmap-map-v100,
+.vmap-shell-v100,
+.leaflet-container {
+  border-radius: var(--vr-radius-xl) !important;
+  overflow: hidden;
+  background: #0b070d !important;
+}
+
+.vmap-pin-v100 {
+  box-shadow:
+    0 12px 34px rgba(0,0,0,.42),
+    0 0 0 7px rgba(255,255,255,.08) !important;
+}
+
+.vmap-popup-v100 {
+  color: #fff8f1 !important;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: rgba(20, 9, 20, .96) !important;
+  color: #fff8f1 !important;
+  border: 1px solid rgba(255,255,255,.15) !important;
+  box-shadow: 0 20px 48px rgba(0,0,0,.42) !important;
+}
+
+.chat,
+.message,
+.toktak-comments-sheet {
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+}
+
+.message.sent,
+.message.outgoing,
+.message.me {
+  background: linear-gradient(135deg, rgba(255, 125, 184, .22), rgba(242, 197, 124, .12)) !important;
+}
+
+.toast {
+  border: 1px solid rgba(255,255,255,.16) !important;
+  background: rgba(23, 9, 22, .92) !important;
+  box-shadow: 0 18px 52px rgba(0,0,0,.34) !important;
+  backdrop-filter: blur(18px);
+}
+
+@media (max-width: 900px) {
+  .page,
+  .hub-page-v65,
+  .social-page,
+  .landing-page,
+  .legal-public-main {
+    padding-left: clamp(12px, 4vw, 18px) !important;
+    padding-right: clamp(12px, 4vw, 18px) !important;
+  }
+
+  .glass,
+  .panel,
+  .admin-panel-v52,
+  .landing-trust-card,
+  .profile-pane-v25,
+  .profile-panel-section-v97,
+  .side-card {
+    border-radius: 22px !important;
+  }
+
+  .feed-tabs,
+  .compact-tabs,
+  .subnav-v101 {
+    border-radius: 18px !important;
+    overflow-x: auto;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .glass,
+  .panel,
+  .admin-panel-v52,
+  .landing-trust-card,
+  .profile-pane-v25,
+  .primary-btn,
+  .secondary-btn,
+  .ghost-btn,
+  .small-btn,
+  .landing-btn-primary,
+  .landing-btn-outline {
+    transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease, filter .18s ease;
+  }
+}

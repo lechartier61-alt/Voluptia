@@ -1,0 +1,197 @@
+/* ============================================================================
+   V176 — Découvrir : carte pleine page + barre basse flottante transparente
+   ========================================================================== */
+
+/* La page Découvrir/Carte récupère l'espace disponible au lieu de présenter
+   une carte dans un petit bloc. */
+.discover-map-full-v176 {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: clamp(8px, 1.2vw, 14px) !important;
+  min-height: calc(100dvh - 132px) !important;
+}
+
+.discover-map-full-v176 > .hub-subnav-v65,
+.discover-map-full-v176 > .hub-subnav-v121 {
+  flex: 0 0 auto !important;
+}
+
+.discover-map-full-v176 > .hub-content-v65 {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.discover-map-full-v176 .member-map-page-v114 {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.discover-map-full-v176 .member-map-shell-v114 {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-height: clamp(620px, calc(100dvh - 210px), 980px) !important;
+  margin: 0 !important;
+  border-radius: 26px !important;
+}
+
+.discover-map-full-v176 .member-map-canvas-v114 {
+  min-height: 100% !important;
+}
+
+/* Tablette : la carte occupe presque tout l'écran disponible. */
+@media (min-width: 761px) and (max-width: 1180px) {
+  .discover-map-full-v176 {
+    min-height: calc(100dvh - 118px) !important;
+  }
+
+  .discover-map-full-v176 .member-map-shell-v114 {
+    min-height: clamp(640px, calc(100dvh - 190px), 900px) !important;
+    border-radius: 24px !important;
+  }
+}
+
+/* Téléphone : carte plein écran sous les onglets, sans cadre qui mange l'espace. */
+@media (max-width: 760px) {
+  :root {
+    --v176-floating-nav-height: 76px;
+    --v176-floating-nav-gap: 12px;
+  }
+
+  body {
+    padding-bottom: calc(var(--v176-floating-nav-height) + var(--v176-floating-nav-gap) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .pro-workspace .main-zone,
+  .main-zone {
+    padding-bottom: calc(var(--v176-floating-nav-height) + var(--v176-floating-nav-gap) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .discover-map-full-v176 {
+    min-height: calc(100dvh - 76px) !important;
+    padding: 8px 8px 0 !important;
+    gap: 8px !important;
+  }
+
+  .discover-map-full-v176 > .hub-content-v65 {
+    min-height: calc(100dvh - 154px) !important;
+  }
+
+  .discover-map-full-v176 .member-map-page-v114 {
+    min-height: calc(100dvh - 154px) !important;
+  }
+
+  .discover-map-full-v176 .member-map-shell-v114 {
+    min-height: calc(100dvh - 154px) !important;
+    height: calc(100dvh - 154px) !important;
+    border-radius: 18px !important;
+    border-color: rgba(255,143,197,.16) !important;
+    box-shadow: none !important;
+  }
+
+  .discover-map-full-v176 .member-map-canvas-v114 {
+    min-height: calc(100dvh - 154px) !important;
+  }
+
+  .discover-map-full-v176 .member-map-hint-v114 {
+    left: 10px !important;
+    right: 10px !important;
+    bottom: calc(var(--v176-floating-nav-height) + 18px + env(safe-area-inset-bottom, 0px)) !important;
+    max-width: none !important;
+  }
+
+  .discover-map-full-v176 .member-map-floating-v114 {
+    top: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+    bottom: calc(var(--v176-floating-nav-height) + 18px + env(safe-area-inset-bottom, 0px)) !important;
+    width: auto !important;
+    max-height: none !important;
+    border-radius: 22px !important;
+  }
+
+  .discover-map-full-v176 .member-map-profile-grid-v114 {
+    max-height: none !important;
+  }
+
+  /* Barre basse flottante : plus de bloc opaque collé au bord. */
+  .mobile-bottom-nav.pro-bottom-nav,
+  .pro-bottom-nav {
+    left: max(10px, env(safe-area-inset-left, 0px)) !important;
+    right: max(10px, env(safe-area-inset-right, 0px)) !important;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    width: auto !important;
+    max-width: none !important;
+    height: var(--v176-floating-nav-height) !important;
+    padding: 6px !important;
+    border: 1px solid rgba(255,143,197,.24) !important;
+    border-radius: 24px !important;
+    background: linear-gradient(180deg, rgba(27, 20, 30, .74), rgba(12, 8, 16, .58)) !important;
+    box-shadow: 0 18px 46px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08) !important;
+    backdrop-filter: blur(18px) saturate(1.18) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.18) !important;
+    overflow: hidden !important;
+  }
+
+  .pro-bottom-nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(circle at 28% 0%, rgba(255,143,197,.18), transparent 52%);
+  }
+
+  .pro-bottom-nav button {
+    min-height: 0 !important;
+    height: 100% !important;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,.03) !important;
+    color: rgba(255,255,255,.76) !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .pro-bottom-nav button.active {
+    color: #fff !important;
+    background: linear-gradient(135deg, rgba(217,60,134,.48), rgba(255,143,197,.18)) !important;
+    box-shadow: inset 0 0 0 1px rgba(255,143,197,.38), 0 8px 22px rgba(217,60,134,.18) !important;
+  }
+
+  .pro-bottom-nav button i,
+  .pro-bottom-nav button.active i {
+    color: inherit !important;
+  }
+}
+
+/* Très petits téléphones : la barre reste lisible et la carte garde la hauteur. */
+@media (max-width: 380px) {
+  :root {
+    --v176-floating-nav-height: 70px;
+  }
+
+  .discover-map-full-v176 {
+    padding-inline: 6px !important;
+  }
+
+  .mobile-bottom-nav.pro-bottom-nav,
+  .pro-bottom-nav {
+    left: 8px !important;
+    right: 8px !important;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    border-radius: 20px !important;
+    gap: 3px !important;
+  }
+
+  .pro-bottom-nav button {
+    border-radius: 15px !important;
+  }
+}

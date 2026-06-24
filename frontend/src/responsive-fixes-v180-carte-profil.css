@@ -1,0 +1,26 @@
+/* ============================================================================
+   V180 — CORRECTIF « carte profil trop grande » (page Carte → Autour de moi)
+   ----------------------------------------------------------------------------
+   CAUSE
+   Le panneau flottant « Autour de moi » occupe tout l'écran (display:grid,
+   header + zone 1fr). Sa grille de profils a des lignes en hauteur
+   automatique. Or, sur une grille CSS, « align-content » vaut « normal »
+   (= stretch) : avec peu de profils, l'unique ligne s'étire sur toute la
+   hauteur disponible → la carte devient démesurée, et comme la carte est
+   elle aussi une grille, son contenu (avatar / nom / statut) se retrouve
+   espacé du haut vers le bas.
+
+   CORRECTION
+   On force les lignes à la hauteur du contenu et on les packe en haut. Les
+   cartes reprennent une taille naturelle, tout en restant de hauteur égale
+   sur une même ligne (présentation propre quand il y a plusieurs profils).
+   ============================================================================ */
+
+.member-map-profile-grid-v114 {
+  align-content: start !important;        /* pas d'étirement/répartition vertical */
+  grid-auto-rows: max-content !important; /* hauteur de ligne = contenu */
+}
+
+.member-map-profile-card-v114 {
+  align-content: start !important;        /* contenu packé en haut de la carte */
+}
